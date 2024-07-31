@@ -13,8 +13,4 @@ public class FileHelper {
     var encodedPath = URLEncoder.encode(path, StandardCharsets.UTF_8);
     return encodedPath.replace("%2F", "/").replace("%20", " ");
   }
-
-  public static String getLogFilePath(String testName) {
-    return System.getProperty("user.dir") + "/target/test-results/" + testName + "/logfile.log";
-  }
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
-<suite name="My Test Suite" parallel="methods" thread-count="3">
+<suite name="My Test Suite">
     <test name="My Test">
         <classes>
             <class name="com.selenium.testng.elite.BaseTest"/>
