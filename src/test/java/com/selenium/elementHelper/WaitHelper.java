@@ -1,4 +1,4 @@
-package com.selenium.utils;
+package com.selenium.elementHelper;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -25,6 +25,11 @@ public class WaitHelper {
 
   private WebDriverWait getWebDriverWait(int duration) {
     return new WebDriverWait(driver, Duration.ofSeconds(duration));
+  }
+
+  // Hard wait but not recommended to use
+  public void hardWait(int second) throws InterruptedException {
+    Thread.sleep(second * 1000L);
   }
 
   // Wait for an element to be clickable

@@ -1,6 +1,6 @@
 package com.selenium.pageObjectModel;
 
-import com.selenium.utils.WaitHelper;
+import com.selenium.elementHelper.WaitHelper;
 import org.openqa.selenium.WebDriver;
 
 public class BasePageObject {
