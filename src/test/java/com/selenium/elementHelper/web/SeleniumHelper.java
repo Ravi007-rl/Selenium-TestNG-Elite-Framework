@@ -4,6 +4,9 @@ import com.selenium.elementHelper.WaitHelper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
+
+import java.util.List;
 
 public class SeleniumHelper {
 
@@ -102,5 +105,51 @@ public class SeleniumHelper {
     var element = waitHelper.waitForElementToBeClickable(by, second);
     var elementIsEnable = waitTillElementIsEnable(element);
     clickOnElement(elementIsEnable);
+  }
+
+  public boolean isElementDisplayed(By by) {
+    WebElement element =null;
+    try {
+      element = waitHelper.waitForElementToBeVisible(by);
+    } catch (Exception _) {}
+    return element != null;
+  }
+
+  public boolean isElementDisplayed(By by, int second) {
+    WebElement element =null;
+    try {
+      element = waitHelper.waitForElementToBeVisible(by, second);
+    } catch (Exception _) {}
+    return element != null;
+  }
+
+  public void selectOptionByValue(By by, String value){
+    var element = waitHelper.waitForElementToBeVisible(by);
+    new Select(element).selectByValue(value);
+  }
+
+  public void selectOptionByValue(By by, String value, int second){
+    var element = waitHelper.waitForElementToBeVisible(by, second);
+    new Select(element).selectByValue(value);
+  }
+
+  public void selectOptionByIndex(By by, int index){
+    var element = waitHelper.waitForElementToBeVisible(by);
+    new Select(element).selectByIndex(index);
+  }
+
+  public void selectOptionByValue(By by, int index, int second){
+    var element = waitHelper.waitForElementToBeVisible(by, second);
+    new Select(element).selectByIndex(index);
+  }
+
+  public List<String> getAllOptionText(By by){
+    var element = waitHelper.waitForElementToBeVisible(by);
+    return new Select(element).getOptions().stream().map(WebElement::getText).toList();
+  }
+
+  public List<String> getAllOptionText(By by,int second){
+    var element = waitHelper.waitForElementToBeVisible(by, second);
+    return new Select(element).getOptions().stream().map(WebElement::getText).toList();
   }
 }
