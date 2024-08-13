@@ -6,15 +6,14 @@ import org.openqa.selenium.WebElement;
 
 public class JavaScriptHelper {
 
-  private final WebDriver driver;
+  private final JavascriptExecutor js;
 
   public JavaScriptHelper(WebDriver driver) {
-    this.driver = driver;
+    js = (JavascriptExecutor) driver;
   }
 
   // Using this we check element displayed in viewport
   private boolean isElementInViewport(WebElement element) {
-    JavascriptExecutor js = (JavascriptExecutor) driver;
     return (Boolean)
         js.executeScript(
             "var rect = arguments[0].getBoundingClientRect();"
@@ -28,8 +27,7 @@ public class JavaScriptHelper {
   }
 
   // used this method when element is not in view port
-  private void scrollToElementCenter(WebElement element) {
-    JavascriptExecutor js = (JavascriptExecutor) driver;
+  void scrollToElementCenter(WebElement element) {
     js.executeScript(
         "var elementRect = arguments[0].getBoundingClientRect();"
             + "var absoluteElementTop = elementRect.top + window.pageYOffset;"
@@ -39,9 +37,17 @@ public class JavaScriptHelper {
   }
 
   // use this method to check and ensure element is in view port
-  public void scrollToElementIfNotInView(WebElement element) {
+  void scrollToElementIfNotInView(WebElement element) {
     if (!isElementInViewport(element)) {
       scrollToElementCenter(element);
     }
+  }
+
+  void javaScriptEnterText(WebElement element, String value) {
+    js.executeScript("arguments[0].value='arguments[1];", element, value);
+  }
+
+  void javaScriptClickOn(WebElement element) {
+    js.executeScript("arguments[0].click();", element);
   }
 }
