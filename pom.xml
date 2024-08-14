@@ -21,6 +21,7 @@
         <commonOs.version>2.8.0</commonOs.version>
         <java.dotEnv>3.0.1</java.dotEnv>
         <log4j.version>2.23.1</log4j.version>
+        <assertj>3.26.3</assertj>
     </properties>
 
     <dependencyManagement>
@@ -73,6 +74,12 @@
                 <artifactId>log4j-core</artifactId>
                 <version>${log4j.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+                <version>${assertj}</version>
+                <scope>test</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -114,6 +121,12 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
             <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${assertj}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
