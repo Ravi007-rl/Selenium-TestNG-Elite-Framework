@@ -1,5 +1,5 @@
-<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
-<suite name="My Test Suite" thread-count="3" parallel="classes">
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="My Test Suite">
     <test name="My Test">
         <classes>
             <class name="com.selenium.testng.elite.webTest.LoginTest"/>

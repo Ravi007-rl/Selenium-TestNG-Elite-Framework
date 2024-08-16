@@ -1,33 +1,26 @@
 package com.selenium.testng.elite.webTest;
 
-import com.selenium.testng.elite.BaseTest;
-import org.testng.Assert;
-import org.testng.annotations.Test;
 
-import static org.testng.Assert.fail;
+import com.selenium.testng.elite.BaseTest;
+import org.testng.annotations.Test;
 
 public class RegisterTest extends BaseTest {
 
   @Test
   public void RegisterTest_verifyThatUserAbleToNavigateToSite() {
-    log.info("Browser opened: " + environmentConfig.getBrowser().toString());
-    driver.get("https://www.baeldung.com/spring-boot-properties-env-variables");
-    fail("Fail the test case");
-    log.info("This is my step ");
+    log.get().info("This is my step ");
+    driver.get("https://github.com/Ravi007-rl/Selenium-TestNG-Elite-Framework/pull/3/files");
   }
 
   @Test
   public void RegisterTest_test2() {
-    log.info("Browser opened: " + environmentConfig.getBrowser().toString());
-    driver.get("https://www.baeldung.com/spring-boot-properties-env-variables");
-    log.info("This is my step ");
-    Assert.assertTrue(true);
+    log.get().info("This is my step ");
+    driver.get("https://github.com/Ravi007-rl/Selenium-TestNG-Elite-Framework/pull/3/files");
   }
 
   @Test
   public void RegisterTest_test3() {
-    log.info("Browser opened: " + environmentConfig.getBrowser().toString());
-    driver.get("https://www.baeldung.com/spring-boot-properties-env-variables");
-    log.info("This is my step ");
+    log.get().info("This is my step ");
+    driver.get("https://github.com/Ravi007-rl/Selenium-TestNG-Elite-Framework/pull/3/files");
   }
 }

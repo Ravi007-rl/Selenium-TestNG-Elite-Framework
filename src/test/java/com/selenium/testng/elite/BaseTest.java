@@ -20,8 +20,8 @@ import java.io.IOException;
 public class BaseTest {
 
   protected WebDriver driver;
-  protected static EnvironmentConfig environmentConfig ;
-  protected Log log;
+  protected static EnvironmentConfig environmentConfig;
+  protected ThreadLocal<Log> log = new ThreadLocal<>();
 
   @BeforeSuite
   public void beforeSuite() {
@@ -32,8 +32,10 @@ public class BaseTest {
   @BeforeMethod
   public void setUp(ITestResult result) throws Exception {
     String testCaseName = result.getMethod().getMethodName();
-    log = new Log(testCaseName);
+    log.set(new Log(testCaseName));
     driver = DriverFactory.getDriver(environmentConfig);
+    log.get().info("Browser opened: " + environmentConfig.getBrowser().toString());
+    driver.get("https://www.baeldung.com/spring-boot-properties-env-variables");
   }
 
   @AfterMethod
@@ -43,9 +45,9 @@ public class BaseTest {
       var screenShotPath = FileHelper.getFilePath(result.getName());
       FileUtils.copyFile(screenshot, new File(screenShotPath));
       System.out.println("Screenshot: file://" + FileHelper.getEncodedPath(screenShotPath));
-      log.error(result.getThrowable());
+      log.get().error(result.getThrowable());
     } else {
-      log.info();
+      log.get().info("Test Passed");
     }
     driver.quit();
   }
