@@ -18,6 +18,5 @@ public class EnvironmentConfig {
     browser = BrowserName.valueOf(dotenv.get("BROWSER").toUpperCase(Locale.ROOT));
     platform = PlatformName.valueOf(dotenv.get("PLATFORM").toUpperCase(Locale.ROOT));
     headless = Boolean.parseBoolean(dotenv.get("HEADLESS"));
-
   }
 }
