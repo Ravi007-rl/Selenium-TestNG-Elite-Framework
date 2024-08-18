@@ -22,6 +22,7 @@
         <java.dotEnv>3.0.1</java.dotEnv>
         <log4j.version>2.23.1</log4j.version>
         <assertj>3.26.3</assertj>
+        <faker>1.0.2</faker>
     </properties>
 
     <dependencyManagement>
@@ -80,6 +81,11 @@
                 <version>${assertj}</version>
                 <scope>test</scope>
             </dependency>
+            <dependency>
+                <groupId>com.github.javafaker</groupId>
+                <artifactId>javafaker</artifactId>
+                <version>${faker}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -127,6 +133,11 @@
             <artifactId>assertj-core</artifactId>
             <version>${assertj}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>${faker}</version>
         </dependency>
     </dependencies>
 
