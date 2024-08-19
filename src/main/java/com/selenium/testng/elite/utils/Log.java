@@ -1,5 +1,8 @@
-package com.selenium.utils;
+package com.selenium.testng.elite.utils;
 
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
+import java.nio.file.Paths;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
@@ -9,15 +12,15 @@ import org.apache.logging.log4j.core.config.Configuration;
 import org.apache.logging.log4j.core.config.LoggerConfig;
 import org.apache.logging.log4j.core.layout.PatternLayout;
 
-import java.nio.file.Paths;
-
 public class Log {
   private final Logger logger;
   private int stepCounter = 1;
   private final String testCaseName;
+  private final ExtentTest extentTest;
 
-  public Log(String testCaseName) {
+  public Log(String testCaseName, ExtentTest extentTest) {
     this.testCaseName = testCaseName;
+    this.extentTest = extentTest;
     this.logger = configureLogger(testCaseName);
     logTestCaseName();
   }
@@ -25,7 +28,6 @@ public class Log {
   private synchronized Logger configureLogger(String testCaseName) {
     LoggerContext context = (LoggerContext) LogManager.getContext(false);
     Configuration config = context.getConfiguration();
-
     String logFilePath =
         Paths.get("target", "test-results", testCaseName, "logfile.log").toString();
 
@@ -37,7 +39,7 @@ public class Log {
             .setName(testCaseName + "FileAppender")
             .withFileName(logFilePath)
             .setLayout(layout)
-            .setImmediateFlush(true) // Ensures logs are immediately written to file
+            .setImmediateFlush(true)
             .build();
     fileAppender.start();
 
@@ -52,7 +54,6 @@ public class Log {
         new LoggerConfig(testCaseName, org.apache.logging.log4j.Level.INFO, false);
     loggerConfig.addAppender(fileAppender, null, null);
     loggerConfig.addAppender(consoleAppender, null, null);
-
     config.addLogger(testCaseName, loggerConfig);
     context.updateLoggers();
 
@@ -61,13 +62,21 @@ public class Log {
 
   private void logTestCaseName() {
     logger.info("Test Case: {}", testCaseName);
+    extentTest.log(Status.INFO, "Test Case: " + testCaseName);
   }
 
   public void info(String message) {
     logger.info("Step {}: {}", stepCounter++, message);
+    extentTest.log(Status.INFO, "Step " + (stepCounter - 1) + ": " + message);
+  }
+
+  public void info() {
+    logger.info("Test Passed!!!");
+    extentTest.log(Status.PASS, "Test Passed!!!");
   }
 
   public void error(Throwable message) {
     logger.error(message);
+    extentTest.log(Status.FAIL, message);
   }
 }
