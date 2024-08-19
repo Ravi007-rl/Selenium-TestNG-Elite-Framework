@@ -23,6 +23,7 @@
         <log4j.version>2.23.1</log4j.version>
         <assertj>3.26.3</assertj>
         <faker>1.0.2</faker>
+        <extent-Report>5.1.2</extent-Report>
     </properties>
 
     <dependencyManagement>
@@ -86,6 +87,11 @@
                 <artifactId>javafaker</artifactId>
                 <version>${faker}</version>
             </dependency>
+            <dependency>
+                <groupId>com.aventstack</groupId>
+                <artifactId>extentreports</artifactId>
+                <version>${extent-Report}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -138,6 +144,11 @@
             <groupId>com.github.javafaker</groupId>
             <artifactId>javafaker</artifactId>
             <version>${faker}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.aventstack</groupId>
+            <artifactId>extentreports</artifactId>
+            <version>${extent-Report}</version>
         </dependency>
     </dependencies>
 

@@ -3,9 +3,8 @@ package com.selenium.utils;
 import com.selenium.testng.elite.enums.BrowserName;
 import com.selenium.testng.elite.enums.PlatformName;
 import io.github.cdimascio.dotenv.Dotenv;
-import lombok.Getter;
-
 import java.util.Locale;
+import lombok.Getter;
 
 @Getter
 public class EnvironmentConfig {
