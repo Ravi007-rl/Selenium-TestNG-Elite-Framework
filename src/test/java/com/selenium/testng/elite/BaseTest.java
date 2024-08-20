@@ -48,7 +48,7 @@ public class BaseTest {
       captureScreenshot(result);
       log.get().error(result.getThrowable());
       attachScreenshotToReport(result);
-    } else log.get().info("Test passed: " + result.getMethod().getMethodName());
+    } else log.get().info();
     extent.flush();
     driver.quit();
   }
