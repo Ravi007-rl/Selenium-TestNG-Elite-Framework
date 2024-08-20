@@ -9,7 +9,7 @@ public class ExtentManager {
   public static synchronized ExtentReports getInstance() {
     if (extent == null) {
       extent = new ExtentReports();
-      ExtentSparkReporter sparkReporter = new ExtentSparkReporter(FileHelper.getPathForReport());
+      ExtentSparkReporter sparkReporter = new ExtentSparkReporter(PathHelper.getPathForReport());
       extent.attachReporter(sparkReporter);
     }
     return extent;
