@@ -4,12 +4,11 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.selenium.testng.elite.utils.ExtentManager;
-import com.selenium.testng.elite.utils.FileHelper;
+import com.selenium.testng.elite.utils.PathHelper;
 import com.selenium.testng.elite.utils.Log;
-import com.selenium.utils.*;
+import com.selenium.utils.DriverFactory;
+import com.selenium.utils.EnvironmentConfig;
 import io.github.cdimascio.dotenv.Dotenv;
-import java.io.File;
-import java.io.IOException;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -18,6 +17,8 @@ import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
+import java.io.File;
+import java.io.IOException;
 
 public class BaseTest {
 
@@ -35,10 +36,7 @@ public class BaseTest {
 
   @BeforeMethod
   public void setUp(ITestResult result) throws Exception {
-    extent = ExtentManager.getInstance();
-    String testCaseName = result.getMethod().getMethodName();
-    test = extent.createTest(testCaseName, "Description of " + testCaseName);
-    log.set(new Log(testCaseName, test));
+    setUpReportAndLogger(result);
     driver = DriverFactory.getDriver(environmentConfig);
     log.get().info("Browser opened: " + environmentConfig.getBrowser().toString());
     driver.get("https://www.baeldung.com/spring-boot-properties-env-variables");
@@ -47,26 +45,30 @@ public class BaseTest {
   @AfterMethod
   public void tearDown(ITestResult result) throws IOException {
     if (result.getStatus() == ITestResult.FAILURE) {
-      var screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-
-      /*Two screenshot saved.
-      1. one for log file
-      2. for html report
-       */
-      var screenShotPath = FileHelper.getFilePath(result.getName());
-      FileUtils.copyFile(screenshot, new File(screenShotPath));
-      FileUtils.copyFile(screenshot, new File(FileHelper.getPathForImageReport(result.getName())));
-
-      // File path for display that screenshot in console
-      System.out.println("Screenshot: file://" + FileHelper.getEncodedPath(screenShotPath));
-
+      captureScreenshot(result);
       log.get().error(result.getThrowable());
-
-      // Attach screenshot to ExtentReports
-      test.fail(MediaEntityBuilder.createScreenCaptureFromPath(result.getName() + ".png").build());
-    } else log.get().info();
-
+      attachScreenshotToReport(result);
+    } else log.get().info("Test passed: " + result.getMethod().getMethodName());
     extent.flush();
     driver.quit();
+  }
+
+  private void setUpReportAndLogger(ITestResult result) {
+    extent = ExtentManager.getInstance();
+    String testCaseName = result.getMethod().getMethodName();
+    test = extent.createTest(testCaseName, "Description of " + testCaseName);
+    log.set(new Log(testCaseName, test));
+  }
+
+  private void captureScreenshot(ITestResult result) throws IOException {
+    var screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+    var screenShotPath = PathHelper.getFilePath(result.getName());
+    FileUtils.copyFile(screenshot, new File(screenShotPath));
+    FileUtils.copyFile(screenshot, new File(PathHelper.getPathForImageReport(result.getName())));
+    System.out.println("Screenshot: file://" + PathHelper.getEncodedPath(screenShotPath));
+  }
+
+  private void attachScreenshotToReport(ITestResult result) {
+    test.fail(MediaEntityBuilder.createScreenCaptureFromPath(result.getName() + ".png").build());
   }
 }

@@ -3,7 +3,7 @@ package com.selenium.testng.elite.utils;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
-public class FileHelper {
+public class PathHelper {
 
   public static String getFilePath(String testName) {
     return System.getProperty("user.dir") + "/target/test-results/" + testName + "/screenshot.png";
