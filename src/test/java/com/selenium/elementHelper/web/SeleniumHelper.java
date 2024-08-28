@@ -1,13 +1,11 @@
 package com.selenium.elementHelper.web;
 
 import com.selenium.elementHelper.WaitHelper;
+import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
-
-import java.util.List;
-import java.util.Stack;
 
 public class SeleniumHelper {
 
@@ -216,5 +214,10 @@ public class SeleniumHelper {
   public void scrollToTheElement(By by, int second) {
     var element = waitHelper.waitForElementToBeVisible(by, second);
     jsHelper.scrollToElementCenter(element);
+  }
+  
+  public String getText(By by){
+    var element = waitHelper.waitForElementToBeVisible(by);
+    return element.getText().trim();
   }
 }

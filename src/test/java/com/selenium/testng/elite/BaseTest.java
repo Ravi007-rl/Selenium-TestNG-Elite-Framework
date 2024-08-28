@@ -3,12 +3,16 @@ package com.selenium.testng.elite;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
+import com.selenium.testng.elite.enums.EnvironmentType;
+import com.selenium.testng.elite.utils.Constant;
 import com.selenium.testng.elite.utils.ExtentManager;
-import com.selenium.testng.elite.utils.PathHelper;
 import com.selenium.testng.elite.utils.Log;
+import com.selenium.testng.elite.utils.PathHelper;
 import com.selenium.utils.DriverFactory;
 import com.selenium.utils.EnvironmentConfig;
 import io.github.cdimascio.dotenv.Dotenv;
+import java.io.File;
+import java.io.IOException;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -17,8 +21,6 @@ import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
-import java.io.File;
-import java.io.IOException;
 
 public class BaseTest {
 
@@ -26,12 +28,17 @@ public class BaseTest {
   protected static EnvironmentConfig environmentConfig;
   protected ThreadLocal<Log> log = new ThreadLocal<>();
   protected ExtentReports extent;
-  protected ExtentTest test;
+  protected ExtentTest extentTest;
+  protected static String baseUrl;
 
   @BeforeSuite
   public void beforeSuite() {
     var dotenv = Dotenv.configure().ignoreIfMissing().load();
     environmentConfig = new EnvironmentConfig(dotenv);
+    baseUrl =
+        environmentConfig.getEnvironment() == EnvironmentType.TEST
+            ? Constant.TEST_URL
+            : Constant.STAGE_URL;
   }
 
   @BeforeMethod
@@ -39,7 +46,9 @@ public class BaseTest {
     setUpReportAndLogger(result);
     driver = DriverFactory.getDriver(environmentConfig);
     log.get().info("Browser opened: " + environmentConfig.getBrowser().toString());
-    driver.get("https://www.baeldung.com/spring-boot-properties-env-variables");
+
+    log.get().info("Navigate to: " + baseUrl);
+    driver.get(baseUrl);
   }
 
   @AfterMethod
@@ -56,8 +65,8 @@ public class BaseTest {
   private void setUpReportAndLogger(ITestResult result) {
     extent = ExtentManager.getInstance();
     String testCaseName = result.getMethod().getMethodName();
-    test = extent.createTest(testCaseName, "Description of " + testCaseName);
-    log.set(new Log(testCaseName, test));
+    extentTest = extent.createTest(testCaseName, "Description of " + testCaseName);
+    log.set(new Log(testCaseName, extentTest));
   }
 
   private void captureScreenshot(ITestResult result) throws IOException {
@@ -69,6 +78,7 @@ public class BaseTest {
   }
 
   private void attachScreenshotToReport(ITestResult result) {
-    test.fail(MediaEntityBuilder.createScreenCaptureFromPath(result.getName() + ".png").build());
+    extentTest.fail(
+        MediaEntityBuilder.createScreenCaptureFromPath(result.getName() + ".png").build());
   }
 }
