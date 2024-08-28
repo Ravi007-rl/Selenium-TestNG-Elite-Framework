@@ -160,7 +160,8 @@
                 <version>3.3.1</version>
                 <configuration>
                     <suiteXmlFiles>
-                        <suiteXmlFile>testng.xml</suiteXmlFile> <!-- Ensure path is correct -->
+                        <!--suppress UnresolvedMavenProperty -->
+                        <suiteXmlFile>${suiteXmlFile}</suiteXmlFile> <!-- Ensure path is correct -->
                     </suiteXmlFiles>
                 </configuration>
             </plugin>
