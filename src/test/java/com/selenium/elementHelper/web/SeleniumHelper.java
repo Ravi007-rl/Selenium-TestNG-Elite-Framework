@@ -11,8 +11,10 @@ public class SeleniumHelper {
 
   private final WaitHelper waitHelper;
   private final JavaScriptHelper jsHelper;
+  private final WebDriver driver;
 
   public SeleniumHelper(WebDriver driver) {
+    this.driver = driver;
     waitHelper = new WaitHelper(driver);
     jsHelper = new JavaScriptHelper(driver);
   }
@@ -215,9 +217,22 @@ public class SeleniumHelper {
     var element = waitHelper.waitForElementToBeVisible(by, second);
     jsHelper.scrollToElementCenter(element);
   }
-  
-  public String getText(By by){
+
+  public String getText(By by) {
     var element = waitHelper.waitForElementToBeVisible(by);
     return element.getText().trim();
+  }
+
+  public List<String> getAllElementsText(By by) {
+    var element = waitHelper.waitForAllElementToBeVisible(by);
+    return element.stream().map(x -> x.getText().trim().replace("\n", "")).toList();
+  }
+
+  public void waitTillPageLoadedProperly() {
+    waitHelper.waitForPageContentLoaded();
+  }
+
+  public String getPageTitle() {
+    return driver.getTitle();
   }
 }
