@@ -1,6 +1,7 @@
 package com.selenium.elementHelper;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -267,5 +268,18 @@ public class WaitHelper {
       WebElement element, By childLocator) {
     return getWebDriverWait()
         .until(ExpectedConditions.visibilityOfNestedElementsLocatedBy(element, childLocator));
+  }
+
+  // Wait till page loaded properly
+  public void waitForPageContentLoaded() {
+    getWebDriverWait()
+        .until(
+            (ExpectedCondition<Boolean>)
+                driver -> {
+                  assert driver != null;
+                  return ((JavascriptExecutor) driver)
+                      .executeScript("return document.readyState")
+                      .equals("complete");
+                });
   }
 }
