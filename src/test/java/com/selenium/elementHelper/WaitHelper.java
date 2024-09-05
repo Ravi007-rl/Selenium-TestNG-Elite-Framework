@@ -272,6 +272,18 @@ public class WaitHelper {
 
   // Wait till page loaded properly
   public void waitForPageContentLoaded() {
+    try {
+      getWebDriverWait(5)
+          .until(
+              (ExpectedCondition<Boolean>)
+                  driver -> {
+                    assert driver != null;
+                    return ((JavascriptExecutor) driver)
+                        .executeScript("return document.readyState")
+                        .equals("loading");
+                  });
+    } catch (Exception _) {
+    }
     getWebDriverWait()
         .until(
             (ExpectedCondition<Boolean>)

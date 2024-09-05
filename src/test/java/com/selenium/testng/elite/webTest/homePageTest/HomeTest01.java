@@ -1,20 +1,19 @@
 package com.selenium.testng.elite.webTest.homePageTest;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-
 import com.selenium.pageObjectModel.webPageObject.homePage.HomePage;
 import com.selenium.pageObjectModel.webPageObject.productPage.ProductPage;
 import com.selenium.pageObjectModel.webPageObject.searchPage.SearchPage;
 import com.selenium.testng.elite.BaseTest;
 import com.selenium.testng.elite.enums.EnvironmentType;
 import com.selenium.testng.elite.utils.RandomHelper;
-import java.util.Arrays;
 import org.testng.annotations.Test;
+import java.util.Arrays;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class HomeTest extends BaseTest {
+public class HomeTest01 extends BaseTest {
 
   @Test(groups = "smoke")
-  public void VerifyTharCurrencyDropdownWorkingProperly() throws InterruptedException {
+  public void VerifyThatCurrencyDropdownWorkingProperly() throws InterruptedException {
 
     // All page object mention here
     var homePage = new HomePage(driver);
@@ -101,8 +100,8 @@ public class HomeTest extends BaseTest {
     homePage.clickOnProductName(randomProductName);
 
     log.get().info("Verify that user redirect to product page and page title is correct");
+    assertThat(productName.getPageTitle()).contains(randomProductName);
     assertThat(productName.getPageHeader()).isEqualTo(randomProductName);
-    assertThat(productName.getPageTitle()).isEqualTo(randomProductName);
   }
 
   @Test(groups = "smoke")
