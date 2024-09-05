@@ -1,11 +1,11 @@
-package com.selenium.pageObjectModel.webPageObject.searchPage;
+package com.selenium.pageObjectModel.webPageObject.checkoutPage;
 
 import com.selenium.pageObjectModel.webPageObject.WebPageBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class SearchPage extends WebPageBase {
-  public SearchPage(WebDriver driver) {
+public class CheckoutPage extends WebPageBase {
+  public CheckoutPage(WebDriver driver) {
     super(driver);
   }
 

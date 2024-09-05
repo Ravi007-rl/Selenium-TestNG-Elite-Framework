@@ -12,10 +12,6 @@ public class ProductPage extends WebPageBase {
   // Locators
   private final By pageHeader = By.cssSelector("h1");
 
-  public String getPageTitle() {
-    return seleniumHelper.getPageTitle();
-  }
-
   public String getPageHeader() {
     return seleniumHelper.getText(pageHeader);
   }

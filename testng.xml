@@ -1,10 +1,12 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="My Test Suite" parallel="classes" thread-count="3">
+<suite name="My Test Suite" parallel="classes" thread-count="5">
     <test name="My Test">
         <classes>
             <class name="com.selenium.testng.elite.webTest.LoginTest"/>
             <class name="com.selenium.testng.elite.webTest.RegisterTest"/>
             <class name="com.selenium.testng.elite.webTest.MyTest"/>
+            <class name="com.selenium.testng.elite.webTest.homePageTest.HomeTest01"/>
+            <class name="com.selenium.testng.elite.webTest.homePageTest.HomeTest02"/>
         </classes>
     </test>
 </suite>

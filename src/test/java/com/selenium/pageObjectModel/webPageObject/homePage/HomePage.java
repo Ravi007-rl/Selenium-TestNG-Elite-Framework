@@ -21,7 +21,6 @@ public class HomePage extends WebPageBase {
   private final By shoppingCartIcon = By.cssSelector("a[title='Shopping Cart']");
   private final By searchBar = By.name("search");
   private final By searchButton = By.xpath("//div[@id='search']//button");
-  private final By logoLink = By.cssSelector("//img[@title='Your Store']/parent::a");
   private final By checkoutButton = By.cssSelector("a[title='Checkout']");
   private final By currencySymbol = By.xpath("//span[.='Currency']/preceding-sibling::strong");
   private final By cartTotalText = By.id("cart-total");
@@ -103,12 +102,12 @@ public class HomePage extends WebPageBase {
     seleniumHelper.waitTillPageLoadedProperly();
   }
 
-  public void clickOnLogoLink() throws InterruptedException {
-    seleniumHelper.scrollAndClickOn(logoLink);
-  }
-
   public void clickOnCheckoutButton() throws InterruptedException {
     seleniumHelper.scrollAndClickOn(checkoutButton);
+  }
+
+  public boolean isCheckoutButtonDisplayed() {
+    return seleniumHelper.isElementDisplayed(checkoutButton);
   }
 
   public String getCurrentCurrencySymbol() {
@@ -163,6 +162,5 @@ public class HomePage extends WebPageBase {
 
   public void clickOnProductName(String productName) throws InterruptedException {
     seleniumHelper.scrollAndClickOn(productName(productName));
-    seleniumHelper.waitTillPageLoadedProperly();
   }
 }
