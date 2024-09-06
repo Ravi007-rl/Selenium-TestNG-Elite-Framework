@@ -54,9 +54,8 @@ public class BaseTest {
   @AfterMethod
   public void tearDown(ITestResult result) throws IOException {
     if (result.getStatus() == ITestResult.FAILURE) {
-      captureScreenshot(result);
       log.get().error(result.getThrowable());
-      attachScreenshotToReport(result);
+      captureScreenshotAndAttachScreenshotToReport(result);
     } else log.get().info();
     extent.flush();
     driver.quit();
@@ -69,16 +68,14 @@ public class BaseTest {
     log.set(new Log(testCaseName, extentTest));
   }
 
-  private void captureScreenshot(ITestResult result) throws IOException {
+  private void captureScreenshotAndAttachScreenshotToReport(ITestResult result) throws IOException {
     var screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+    String screenshotBase64 = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
     var screenShotPath = PathHelper.getFilePath(result.getName());
-    FileUtils.copyFile(screenshot, new File(screenShotPath));
-    FileUtils.copyFile(screenshot, new File(PathHelper.getPathForImageReport(result.getName())));
-    System.out.println("Screenshot: file://" + PathHelper.getEncodedPath(screenShotPath));
-  }
 
-  private void attachScreenshotToReport(ITestResult result) {
+    FileUtils.copyFile(screenshot, new File(screenShotPath));
     extentTest.fail(
-        MediaEntityBuilder.createScreenCaptureFromPath(result.getName() + ".png").build());
+        MediaEntityBuilder.createScreenCaptureFromBase64String(screenshotBase64).build());
+    System.out.println("Screenshot: file://" + PathHelper.getEncodedPath(screenShotPath));
   }
 }
