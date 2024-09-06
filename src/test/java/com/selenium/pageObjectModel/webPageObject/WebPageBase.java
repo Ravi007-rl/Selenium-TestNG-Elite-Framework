@@ -15,13 +15,14 @@ public class WebPageBase extends BasePageObject {
   }
 
   // Common Locator
-  private final By logoLink = By.partialLinkText("home");
+  private final By logoLink = By.cssSelector("div#logo a[href*='home']");
 
   public String getPageTitle() {
     return seleniumHelper.getPageTitle();
   }
 
-  public void clickOnLogoLink() throws InterruptedException {
-    seleniumHelper.scrollAndClickOn(logoLink);
+  public void clickOnLogoLink() {
+    seleniumHelper.clickOnElementUsingJavaScript(logoLink);
+    seleniumHelper.waitTillPageLoadedProperly();
   }
 }

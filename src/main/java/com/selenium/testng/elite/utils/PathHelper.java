@@ -17,8 +17,4 @@ public class PathHelper {
   public static String getPathForReport() {
     return System.getProperty("user.dir") + "/target/html-report/SparkReport.html";
   }
-
-  public static String getPathForImageReport(String testName) {
-    return System.getProperty("user.dir") + "/target/html-report/" + testName + ".png";
-  }
 }
