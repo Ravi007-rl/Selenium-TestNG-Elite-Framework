@@ -26,6 +26,7 @@ public class SeleniumHelper {
       waitHelper.hardWait(numberOfTries);
       numberOfTries++;
     }
+    if (!isElementDisable(element)) throw new RuntimeException("Element is not in enable state");
     return element;
   }
 
@@ -234,5 +235,18 @@ public class SeleniumHelper {
 
   public String getPageTitle() {
     return driver.getTitle();
+  }
+
+  public boolean isElementSelected(By by) {
+    return waitHelper.waitForElementToBeVisible(by).isSelected();
+  }
+
+  public boolean isElementSelected(By by, int second) {
+    return waitHelper.waitForElementToBeVisible(by, second).isSelected();
+  }
+
+  public boolean isElementHaveGivenClass(By by, String cssValue) {
+    var element = waitHelper.waitForElementToBeVisible(by);
+    return element.getAttribute("class").contains(cssValue);
   }
 }
