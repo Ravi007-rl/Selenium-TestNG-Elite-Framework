@@ -7,7 +7,6 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.safari.SafariDriver;
 
 public class DriverFactory {
@@ -25,10 +24,7 @@ public class DriverFactory {
           driver = new ChromeDriver(options);
         }
         case FIREFOX -> {
-          var options = new FirefoxOptions();
-          //options.addArguments("--disable-notifications");
-          if (environmentConfig.isHeadless()) options.addArguments("--headless");
-          driver = new FirefoxDriver(options);
+          driver = new FirefoxDriver();
         }
         case EDGE -> {
           var options = new EdgeOptions();
