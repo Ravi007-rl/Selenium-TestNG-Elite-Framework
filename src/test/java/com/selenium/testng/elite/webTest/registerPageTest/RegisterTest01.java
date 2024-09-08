@@ -4,12 +4,13 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import com.selenium.dataObject.registerUser.RegisterUserDataFactory;
 import com.selenium.pageObjectModel.webPageObject.homePage.HomePage;
+import com.selenium.pageObjectModel.webPageObject.loginPage.LoginPage;
 import com.selenium.pageObjectModel.webPageObject.registrationPage.RegistrationPage;
 import com.selenium.testng.elite.BaseTest;
 import java.util.Arrays;
 import org.testng.annotations.Test;
 
-public class RegisterTest extends BaseTest {
+public class RegisterTest01 extends BaseTest {
 
   @Test
   public void VerifyThatUserAbleToNavigateToRegistrationPage() throws InterruptedException {
@@ -113,5 +114,27 @@ public class RegisterTest extends BaseTest {
         .isEqualTo("Last Name must be between 1 and 32 characters!");
     assertThat(registerPage.getTelephoneValidationMessage())
         .isEqualTo("Telephone must be between 3 and 32 characters!");
+  }
+
+  @Test
+  public void VerifyThatUserRedirectToLoginPageWhenUserClickOnLoginLink()
+      throws InterruptedException {
+
+    // All page object mention here
+    var homePage = new HomePage(driver);
+    var registerPage = new RegistrationPage(driver);
+    var loginPage = new LoginPage(driver);
+
+    log.get().info("Click on 'My Account' dropdown and click on 'Register' option");
+    homePage.clickOnMyAccountDropdown();
+    homePage.clickOnRegisterOption();
+
+    log.get().info("Click on 'Login' link and verify that user redirected to login page");
+    assertThat(registerPage.isLoginLinkDisplayed()).isTrue();
+    assertThat(registerPage.isLoginLinkClickable()).isTrue();
+    registerPage.clickOnLoginLink();
+
+    log.get().info("Verify that user redirected to login page");
+    assertThat(loginPage.getPageTitle()).isEqualTo("Account Login");
   }
 }

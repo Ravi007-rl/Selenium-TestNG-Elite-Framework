@@ -22,11 +22,11 @@ public class SeleniumHelper {
   // wait till element become enable
   private WebElement waitTillElementIsEnable(WebElement element) throws InterruptedException {
     var numberOfTries = 1;
-    while (!isElementDisable(element) && numberOfTries != 15) {
+    while (!isElementEnable(element) && numberOfTries != 15) {
       waitHelper.hardWait(numberOfTries);
       numberOfTries++;
     }
-    if (!isElementDisable(element)) throw new RuntimeException("Element is not in enable state");
+    if (!isElementEnable(element)) throw new RuntimeException("Element is not in enable state");
     return element;
   }
 
@@ -53,8 +53,19 @@ public class SeleniumHelper {
   }
 
   // Return that element is in enable state or disable state
-  private boolean isElementDisable(WebElement element) {
+  private boolean isElementEnable(WebElement element) {
     return element.isEnabled();
+  }
+
+  // Return that element is in disable state or enable state
+  public boolean isElementEnabled(By by) {
+    var elementIsEnable = waitHelper.waitForElementToBeVisible(by);
+    return isElementEnable(elementIsEnable);
+  }
+
+  public boolean isElementEnabled(By by, int second) {
+    var elementIsEnable = waitHelper.waitForElementToBeVisible(by,second);
+    return isElementEnable(elementIsEnable);
   }
 
   // Use this for sendKey to an element
