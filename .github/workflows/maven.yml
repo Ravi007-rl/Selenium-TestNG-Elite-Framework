@@ -40,5 +40,12 @@ jobs:
           FIREFOX_BIN=$(which firefox)
           echo "Firefox installed at $FIREFOX_BIN"
 
+      - name: Install GeckoDriver
+        run: |
+          GECKODRIVER_VERSION=$(curl -s https://api.github.com/repos/mozilla/geckodriver/releases/latest | jq -r .tag_name)
+          curl -L -o geckodriver.wget https://github.com/mozilla/geckodriver/releases/download/$GECKODRIVER_VERSION/geckodriver-$GECKODRIVER_VERSION-linux64.tar.gz
+          tar -xzf geckodriver-$GECKODRIVER_VERSION-linux64.tar.gz
+          sudo mv geckodriver /usr/local/bin/
+
       - name: Run tests
         run: mvn clean test -DsuiteXmlFile=testng.xml
