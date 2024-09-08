@@ -26,7 +26,7 @@ public class DriverFactory {
         }
         case FIREFOX -> {
           var options = new FirefoxOptions();
-          options.addArguments("--disable-notifications");
+          //options.addArguments("--disable-notifications");
           if (environmentConfig.isHeadless()) options.addArguments("--headless");
           driver = new FirefoxDriver(options);
         }
