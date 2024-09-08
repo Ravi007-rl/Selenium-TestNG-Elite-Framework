@@ -1,5 +1,6 @@
 package com.selenium.pageObjectModel.webPageObject.registrationPage;
 
+import com.selenium.dataFactory.registerUser.RegisterUserDataObject;
 import com.selenium.pageObjectModel.webPageObject.WebPageBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -21,6 +22,13 @@ public class RegistrationPage extends WebPageBase {
   private final By subscribeNoRadio = By.xpath("//input[@name='newsletter' and @value='0']");
   private final By privacyPolicyCheckbox = By.name("agree");
   private final By continueButton = By.xpath("//input[@value='Continue']");
+  private final By loginLink = By.linkText("Login");
+  private final By validationMessageForPrivacyPolicy = By.cssSelector("div.alert-dismissible");
+  private final By privacyPolicyLink = By.linkText("Privacy Policy");
+  private final By privacyPolicyPopup = By.cssSelector("div.modal-content");
+  private final By privacyPolicyHeader = By.cssSelector("h4.modal-title");
+  private final By privacyPolicyContent = By.cssSelector("div.modal-body > p");
+  private final By privacyPolicyCloseButton = By.cssSelector("div.modal-header > button");
 
   private By validationMessageUsingFieldName(String fieldName) {
     return By.xpath(
@@ -94,6 +102,7 @@ public class RegistrationPage extends WebPageBase {
 
   public void clickOnContinueButton() throws InterruptedException {
     seleniumHelper.scrollAndClickOn(continueButton);
+    seleniumHelper.waitTillPageLoadedProperly();
   }
 
   public boolean isValidationDisplayedForFirstName() {
@@ -138,5 +147,75 @@ public class RegistrationPage extends WebPageBase {
 
   public boolean isAsteriskIsDisplayedForGivenFiled(String fieldName) {
     return seleniumHelper.isElementHaveGivenClass(getLabelTextElement(fieldName), "control-label");
+  }
+
+  public void clickOnLoginLink() throws InterruptedException {
+    seleniumHelper.scrollAndClickOn(loginLink);
+    seleniumHelper.waitTillPageLoadedProperly();
+  }
+
+  public boolean isLoginLinkDisplayed() {
+    return seleniumHelper.isElementDisplayed(loginLink);
+  }
+
+  public boolean isLoginLinkClickable() {
+    return seleniumHelper.isElementEnabled(loginLink);
+  }
+
+  public boolean isValidationDisplayedForPrivacyPolicy() {
+    return seleniumHelper.isElementDisplayed(validationMessageForPrivacyPolicy);
+  }
+
+  public String getPrivacyPolicyValidationMessage() {
+    return seleniumHelper.getText(validationMessageForPrivacyPolicy);
+  }
+
+  public void clickOnPrivacyPolicyLink() throws InterruptedException {
+    seleniumHelper.scrollAndClickOn(privacyPolicyLink);
+  }
+
+  public boolean isPrivacyPolicyLinkClickable() {
+    return seleniumHelper.isElementEnabled(privacyPolicyLink);
+  }
+
+  public boolean isPrivacyPolicyLinkDisplayed() {
+    return seleniumHelper.isElementDisplayed(privacyPolicyLink);
+  }
+
+  public boolean isPrivacyPolicyPopupDisplayed() {
+    return seleniumHelper.isElementDisplayed(privacyPolicyPopup, 5);
+  }
+
+  public String getPrivacyPolicyPopupHeader() {
+    return seleniumHelper.getText(privacyPolicyHeader);
+  }
+
+  public String getPrivacyPolicyPopupContent() {
+    return seleniumHelper.getText(privacyPolicyContent);
+  }
+
+  public void clickOnPrivacyPolicyPopupCloseButton() throws InterruptedException {
+    seleniumHelper.scrollAndClickOn(privacyPolicyCloseButton);
+  }
+
+  public boolean isValidationMessageDisplayedForPasswordAndConfirmPasswordNotMatched() {
+    return seleniumHelper.isElementDisplayed(validationMessageUsingFieldName("confirm"));
+  }
+
+  public String getValidationMessageForPasswordAndConfirmPasswordNotMatched() {
+    return seleniumHelper.getText(validationMessageUsingFieldName("confirm"));
+  }
+
+  public void clickOnPrivacyPolicyCheckbox() throws InterruptedException {
+    seleniumHelper.scrollAndClickOn(privacyPolicyCheckbox);
+  }
+
+  public void fillTheForm(RegisterUserDataObject registerUserData) throws InterruptedException {
+    enterFirstName(registerUserData.getFirstName());
+    enterLastName(registerUserData.getLastName());
+    enterTelephone(registerUserData.getTelephone());
+    enterEmail(registerUserData.getEmail());
+    enterPassword(registerUserData.getPassword());
+    enterConfirmPassword(registerUserData.getConfirmPassword());
   }
 }

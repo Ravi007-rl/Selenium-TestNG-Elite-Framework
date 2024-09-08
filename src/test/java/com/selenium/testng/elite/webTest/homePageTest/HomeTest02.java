@@ -1,5 +1,7 @@
 package com.selenium.testng.elite.webTest.homePageTest;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
 import com.selenium.pageObjectModel.webPageObject.checkoutPage.CheckoutPage;
 import com.selenium.pageObjectModel.webPageObject.homePage.HomePage;
 import com.selenium.pageObjectModel.webPageObject.productPage.ProductPage;
@@ -7,7 +9,6 @@ import com.selenium.testng.elite.BaseTest;
 import com.selenium.testng.elite.enums.EnvironmentType;
 import com.selenium.testng.elite.utils.RandomHelper;
 import org.testng.annotations.Test;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class HomeTest02 extends BaseTest {
 
