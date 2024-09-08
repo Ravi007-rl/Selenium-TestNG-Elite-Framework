@@ -33,5 +33,25 @@ jobs:
       - name: Install dependencies
         run: mvn install -DskipTests
 
+      - name: Set up Firefox
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y firefox
+          FIREFOX_BIN=$(which firefox)
+          echo "Firefox installed at $FIREFOX_BIN"
+
+      - name: Set up GeckoDriver
+        run: |
+          GECKO_DRIVER_VERSION=$(curl -sS https://api.github.com/repos/mozilla/geckodriver/releases/latest | grep 'tag_name' | cut -d\" -f4)
+          wget -N https://github.com/mozilla/geckodriver/releases/download/$GECKO_DRIVER_VERSION/geckodriver-v$GECKO_DRIVER_VERSION-linux64.tar.gz
+          tar -xzf geckodriver-v$GECKO_DRIVER_VERSION-linux64.tar.gz -C /usr/local/bin/
+          geckodriver --version
+
+      - name: Check Firefox version
+        run: firefox --version
+
+      - name: Check GeckoDriver version
+        run: geckodriver --version
+
       - name: Run tests
         run: mvn clean test -DsuiteXmlFile=testng.xml
