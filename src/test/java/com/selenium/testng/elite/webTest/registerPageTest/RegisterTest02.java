@@ -3,7 +3,7 @@ package com.selenium.testng.elite.webTest.registerPageTest;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import com.github.javafaker.Faker;
-import com.selenium.dataObject.registerUser.RegisterUserDataFactory;
+import com.selenium.dataFactory.registerUserDataFactory.RegisterUserDataFactory;
 import com.selenium.pageObjectModel.webPageObject.accountPage.AccountCreatedPage;
 import com.selenium.pageObjectModel.webPageObject.homePage.HomePage;
 import com.selenium.pageObjectModel.webPageObject.registrationPage.RegistrationPage;

@@ -1,4 +1,4 @@
-package com.selenium.dataFactory.registerUser;
+package com.selenium.dataObject.registerUser;
 
 import lombok.Data;
 
