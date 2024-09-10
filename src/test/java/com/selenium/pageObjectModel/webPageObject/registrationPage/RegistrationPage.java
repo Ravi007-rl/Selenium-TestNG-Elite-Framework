@@ -1,6 +1,6 @@
 package com.selenium.pageObjectModel.webPageObject.registrationPage;
 
-import com.selenium.dataFactory.registerUser.RegisterUserDataObject;
+import com.selenium.dataObject.registerUser.RegisterUserDataObject;
 import com.selenium.pageObjectModel.webPageObject.WebPageBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

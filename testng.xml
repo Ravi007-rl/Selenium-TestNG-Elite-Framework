@@ -2,7 +2,7 @@
 <suite name="My Test Suite" parallel="classes" thread-count="5">
     <test name="My Test">
         <classes>
-            <class name="com.selenium.testng.elite.webTest.LoginTest"/>
+            <class name="com.selenium.testng.elite.webTest.loginPageTest.LoginTest"/>
             <class name="com.selenium.testng.elite.webTest.registerPageTest.RegisterTest01"/>
             <class name="com.selenium.testng.elite.webTest.registerPageTest.RegisterTest02"/>
             <class name="com.selenium.testng.elite.webTest.MyTest"/>
