@@ -21,7 +21,7 @@ public class WebPageBase extends BasePageObject {
     return seleniumHelper.getPageTitle();
   }
 
-  public void clickOnLogoLink() {
+  public void clickOnLogoLink() throws InterruptedException {
     seleniumHelper.clickOnElementUsingJavaScript(logoLink);
     seleniumHelper.waitTillPageLoadedProperly();
   }

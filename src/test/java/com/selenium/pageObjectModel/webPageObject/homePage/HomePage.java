@@ -110,11 +110,11 @@ public class HomePage extends WebPageBase {
     return seleniumHelper.isElementDisplayed(checkoutButton);
   }
 
-  public String getCurrentCurrencySymbol() {
+  public String getCurrentCurrencySymbol() throws InterruptedException {
     return seleniumHelper.getText(currencySymbol);
   }
 
-  public String getCartTotalText() {
+  public String getCartTotalText() throws InterruptedException {
     return seleniumHelper.getText(cartTotalText);
   }
 
@@ -143,11 +143,11 @@ public class HomePage extends WebPageBase {
     return seleniumHelper.isElementDisplayed(alertMessage);
   }
 
-  public String getAlertMessage() {
+  public String getAlertMessage() throws InterruptedException {
     return seleniumHelper.getText(alertMessage);
   }
 
-  public String getWishListText() {
+  public String getWishListText() throws InterruptedException {
     return seleniumHelper.getText(wishListIcon);
   }
 

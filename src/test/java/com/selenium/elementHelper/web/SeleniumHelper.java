@@ -1,6 +1,7 @@
 package com.selenium.elementHelper.web;
 
 import com.selenium.elementHelper.WaitHelper;
+import io.github.cdimascio.dotenv.Dotenv;
 import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -12,6 +13,8 @@ public class SeleniumHelper {
   private final WaitHelper waitHelper;
   private final JavaScriptHelper jsHelper;
   private final WebDriver driver;
+  private static final boolean IS_DEBUG =
+      Boolean.parseBoolean(Dotenv.configure().ignoreIfMissing().load().get("IS_DEBUG"));
 
   public SeleniumHelper(WebDriver driver) {
     this.driver = driver;
@@ -64,36 +67,41 @@ public class SeleniumHelper {
   }
 
   public boolean isElementEnabled(By by, int second) {
-    var elementIsEnable = waitHelper.waitForElementToBeVisible(by,second);
+    var elementIsEnable = waitHelper.waitForElementToBeVisible(by, second);
     return isElementEnable(elementIsEnable);
   }
 
   // Use this for sendKey to an element
   public void scrollAndEnterText(By by, String value) throws InterruptedException {
     var element = waitHelper.waitForElementToBeVisible(by);
+    if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     jsHelper.scrollToElementIfNotInView(element);
     enterText(element, value);
   }
 
   public void scrollAndEnterText(By by, String value, int second) throws InterruptedException {
     var element = waitHelper.waitForElementToBeVisible(by, second);
+    if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     jsHelper.scrollToElementIfNotInView(element);
     enterText(element, value);
   }
 
   public void enterText(By by, String value) throws InterruptedException {
     var element = waitHelper.waitForElementToBeVisible(by);
+    if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     enterText(element, value);
   }
 
   public void enterText(By by, String value, int second) throws InterruptedException {
     var element = waitHelper.waitForElementToBeVisible(by, second);
+    if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     enterText(element, value);
   }
 
   // This method used to click on element
   public void scrollAndClickOn(By by) throws InterruptedException {
     var element = waitHelper.waitForElementToBeClickable(by);
+    if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     var elementIsEnable = waitTillElementIsEnable(element);
     jsHelper.scrollToElementIfNotInView(elementIsEnable);
     clickOnElement(elementIsEnable);
@@ -101,6 +109,7 @@ public class SeleniumHelper {
 
   public void scrollAndClickOn(By by, int second) throws InterruptedException {
     var element = waitHelper.waitForElementToBeClickable(by, second);
+    if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     var elementIsEnable = waitTillElementIsEnable(element);
     jsHelper.scrollToElementIfNotInView(elementIsEnable);
     clickOnElement(elementIsEnable);
@@ -108,12 +117,14 @@ public class SeleniumHelper {
 
   public void ClickOn(By by) throws InterruptedException {
     var element = waitHelper.waitForElementToBeClickable(by);
+    if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     var elementIsEnable = waitTillElementIsEnable(element);
     clickOnElement(elementIsEnable);
   }
 
   public void ClickOn(By by, int second) throws InterruptedException {
     var element = waitHelper.waitForElementToBeClickable(by, second);
+    if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     var elementIsEnable = waitTillElementIsEnable(element);
     clickOnElement(elementIsEnable);
   }
@@ -122,6 +133,7 @@ public class SeleniumHelper {
     WebElement element = null;
     try {
       element = waitHelper.waitForElementToBeVisible(by);
+      if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     } catch (Exception _) {
     }
     return element != null;
@@ -131,48 +143,57 @@ public class SeleniumHelper {
     WebElement element = null;
     try {
       element = waitHelper.waitForElementToBeVisible(by, second);
+      if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     } catch (Exception _) {
     }
     return element != null;
   }
 
-  public void selectOptionByText(By by, String text) {
+  public void selectOptionByText(By by, String text) throws InterruptedException {
     var element = waitHelper.waitForElementToBeVisible(by);
+    if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     new Select(element).selectByValue(text);
   }
 
-  public void selectOptionByText(By by, String text, int second) {
+  public void selectOptionByText(By by, String text, int second) throws InterruptedException {
     var element = waitHelper.waitForElementToBeVisible(by, second);
+    if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     new Select(element).selectByValue(text);
   }
 
-  public void selectOptionByValue(By by, String value) {
+  public void selectOptionByValue(By by, String value) throws InterruptedException {
     var element = waitHelper.waitForElementToBeVisible(by);
+    if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     new Select(element).selectByValue(value);
   }
 
-  public void selectOptionByValue(By by, String value, int second) {
+  public void selectOptionByValue(By by, String value, int second) throws InterruptedException {
     var element = waitHelper.waitForElementToBeVisible(by, second);
+    if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     new Select(element).selectByValue(value);
   }
 
-  public void selectOptionByIndex(By by, int index) {
+  public void selectOptionByIndex(By by, int index) throws InterruptedException {
     var element = waitHelper.waitForElementToBeVisible(by);
+    if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     new Select(element).selectByIndex(index);
   }
 
-  public void selectOptionByValue(By by, int index, int second) {
+  public void selectOptionByValue(By by, int index, int second) throws InterruptedException {
     var element = waitHelper.waitForElementToBeVisible(by, second);
+    if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     new Select(element).selectByIndex(index);
   }
 
-  public List<String> getAllOptionText(By by) {
+  public List<String> getAllOptionText(By by) throws InterruptedException {
     var element = waitHelper.waitForElementToBeVisible(by);
+    if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     return new Select(element).getOptions().stream().map(WebElement::getText).toList();
   }
 
-  public List<String> getAllOptionText(By by, int second) {
+  public List<String> getAllOptionText(By by, int second) throws InterruptedException {
     var element = waitHelper.waitForElementToBeVisible(by, second);
+    if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     return new Select(element).getOptions().stream().map(WebElement::getText).toList();
   }
 
@@ -200,13 +221,15 @@ public class SeleniumHelper {
     return waitHelper.waitForElementToBeVisible(by, second).isSelected();
   }
 
-  public void clickOnElementUsingJavaScript(By by) {
+  public void clickOnElementUsingJavaScript(By by) throws InterruptedException {
     var element = waitHelper.waitForElementToBeVisible(by);
+    if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     jsHelper.javaScriptClickOn(element);
   }
 
-  public void clickOnElementUsingJavaScript(By by, int second) {
+  public void clickOnElementUsingJavaScript(By by, int second) throws InterruptedException {
     var element = waitHelper.waitForElementToBeVisible(by, second);
+    if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     jsHelper.javaScriptClickOn(element);
   }
 
@@ -230,14 +253,20 @@ public class SeleniumHelper {
     jsHelper.scrollToElementCenter(element);
   }
 
-  public String getText(By by) {
+  public String getText(By by) throws InterruptedException {
     var element = waitHelper.waitForElementToBeVisible(by);
+    if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     return element.getText().trim();
   }
 
   public List<String> getAllElementsText(By by) {
-    var element = waitHelper.waitForAllElementToBeVisible(by);
-    return element.stream().map(x -> x.getText().trim().replace("\n", "")).toList();
+    var elements = waitHelper.waitForAllElementToBeVisible(by);
+    if (IS_DEBUG)
+      try {
+        for (WebElement element : elements) jsHelper.javaScriptHighlightElement(element);
+      } catch (Exception _) {
+      }
+    return elements.stream().map(x -> x.getText().trim().replace("\n", "")).toList();
   }
 
   public void waitTillPageLoadedProperly() {

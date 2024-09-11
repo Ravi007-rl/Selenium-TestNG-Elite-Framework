@@ -12,7 +12,7 @@ public class SearchPage extends WebPageBase {
   // Locators
   private final By pageHeader = By.cssSelector("h1");
 
-  public String getPageHeader() {
+  public String getPageHeader() throws InterruptedException {
     return seleniumHelper.getText(pageHeader);
   }
 }

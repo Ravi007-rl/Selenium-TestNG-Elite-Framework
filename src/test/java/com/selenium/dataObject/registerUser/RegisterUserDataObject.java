@@ -4,12 +4,12 @@ import lombok.Data;
 
 @Data
 public class RegisterUserDataObject {
-  String firstName;
-  String lastName;
-  String email;
-  String telephone;
-  String password;
-  String confirmPassword;
-  boolean subscribe;
-  boolean privacyPolicy;
+  private String firstName;
+  private String lastName;
+  private String email;
+  private String telephone;
+  private String password;
+  private String confirmPassword;
+  private boolean subscribe;
+  private boolean privacyPolicy;
 }

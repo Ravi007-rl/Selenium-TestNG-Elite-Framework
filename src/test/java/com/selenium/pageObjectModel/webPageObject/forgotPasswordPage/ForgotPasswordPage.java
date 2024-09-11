@@ -16,7 +16,7 @@ public class ForgotPasswordPage extends WebPageBase {
     return seleniumHelper.isElementDisplayed(pageHeader);
   }
 
-  public String getPageHeader() {
+  public String getPageHeader() throws InterruptedException {
     return seleniumHelper.getText(pageHeader);
   }
 }

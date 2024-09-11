@@ -1,5 +1,6 @@
 package com.selenium.elementHelper.web;
 
+import com.selenium.elementHelper.WaitHelper;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -7,9 +8,11 @@ import org.openqa.selenium.WebElement;
 public class JavaScriptHelper {
 
   private final JavascriptExecutor js;
+  private final WaitHelper waitHelper;
 
   public JavaScriptHelper(WebDriver driver) {
     js = (JavascriptExecutor) driver;
+    waitHelper = new WaitHelper(driver);
   }
 
   // Using this we check element displayed in viewport
@@ -49,5 +52,10 @@ public class JavaScriptHelper {
 
   void javaScriptClickOn(WebElement element) {
     js.executeScript("arguments[0].click();", element);
+  }
+
+  void javaScriptHighlightElement(WebElement element) throws InterruptedException {
+    js.executeScript("arguments[0].style.border='3px solid red'", element);
+    waitHelper.hardWait(2);
   }
 }
