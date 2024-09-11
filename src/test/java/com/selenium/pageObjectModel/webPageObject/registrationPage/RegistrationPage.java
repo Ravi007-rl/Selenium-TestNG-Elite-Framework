@@ -44,7 +44,7 @@ public class RegistrationPage extends WebPageBase {
     return seleniumHelper.isElementDisplayed(pageHeader);
   }
 
-  public String getPageHeader() {
+  public String getPageHeader() throws InterruptedException {
     return seleniumHelper.getText(pageHeader);
   }
 
@@ -125,23 +125,23 @@ public class RegistrationPage extends WebPageBase {
     return seleniumHelper.isElementDisplayed(validationMessageUsingFieldName("password"));
   }
 
-  public String getFirstNameValidationMessage() {
+  public String getFirstNameValidationMessage() throws InterruptedException {
     return seleniumHelper.getText(validationMessageUsingFieldName("firstname"));
   }
 
-  public String getLastNameValidationMessage() {
+  public String getLastNameValidationMessage() throws InterruptedException {
     return seleniumHelper.getText(validationMessageUsingFieldName("lastname"));
   }
 
-  public String getEmailValidationMessage() {
+  public String getEmailValidationMessage() throws InterruptedException {
     return seleniumHelper.getText(validationMessageUsingFieldName("email"));
   }
 
-  public String getTelephoneValidationMessage() {
+  public String getTelephoneValidationMessage() throws InterruptedException {
     return seleniumHelper.getText(validationMessageUsingFieldName("telephone"));
   }
 
-  public String getPasswordValidationMessage() {
+  public String getPasswordValidationMessage() throws InterruptedException {
     return seleniumHelper.getText(validationMessageUsingFieldName("password"));
   }
 
@@ -166,7 +166,7 @@ public class RegistrationPage extends WebPageBase {
     return seleniumHelper.isElementDisplayed(validationMessageForPrivacyPolicy);
   }
 
-  public String getPrivacyPolicyValidationMessage() {
+  public String getPrivacyPolicyValidationMessage() throws InterruptedException {
     return seleniumHelper.getText(validationMessageForPrivacyPolicy);
   }
 
@@ -186,11 +186,11 @@ public class RegistrationPage extends WebPageBase {
     return seleniumHelper.isElementDisplayed(privacyPolicyPopup, 5);
   }
 
-  public String getPrivacyPolicyPopupHeader() {
+  public String getPrivacyPolicyPopupHeader() throws InterruptedException {
     return seleniumHelper.getText(privacyPolicyHeader);
   }
 
-  public String getPrivacyPolicyPopupContent() {
+  public String getPrivacyPolicyPopupContent() throws InterruptedException {
     return seleniumHelper.getText(privacyPolicyContent);
   }
 
@@ -202,7 +202,7 @@ public class RegistrationPage extends WebPageBase {
     return seleniumHelper.isElementDisplayed(validationMessageUsingFieldName("confirm"));
   }
 
-  public String getValidationMessageForPasswordAndConfirmPasswordNotMatched() {
+  public String getValidationMessageForPasswordAndConfirmPasswordNotMatched() throws InterruptedException {
     return seleniumHelper.getText(validationMessageUsingFieldName("confirm"));
   }
 

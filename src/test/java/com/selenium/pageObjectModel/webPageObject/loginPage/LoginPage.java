@@ -50,7 +50,7 @@ public class LoginPage extends WebPageBase {
     return seleniumHelper.isElementDisplayed(validationMessage);
   }
 
-  public String getValidationMessage() {
+  public String getValidationMessage() throws InterruptedException {
     return seleniumHelper.getText(validationMessage);
   }
 
