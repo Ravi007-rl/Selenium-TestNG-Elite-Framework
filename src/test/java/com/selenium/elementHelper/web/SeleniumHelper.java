@@ -74,18 +74,19 @@ public class SeleniumHelper {
   // Use this for sendKey to an element
   public void scrollAndEnterText(By by, String value) throws InterruptedException {
     var element = waitHelper.waitForElementToBeVisible(by);
-    if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     jsHelper.scrollToElementIfNotInView(element);
+    if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     enterText(element, value);
   }
 
   public void scrollAndEnterText(By by, String value, int second) throws InterruptedException {
     var element = waitHelper.waitForElementToBeVisible(by, second);
-    if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     jsHelper.scrollToElementIfNotInView(element);
+    if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     enterText(element, value);
   }
 
+  // Without scroll enter text
   public void enterText(By by, String value) throws InterruptedException {
     var element = waitHelper.waitForElementToBeVisible(by);
     if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
@@ -101,34 +102,36 @@ public class SeleniumHelper {
   // This method used to click on element
   public void scrollAndClickOn(By by) throws InterruptedException {
     var element = waitHelper.waitForElementToBeClickable(by);
-    if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     var elementIsEnable = waitTillElementIsEnable(element);
     jsHelper.scrollToElementIfNotInView(elementIsEnable);
+    if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     clickOnElement(elementIsEnable);
   }
 
   public void scrollAndClickOn(By by, int second) throws InterruptedException {
     var element = waitHelper.waitForElementToBeClickable(by, second);
-    if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     var elementIsEnable = waitTillElementIsEnable(element);
     jsHelper.scrollToElementIfNotInView(elementIsEnable);
+    if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     clickOnElement(elementIsEnable);
   }
 
+  // Without scroll click on element
   public void ClickOn(By by) throws InterruptedException {
     var element = waitHelper.waitForElementToBeClickable(by);
-    if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     var elementIsEnable = waitTillElementIsEnable(element);
+    if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     clickOnElement(elementIsEnable);
   }
 
   public void ClickOn(By by, int second) throws InterruptedException {
     var element = waitHelper.waitForElementToBeClickable(by, second);
-    if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     var elementIsEnable = waitTillElementIsEnable(element);
+    if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     clickOnElement(elementIsEnable);
   }
 
+  // Use this to ensure element is displayed
   public boolean isElementDisplayed(By by) {
     WebElement element = null;
     try {
@@ -149,42 +152,51 @@ public class SeleniumHelper {
     return element != null;
   }
 
+  // Use this to select option from drop down using visible text
   public void selectOptionByText(By by, String text) throws InterruptedException {
     var element = waitHelper.waitForElementToBeVisible(by);
+    jsHelper.scrollToElementIfNotInView(element);
     if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
-    new Select(element).selectByValue(text);
+    new Select(element).selectByVisibleText(text);
   }
 
   public void selectOptionByText(By by, String text, int second) throws InterruptedException {
     var element = waitHelper.waitForElementToBeVisible(by, second);
+    jsHelper.scrollToElementIfNotInView(element);
     if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
-    new Select(element).selectByValue(text);
+    new Select(element).selectByVisibleText(text);
   }
 
+  // Use this to select option from drop down using value
   public void selectOptionByValue(By by, String value) throws InterruptedException {
     var element = waitHelper.waitForElementToBeVisible(by);
+    jsHelper.scrollToElementIfNotInView(element);
     if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     new Select(element).selectByValue(value);
   }
 
   public void selectOptionByValue(By by, String value, int second) throws InterruptedException {
     var element = waitHelper.waitForElementToBeVisible(by, second);
+    jsHelper.scrollToElementIfNotInView(element);
     if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     new Select(element).selectByValue(value);
   }
 
+  // Use this to select option from drop down using index
   public void selectOptionByIndex(By by, int index) throws InterruptedException {
     var element = waitHelper.waitForElementToBeVisible(by);
+    jsHelper.scrollToElementIfNotInView(element);
     if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     new Select(element).selectByIndex(index);
   }
 
-  public void selectOptionByValue(By by, int index, int second) throws InterruptedException {
+  public void selectOptionByIndex(By by, int index, int second) throws InterruptedException {
     var element = waitHelper.waitForElementToBeVisible(by, second);
     if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     new Select(element).selectByIndex(index);
   }
 
+  // Use this to get all option from drop down
   public List<String> getAllOptionText(By by) throws InterruptedException {
     var element = waitHelper.waitForElementToBeVisible(by);
     if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
@@ -197,6 +209,7 @@ public class SeleniumHelper {
     return new Select(element).getOptions().stream().map(WebElement::getText).toList();
   }
 
+  // Use this to switch to iframe
   public void switchToIframe(By by) {
     waitHelper.waitForFrameToBeAvailableAndSwitchToIt(by);
   }
@@ -205,6 +218,7 @@ public class SeleniumHelper {
     waitHelper.waitForFrameToBeAvailableAndSwitchToIt(by, second);
   }
 
+  // Use this to check radio button
   public boolean isRadioButtonSelected(By by) {
     return waitHelper.waitForElementToBeVisible(by).isSelected();
   }
@@ -213,6 +227,7 @@ public class SeleniumHelper {
     return waitHelper.waitForElementToBeVisible(by, second).isSelected();
   }
 
+  // Use this to check checkbox is selected
   public boolean isCheckBoxButtonSelected(By by) {
     return waitHelper.waitForElementToBeVisible(by).isSelected();
   }
@@ -221,6 +236,7 @@ public class SeleniumHelper {
     return waitHelper.waitForElementToBeVisible(by, second).isSelected();
   }
 
+  // Use this to click on element using javascript
   public void clickOnElementUsingJavaScript(By by) throws InterruptedException {
     var element = waitHelper.waitForElementToBeVisible(by);
     if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
@@ -233,6 +249,7 @@ public class SeleniumHelper {
     jsHelper.javaScriptClickOn(element);
   }
 
+  // Use this to enter text using javascript
   public void enterTextUsingJavaScript(By by, String value) {
     var element = waitHelper.waitForElementToBeVisible(by);
     jsHelper.javaScriptEnterText(element, value);
@@ -243,6 +260,7 @@ public class SeleniumHelper {
     jsHelper.javaScriptEnterText(element, value);
   }
 
+  // Use this to scroll to element
   public void scrollToTheElement(By by) {
     var element = waitHelper.waitForElementToBeVisible(by);
     jsHelper.scrollToElementCenter(element);
@@ -253,12 +271,15 @@ public class SeleniumHelper {
     jsHelper.scrollToElementCenter(element);
   }
 
+  // Use this to get text from element
   public String getText(By by) throws InterruptedException {
     var element = waitHelper.waitForElementToBeVisible(by);
+    jsHelper.scrollToElementIfNotInView(element);
     if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     return element.getText().trim();
   }
 
+  // Use this to get text from multiple elements
   public List<String> getAllElementsText(By by) {
     var elements = waitHelper.waitForAllElementToBeVisible(by);
     if (IS_DEBUG)
@@ -269,22 +290,17 @@ public class SeleniumHelper {
     return elements.stream().map(x -> x.getText().trim().replace("\n", "")).toList();
   }
 
+  // Use this to wait till page loaded properly
   public void waitTillPageLoadedProperly() {
     waitHelper.waitForPageContentLoaded();
   }
 
+  // Use this to get page title
   public String getPageTitle() {
     return driver.getTitle();
   }
 
-  public boolean isElementSelected(By by) {
-    return waitHelper.waitForElementToBeVisible(by).isSelected();
-  }
-
-  public boolean isElementSelected(By by, int second) {
-    return waitHelper.waitForElementToBeVisible(by, second).isSelected();
-  }
-
+  // Use this to check element have given class
   public boolean isElementHaveGivenClass(By by, String cssValue) {
     var element = waitHelper.waitForElementToBeVisible(by);
     return element.getAttribute("class").contains(cssValue);

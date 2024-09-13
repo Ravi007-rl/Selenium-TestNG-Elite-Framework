@@ -65,11 +65,11 @@ public class BaseTest {
   private void captureScreenshotAndAttachScreenshotToReport(ITestResult result) throws IOException {
     var screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
     String screenshotBase64 = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
-    var screenShotPath = PathHelper.getFilePath(result.getName());
+    var screenShotPath = PathHelper.screenShotFilePath(result.getName());
 
     FileUtils.copyFile(screenshot, new File(screenShotPath));
     extentTest.fail(
         MediaEntityBuilder.createScreenCaptureFromBase64String(screenshotBase64).build());
-    System.out.println("Screenshot: file://" + PathHelper.getEncodedPath(screenShotPath));
+    System.out.println("Screenshot: file://" + PathHelper.getEncodedPathForScreenShot(screenShotPath));
   }
 }

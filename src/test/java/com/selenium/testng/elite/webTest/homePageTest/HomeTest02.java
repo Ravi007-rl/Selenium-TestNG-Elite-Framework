@@ -35,7 +35,7 @@ public class HomeTest02 extends BaseTest {
     var productPage = new ProductPage(driver);
 
     log.get().info("Click on any product");
-    var randomProduct = RandomHelper.getRandomList(homePage.getAllProductNamesList());
+    var randomProduct = RandomHelper.getRandomElementFromList(homePage.getAllProductNamesList());
     homePage.clickOnProductName(randomProduct);
 
     log.get().info("Click on 'Logo' link and verify that user redirected to Home Page");
