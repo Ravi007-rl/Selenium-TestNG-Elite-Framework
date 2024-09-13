@@ -5,11 +5,11 @@ import java.nio.charset.StandardCharsets;
 
 public class PathHelper {
 
-  public static String getFilePath(String testName) {
+  public static String screenShotFilePath(String testName) {
     return System.getProperty("user.dir") + "/target/test-results/" + testName + "/screenshot.png";
   }
 
-  public static String getEncodedPath(String path) {
+  public static String getEncodedPathForScreenShot(String path) {
     var encodedPath = URLEncoder.encode(path, StandardCharsets.UTF_8);
     return encodedPath.replace("%2F", "/").replace("%20", " ");
   }

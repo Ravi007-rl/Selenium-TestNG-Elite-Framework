@@ -65,7 +65,7 @@ public class LoginTest extends BaseTest {
     homePage.clickOnLoginOption();
 
     log.get().info("Enter invalid details and click on 'Login' button");
-    var loginUserData = LoginUserDataFactory.inValidLoginUserData();
+    var loginUserData = LoginUserDataFactory.invalidLoginUserData();
     loginPage.fillLoginDetails(loginUserData);
     loginPage.clickOnLoginButton();
 

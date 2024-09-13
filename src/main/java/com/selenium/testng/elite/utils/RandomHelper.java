@@ -5,7 +5,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class RandomHelper {
 
-  public static <T> T getRandomList(List<T> items) {
+  public static <T> T getRandomElementFromList(List<T> items) {
     return items.get(ThreadLocalRandom.current().nextInt(items.size()));
   }
 

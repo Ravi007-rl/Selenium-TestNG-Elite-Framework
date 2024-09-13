@@ -76,7 +76,7 @@ public class HomeTest01 extends BaseTest {
     assertThat(homePage.IsWishListIconDisplayed()).isTrue();
 
     log.get().info("Click on product wish List button and Verify that alert message displayed");
-    var randomProductName = RandomHelper.getRandomList(homePage.getAllProductNamesList());
+    var randomProductName = RandomHelper.getRandomElementFromList(homePage.getAllProductNamesList());
     homePage.clickOnWishListButton(randomProductName);
     assertThat(homePage.isAlertMessageDisplayed()).isTrue();
     var alertMessage =
@@ -96,7 +96,7 @@ public class HomeTest01 extends BaseTest {
     var productName = new ProductPage(driver);
 
     log.get().info("Click on product name");
-    var randomProductName = RandomHelper.getRandomList(homePage.getAllProductNamesList());
+    var randomProductName = RandomHelper.getRandomElementFromList(homePage.getAllProductNamesList());
     homePage.clickOnProductName(randomProductName);
 
     log.get().info("Verify that user redirect to product page and page title is correct");
@@ -112,7 +112,7 @@ public class HomeTest01 extends BaseTest {
     var searchPage = new SearchPage(driver);
 
     log.get().info("Enter product name in search bar and click on search button");
-    var randomProductName = RandomHelper.getRandomList(homePage.getAllProductNamesList());
+    var randomProductName = RandomHelper.getRandomElementFromList(homePage.getAllProductNamesList());
     homePage.enterTextInSearchBar(randomProductName);
     homePage.clickOnSearchButton();
 

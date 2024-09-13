@@ -7,6 +7,8 @@ import com.selenium.testng.elite.utils.RandomHelper;
 public class RegisterUserDataFactory {
 
   public static RegisterUserDataObject getInvalidRegisterUserData() {
+
+    // Register User DataObject
     var registerUser = new RegisterUserDataObject();
     var invalidData = RandomHelper.getRandomString(33);
     registerUser.setFirstName(invalidData);
@@ -19,6 +21,8 @@ public class RegisterUserDataFactory {
   }
 
   public static RegisterUserDataObject getRegisterUserData() {
+
+    // Register User DataObject
     var registerUser = new RegisterUserDataObject();
 
     // generate random data

@@ -97,7 +97,7 @@ public class RegistrationPage extends WebPageBase {
   }
 
   public boolean isSubscribeNoRadioSelected() {
-    return seleniumHelper.isElementSelected(subscribeNoRadio);
+    return seleniumHelper.isRadioButtonSelected(subscribeNoRadio);
   }
 
   public void clickOnContinueButton() throws InterruptedException {
