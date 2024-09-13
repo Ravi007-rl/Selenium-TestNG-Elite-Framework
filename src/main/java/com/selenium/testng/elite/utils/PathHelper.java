@@ -17,4 +17,8 @@ public class PathHelper {
   public static String getPathForReport() {
     return System.getProperty("user.dir") + "/target/html-report/SparkReport.html";
   }
+
+  public static String getConfigFilePath() {
+    return System.getProperty("user.dir") + "/src/main/resources/config/";
+  }
 }

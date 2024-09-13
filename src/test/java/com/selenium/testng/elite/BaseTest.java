@@ -3,14 +3,12 @@ package com.selenium.testng.elite;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
-import com.selenium.testng.elite.enums.EnvironmentType;
 import com.selenium.testng.elite.utils.Constant;
 import com.selenium.testng.elite.utils.ExtentManager;
 import com.selenium.testng.elite.utils.Log;
 import com.selenium.testng.elite.utils.PathHelper;
 import com.selenium.utils.DriverFactory;
 import com.selenium.utils.EnvironmentConfig;
-import io.github.cdimascio.dotenv.Dotenv;
 import java.io.File;
 import java.io.IOException;
 import org.apache.commons.io.FileUtils;
@@ -33,12 +31,8 @@ public class BaseTest {
 
   @BeforeSuite
   public void beforeSuite() {
-    var dotenv = Dotenv.configure().ignoreIfMissing().load();
-    environmentConfig = new EnvironmentConfig(dotenv);
-    baseUrl =
-        environmentConfig.getEnvironment() == EnvironmentType.TEST
-            ? Constant.TEST_URL
-            : Constant.STAGE_URL;
+    environmentConfig = new EnvironmentConfig();
+    baseUrl = Constant.BASE_URL;
   }
 
   @BeforeMethod

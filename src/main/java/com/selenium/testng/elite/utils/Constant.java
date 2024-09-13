@@ -1,6 +1,12 @@
 package com.selenium.testng.elite.utils;
 
+import io.github.cdimascio.dotenv.Dotenv;
+
 public class Constant {
-  public static String TEST_URL = "https://opencart.antropy.co.uk/";
-  public static String STAGE_URL = "https://naveenautomationlabs.com/opencart/";
+
+  public static String BASE_URL;
+
+  public static void loadConstants(Dotenv dotenv) {
+    BASE_URL = dotenv.get("BASE_URL");
+  }
 }
