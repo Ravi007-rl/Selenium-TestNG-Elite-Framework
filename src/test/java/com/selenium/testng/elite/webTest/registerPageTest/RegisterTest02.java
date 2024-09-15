@@ -3,12 +3,12 @@ package com.selenium.testng.elite.webTest.registerPageTest;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import com.github.javafaker.Faker;
-import com.selenium.dataFactory.registerUserDataFactory.RegisterUserDataFactory;
-import com.selenium.pageObjectModel.webPageObject.accountPage.AccountCreatedPage;
-import com.selenium.pageObjectModel.webPageObject.homePage.HomePage;
-import com.selenium.pageObjectModel.webPageObject.registrationPage.RegistrationPage;
 import com.selenium.testng.elite.BaseTest;
+import dataFactory.registerUserDataFactory.RegisterUserDataFactory;
 import org.testng.annotations.Test;
+import pageObjectModel.webPageObject.accountPage.AccountCreatedPage;
+import pageObjectModel.webPageObject.homePage.HomePage;
+import pageObjectModel.webPageObject.registrationPage.RegistrationPage;
 
 public class RegisterTest02 extends BaseTest {
 
