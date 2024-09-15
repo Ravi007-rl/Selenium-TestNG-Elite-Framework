@@ -2,11 +2,11 @@ package com.selenium.testng.elite.webTest.loginPageTest;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import com.selenium.dataFactory.loginUserDataFactory.LoginUserDataFactory;
-import com.selenium.pageObjectModel.webPageObject.forgotPasswordPage.ForgotPasswordPage;
-import com.selenium.pageObjectModel.webPageObject.homePage.HomePage;
-import com.selenium.pageObjectModel.webPageObject.loginPage.LoginPage;
-import com.selenium.pageObjectModel.webPageObject.registrationPage.RegistrationPage;
+import dataFactory.loginUserDataFactory.LoginUserDataFactory;
+import pageObjectModel.webPageObject.forgotPasswordPage.ForgotPasswordPage;
+import pageObjectModel.webPageObject.homePage.HomePage;
+import pageObjectModel.webPageObject.loginPage.LoginPage;
+import pageObjectModel.webPageObject.registrationPage.RegistrationPage;
 import com.selenium.testng.elite.BaseTest;
 import org.testng.annotations.Test;
 

@@ -1,8 +1,8 @@
 package com.selenium.testng.elite.webTest.homePageTest;
 
-import com.selenium.pageObjectModel.webPageObject.homePage.HomePage;
-import com.selenium.pageObjectModel.webPageObject.productPage.ProductPage;
-import com.selenium.pageObjectModel.webPageObject.searchPage.SearchPage;
+import pageObjectModel.webPageObject.homePage.HomePage;
+import pageObjectModel.webPageObject.productPage.ProductPage;
+import pageObjectModel.webPageObject.searchPage.SearchPage;
 import com.selenium.testng.elite.BaseTest;
 import com.selenium.testng.elite.enums.EnvironmentType;
 import com.selenium.testng.elite.utils.RandomHelper;
