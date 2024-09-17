@@ -81,22 +81,10 @@ Selenium-TestNG-Elite-Framework/
 └── README.md
 ```
 
-### Directory and File Descriptions:
-- `src/main/java/com/example/helpers/`: Contains helper classes like WaitHelper, ElementHelper, and JavaScriptHelper that assist in interacting with web elements.
-- `src/main/java/com/example/pages/`: Contains Page Object Model (POM) classes that represent the web pages of the application under test.
-- `src/main/java/com/example/utils/`: Contains utility classes such as RandomHelper for random data generation and other common utilities.
-- `src/main/resources/`: Contains resource files required by the application, such as configuration files.
-- `src/test/java/com/example/tests/`: Contains the test classes where the test cases are written.
-- `src/test/java/com/example/data/`: Contains data classes and factories for creating test data.
-- `src/test/resources/`: Contains resource files required by the tests, such as test data files.
-- `.env`: Environment configuration file where you can set environment variables.
-- `pom.xml`: Maven configuration file that manages project dependencies and build configuration.
-- `README.md`: The readme file you are currently reading.
-
 ## What Framework Users Need to Do
 - **Create DataObject**: The DataObject defines the shape of the object. For example, for a login form requiring email and password fields, create a class for that and shape the object accordingly.
 - **DataFactory**: Use this to create data for your test cases.
-- **Page Object Model**: The backbone of the framework. Use the By locator strategy. Users just need to create By locators and then interact with elements using the enhanced element helper class.
+- **Page Object Model**: The backbone of the framework. Use the By locator strategy. Users just need to create By locators and then interact with elements using the enhanced SeleniumHelper class.
 - **Test File**: Where you can put your test cases.
 
 For reference, 20 test cases have been automated to demonstrate how anyone can automate test cases.
