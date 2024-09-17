@@ -26,7 +26,7 @@ The framework is designed to be user-friendly, allowing users to read 2-3 pre-wr
 - **Random Data Generation**: Uses the [Faker library](https://faker.readthedocs.io/en/master/) for random data generation. There is also a `RandomHelper` class that gives you random elements from a list and generates random strings.
 - **Element Helper Classes**:
     - **WaitHelper**: Uses explicit waits to get elements in a particular state like visible or clickable.
-    - **ElementHelper**: Improves interaction with elements to remove flakiness. For example, `driver.findElement(By.xpath()).isDisplayed()` will return `true` if the element is displayed, but if not, it throws a `NoSuchElementException`. The helper method will return `false` instead.
+    - **SeleniumHelper**: Improves interaction with elements to remove flakiness. For example, `driver.findElement(By.xpath()).isDisplayed()` will return `true` if the element is displayed, but if not, it throws a `NoSuchElementException`. The helper method will return `false` instead.
     - **JavaScriptHelper**: Interacts with elements using JavaScript.
 - **Integrated Surefire Plugin**: Using this plugin, you can run test cases from the CLI. It also generates a failed test cases XML file when any test case fails, so you can run only the failed test cases.
 - **Debug Mode**: If you set `DEBUG=true` in the `.env` file, elements will be bordered in red before interaction.
