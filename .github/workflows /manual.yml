@@ -1,0 +1,31 @@
+name: manual workflow
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Java JDK
+        uses: actions/setup-java@v4.3.0
+        with:
+          java-version: 22
+          distribution: 'temurin'
+
+      - name: Setup Maven
+        uses: stCarolas/setup-maven@v5
+
+      - name: Install dependencies
+        run: mvn install
+
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@v1.7.2
+
+
+      - name: Run tests
+        run: |
+          export BROWSER=chrome && mvn clean test DsuiteXmlFile=testng.xml
