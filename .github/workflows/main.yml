@@ -1,0 +1,72 @@
+name: manual workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      Environment:
+        description: 'Environment'
+        required: true
+        default: 'dev'
+        type: choice
+        options:
+          - test
+          - stage
+      Browser:
+        description: 'Browser'
+        required: true
+        default: 'chrome'
+        type: choice
+        options:
+          - chrome
+          - firefox
+          - edge
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Java JDK
+        uses: actions/setup-java@v4.3.0
+        with:
+          java-version: 22
+          distribution: 'temurin'
+
+      - name: Setup Maven
+        uses: stCarolas/setup-maven@v5
+
+      - name: Set up Chrome
+        if: ${{ github.event.inputs.Browser == 'chrome' }}
+        uses: browser-actions/setup-chrome@v1.7.2
+
+      - name: Set up Firefox
+        if: ${{ github.event.inputs.Browser == 'firefox' }}
+        uses: browser-actions/setup-firefox@v1.5.2
+
+      - name: Set up Edge
+        if: ${{ github.event.inputs.Browser == 'edge' }}
+        uses: browser-actions/setup-edge@v1.1.1
+
+      - name: Setup Chrome WebDriver
+        if: ${{ github.event.inputs.Browser == 'chrome' }}
+        uses: browser-actions/setup-chrome@v1.7.2
+
+      - name: Setup Firefox WebDriver
+        if: ${{ github.event.inputs.Browser == 'firefox' }}
+        uses: browser-actions/setup-firefox@v1.5.2
+
+      - name: Setup Edge WebDriver
+        if: ${{ github.event.inputs.Browser == 'edge' }}
+        uses: browser-actions/setup-edge@v1.1.1
+
+      - name: Install dependencies without running tests
+        run: mvn clean install -DskipTests
+
+      - name: Run tests
+        run: |
+          export BROWSER=${{ github.event.inputs.Browser }}
+          export HEADLESS=true
+          export ENV=${{ github.event.inputs.Environment }}
+          mvn test -DsuiteXmlFile=testng.xml
