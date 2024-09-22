@@ -23,6 +23,7 @@ public class DriverFactory {
           options.addArguments("--disable-notifications");
           options.addArguments("--no-sandbox");
           options.addArguments("--disable-dev-shm-usage");
+          options.addArguments("--disable-gpu");
           if (environmentConfig.isHeadless()) options.addArguments("--headless");
           driver = new ChromeDriver(options);
         }

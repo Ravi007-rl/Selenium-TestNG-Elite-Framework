@@ -24,4 +24,6 @@ jobs:
 
       - name: Run tests
         run: |
-          export BROWSER=chrome && HEADLESS=true && mvn clean test -DsuiteXmlFile=testng.xml
+          export BROWSER=chrome
+          export HEADLESS=true
+          mvn clean test -DsuiteXmlFile=testng.xml
