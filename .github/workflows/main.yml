@@ -9,7 +9,7 @@ on:
         default: 'dev'
         type: choice
         options:
-          - dev
+          - test
           - stage
       Browser:
         description: 'Browser'
