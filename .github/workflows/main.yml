@@ -25,6 +25,9 @@ jobs:
       - name: setup-chromedriver
         uses: nanasess/setup-chromedriver@v2.2.2
 
+      - name: clean with Maven
+        run: mvn clean
+
       - name: Run tests
         run: |
           export BROWSER=chrome
