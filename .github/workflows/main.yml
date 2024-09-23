@@ -6,20 +6,23 @@ on:
       Environment:
         description: 'Environment'
         required: true
-        default: 'dev'
+        default: 'Test'
         type: choice
         options:
-          - test
-          - stage
+          - Test
+          - Stage
       Browser:
         description: 'Browser'
         required: true
-        default: 'chrome'
+        default: 'Chrome'
         type: choice
         options:
-          - chrome
-          - firefox
-          - edge
+          - Chrome
+          - Firefox
+          - Edge
+      Email:
+        description: 'Please enter Email to receive result'
+        required: true
 
 jobs:
   build:
@@ -70,3 +73,11 @@ jobs:
           export HEADLESS=true
           export ENV=${{ github.event.inputs.Environment }}
           mvn test -DsuiteXmlFile=testng.xml
+
+      - name: Send result via email
+        run: |
+          export EMAIL=${{ github.event.inputs.Email }}
+          mvn exec:java
+        env:
+          EMAIL_USER: ${{ secrets.SENDER_EMAIL }}
+          EMAIL_PASSWORD: ${{ secrets.SENDER_APP_PASSWORD }}
