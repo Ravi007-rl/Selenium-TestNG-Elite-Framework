@@ -21,4 +21,8 @@ public class PathHelper {
   public static String getConfigFilePath() {
     return System.getProperty("user.dir") + "/src/main/resources/config/";
   }
+
+  public static String getTestResultTextFilePath() {
+    return System.getProperty("user.dir") + "target/surefire-reports/TestSuite.txt";
+  }
 }

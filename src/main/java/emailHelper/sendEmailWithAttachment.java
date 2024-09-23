@@ -7,26 +7,44 @@ import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeBodyPart;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.mail.internet.MimeMultipart;
-
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Properties;
 
 public class sendEmailWithAttachment {
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IOException {
 
     // Load environment variables from .env file
     Dotenv dotenv = Dotenv.load();
     String emailSendTo = dotenv.get("EMAIL");
+    String txtFilePath = PathHelper.getTestResultTextFilePath();
 
-    // Fetch subject and body from .env
+    // Read the content of the text file
+    StringBuilder content = new StringBuilder();
+    BufferedReader reader = new BufferedReader(new FileReader(txtFilePath));
+    String line;
+    int lineCount = 0;
+    while ((line = reader.readLine()) != null && lineCount < 4) {
+      // Remove the unwanted string from the 4th line
+      if (line.contains("<<< FAILURE! -- in TestSuite")) {
+        line = line.replace("<<< FAILURE! -- in TestSuite", "");
+      }
+      content.append(line).append("\n"); // Append the line to the content
+      lineCount++;
+    }
+    reader.close();
+
     String subject = "Automation Test Report Results";
     String body =
         """
           Hello Team,
 
-          Please find attached the report for Automation Test.
-
+          Please find attached the report for Automation Test. You can get overview of all the test results here:"""
+            + "\n" + content
+            + """
           Thanks,
           Automation Team""";
 
