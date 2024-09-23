@@ -31,8 +31,8 @@ public class sendEmailWithAttachment {
           Automation Team""";
 
     // Fetch sender email and password from GitHub Secrets
-    String senderEmail = System.getenv("SENDER_EMAIL");
-    String senderAPPPassword = System.getenv("SENDER_APP_PASSWORD");
+    String senderEmail = System.getenv("EMAIL_USER");
+    String senderAPPPassword = System.getenv("EMAIL_PASSWORD");
 
     // SMTP server information
     String host = "smtp.gmail.com";
