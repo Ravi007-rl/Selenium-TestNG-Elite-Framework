@@ -23,6 +23,6 @@ public class PathHelper {
   }
 
   public static String getTestResultTextFilePath() {
-    return System.getProperty("user.dir") + "target/surefire-reports/TestSuite.txt";
+    return System.getProperty("user.dir") + "/target/surefire-reports/TestSuite.txt";
   }
 }
