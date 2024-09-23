@@ -75,6 +75,7 @@ jobs:
           mvn test -DsuiteXmlFile=testng.xml
 
       - name: Send result via email
+        if: always()
         run: |
           export EMAIL=${{ github.event.inputs.Email }}
           mvn exec:java
