@@ -43,8 +43,12 @@ public class sendEmailWithAttachment {
           Hello Team,
 
           Please find attached the report for Automation Test. You can get overview of all the test results here:"""
-            + "\n" + content
+            + "\n\n" + content
             + """
+          -------------------------------------------------------------------------------
+          
+          This is an auto-generated email. Please do not reply to it.
+          
           Thanks,
           Automation Team""";
 
