@@ -81,6 +81,7 @@ public class sendEmailWithAttachment {
       Transport.send(message);
       System.out.println("Email sent successfully!");
     } catch (Exception e) {
+      e.printStackTrace();
       System.out.println("Failed to send email: " + e.getMessage());
     }
   }
