@@ -24,6 +24,7 @@
         <assertj>3.26.3</assertj>
         <faker>1.0.2</faker>
         <extent-Report>5.1.2</extent-Report>
+        <java-mail>2.0.1</java-mail>
     </properties>
 
     <dependencyManagement>
@@ -92,6 +93,13 @@
                 <artifactId>extentreports</artifactId>
                 <version>${extent-Report}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.sun.mail</groupId>
+                <artifactId>jakarta.mail</artifactId>
+                <version>${java-mail}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -150,6 +158,11 @@
             <artifactId>extentreports</artifactId>
             <version>${extent-Report}</version>
         </dependency>
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>jakarta.mail</artifactId>
+            <version>${java-mail}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -163,6 +176,21 @@
                         <!--suppress UnresolvedMavenProperty -->
                         <suiteXmlFile>${suiteXmlFile}</suiteXmlFile> <!-- Ensure path is correct -->
                     </suiteXmlFiles>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>emailHelper.sendEmailWithAttachment</mainClass>
                 </configuration>
             </plugin>
         </plugins>
