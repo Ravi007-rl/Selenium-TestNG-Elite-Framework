@@ -22,10 +22,11 @@ public class sendEmailWithAttachment {
     String failedTestCasesFilePath = PathHelper.getListOfFailedTestCasesFile();
 
     // Read the content of the text file
-    StringBuilder content = readTextFile(txtFilePath);
+    String subject = dotenv.get("SUBJECT");
+    StringBuilder content = (!subject.contains("Re-run")) ? null : readTextFile(txtFilePath);
     StringBuilder failedTextCasesList = readFailedTextCaseListFile(failedTestCasesFilePath);
 
-    String subject = dotenv.get("SUBJECT");
+    // Build the email body
     String body =
         """
           Hello Team,
@@ -110,20 +111,25 @@ public class sendEmailWithAttachment {
     return content;
   }
 
-  private static StringBuilder readTextFile(String filePath) throws IOException {
+  private static StringBuilder readTextFile(String filePath) {
     StringBuilder content = new StringBuilder();
-    BufferedReader reader = new BufferedReader(new FileReader(filePath));
-    String line;
-    int lineCount = 0;
-    while ((line = reader.readLine()) != null && lineCount < 4) {
-      // Remove the unwanted string from the 4th line
-      if (line.contains("<<< FAILURE! -- in TestSuite")) {
-        line = line.replace("<<< FAILURE! -- in TestSuite", "");
+    try {
+      BufferedReader reader = new BufferedReader(new FileReader(filePath));
+      String line;
+      int lineCount = 0;
+      while ((line = reader.readLine()) != null && lineCount < 4) {
+        // Remove the unwanted string from the 4th line
+        if (line.contains("<<< FAILURE! -- in TestSuite")) {
+          line = line.replace("<<< FAILURE! -- in TestSuite", "");
+        }
+        content.append(line).append("\n"); // Append the line to the content
+        lineCount++;
       }
-      content.append(line).append("\n"); // Append the line to the content
-      lineCount++;
+      reader.close();
+    } catch (Exception e) {
+      e.printStackTrace();
+      content.append("Congratulations! No failed test cases found");
     }
-    reader.close();
     return content;
   }
 }
