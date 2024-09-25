@@ -79,7 +79,7 @@ jobs:
         if: always()
         run: |
           export EMAIL=${{ github.event.inputs.Email }}
-          export SUBJECT=Complete Execution for ${{ github.event.inputs.Environment }} on ${{ github.event.inputs.Browser }}
+          export SUBJECT="Complete Execution for ${{ github.event.inputs.Environment }} on ${{ github.event.inputs.Browser }}"
           mvn exec:java
         env:
           EMAIL_USER: ${{ secrets.SENDER_EMAIL }}
@@ -87,15 +87,15 @@ jobs:
 
       - name: Re-run failed tests
         id: Re_Run_Test
-        if: steps.Run_Test.outcome == 'failure'
+        if: ${{ steps.Run_Test.outcome == 'failure' }}
         run: |
           mvn test -DsuiteXmlFile=target/surefire-reports/testng-failed.xml
 
       - name: Re-send result via email
-        if: steps.Run_Test.outcome == 'failure'
+        if: ${{ steps.Run_Test.outcome == 'failure' }}
         run: |
           export EMAIL=${{ github.event.inputs.Email }}
-          export SUBJECT=Re-run Failed Test Cases for ${{ github.event.inputs.Environment }} on ${{ github.event.inputs.Browser }}
+          export SUBJECT="Re-run Failed Test Cases for ${{ github.event.inputs.Environment }} on ${{ github.event.inputs.Browser }}"
           mvn exec:java
         env:
           EMAIL_USER: ${{ secrets.SENDER_EMAIL }}
