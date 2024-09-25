@@ -25,7 +25,7 @@ public class sendEmailWithAttachment {
     StringBuilder content = readTextFile(txtFilePath);
     StringBuilder failedTextCasesList = readFailedTextCaseListFile(failedTestCasesFilePath);
 
-    String subject = "Automation Test Report Results";
+    String subject = dotenv.get("SUBJECT");
     String body =
         """
           Hello Team,

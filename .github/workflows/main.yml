@@ -68,6 +68,7 @@ jobs:
         run: mvn clean install -DskipTests
 
       - name: Run tests
+        id: Run_Test
         run: |
           export BROWSER=${{ github.event.inputs.Browser }}
           export HEADLESS=true
@@ -78,6 +79,23 @@ jobs:
         if: always()
         run: |
           export EMAIL=${{ github.event.inputs.Email }}
+          export SUBJECT=Complete Execution for $ENVIRONMENT on $BROWSER
+          mvn exec:java
+        env:
+          EMAIL_USER: ${{ secrets.SENDER_EMAIL }}
+          EMAIL_PASSWORD: ${{ secrets.SENDER_APP_PASSWORD }}
+
+      - name: Re-run failed tests
+        id: Re_Run_Test
+        if: steps.Run_Test.outcome == 'failure'
+        run: |
+          mvn test -DsuiteXmlFile=target/surefire-reports/testng-failed.xml
+
+      - name: Re-send result via email
+        if: steps.Run_Test.outcome == 'failure'
+        run: |
+          export EMAIL=${{ github.event.inputs.Email }}
+          export SUBJECT=Re-run Failed Test Cases for $ENVIRONMENT on $BROWSER
           mvn exec:java
         env:
           EMAIL_USER: ${{ secrets.SENDER_EMAIL }}
