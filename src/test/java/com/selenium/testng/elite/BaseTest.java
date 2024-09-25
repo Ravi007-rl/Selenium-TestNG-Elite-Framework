@@ -9,14 +9,19 @@ import com.selenium.testng.elite.utils.Log;
 import com.selenium.testng.elite.utils.PathHelper;
 import com.selenium.utils.DriverFactory;
 import com.selenium.utils.EnvironmentConfig;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
@@ -28,6 +33,7 @@ public class BaseTest {
   protected ExtentReports extent;
   protected ExtentTest extentTest;
   protected static String baseUrl;
+  private static final List<String> failedTests = new ArrayList<>();
 
   @BeforeSuite
   public void beforeSuite() {
@@ -50,9 +56,15 @@ public class BaseTest {
     if (result.getStatus() == ITestResult.FAILURE) {
       log.get().error(result.getThrowable());
       captureScreenshotAndAttachScreenshotToReport(result);
+      failedTests.add(result.getName());
     } else log.get().info();
     extent.flush();
     driver.quit();
+  }
+
+  @AfterSuite
+  public void afterSuite() {
+    if (!failedTests.isEmpty()) writeFailedTestCasesToFile();
   }
 
   private void setUpReportAndLogger(ITestResult result) {
@@ -71,5 +83,25 @@ public class BaseTest {
     extentTest.fail(
         MediaEntityBuilder.createScreenCaptureFromBase64String(screenshotBase64).build());
     System.out.println("Screenshot: file://" + PathHelper.getEncodedPathForScreenShot(screenShotPath));
+  }
+
+  // Method to write the list of failed test cases to a file
+  private static void writeFailedTestCasesToFile() {
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(PathHelper.getListOfFailedTestCasesFile(), true))) {
+      writer.write("List of test cases which are failed:");
+      writer.newLine();
+
+      // Loop through the list and write each test case with a number
+      int index = 1;
+      for (String testCase : BaseTest.failedTests) {
+        writer.write(index + ") " + testCase);
+        writer.newLine();
+        index++;
+      }
+    } catch (IOException e) {
+      e.printStackTrace(); // Handle any IO exceptions
+    }
+
+    System.out.println("Failed test cases written to file: " + PathHelper.getListOfFailedTestCasesFile());
   }
 }
