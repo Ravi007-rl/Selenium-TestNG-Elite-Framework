@@ -24,7 +24,7 @@ public class sendEmailWithAttachment {
 
     // Read the content of the text file
     String subject = dotenv.get("SUBJECT");
-    StringBuilder content = (!subject.contains("Re-run")) ? null : readTextFile(txtFilePath);
+    StringBuilder content = readTextFile(txtFilePath);
     StringBuilder failedTextCasesList = readFailedTextCaseListFile(failedTestCasesFilePath);
 
     // Build the email body

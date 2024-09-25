@@ -1,4 +1,4 @@
-name: manual workflow
+name: Manual workflow for automation testcases
 
 on:
   workflow_dispatch:
