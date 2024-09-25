@@ -25,4 +25,8 @@ public class PathHelper {
   public static String getTestResultTextFilePath() {
     return System.getProperty("user.dir") + "/target/surefire-reports/TestSuite.txt";
   }
+
+  public static String getListOfFailedTestCasesFile() {
+    return System.getProperty("user.dir") + "/target/test-results/failed-test-cases.txt";
+  }
 }
