@@ -79,7 +79,7 @@ jobs:
         if: always()
         run: |
           export EMAIL=${{ github.event.inputs.Email }}
-          export SUBJECT="Complete Execution for ${{ github.event.inputs.Environment }} on ${{ github.event.inputs.Browser }}"
+          export SUBJECT="Complete Execution for ${{ github.event.inputs.Environment }} Environment on ${{ github.event.inputs.Browser }} Browser"
           mvn exec:java
         env:
           EMAIL_USER: ${{ secrets.SENDER_EMAIL }}
@@ -98,7 +98,7 @@ jobs:
         if: ${{ failure() && steps.Run_Test.outcome == 'failure' }}
         run: |
           export EMAIL=${{ github.event.inputs.Email }}
-          export SUBJECT="Re-run Failed Test Cases for ${{ github.event.inputs.Environment }} on ${{ github.event.inputs.Browser }}"
+          export SUBJECT="Re-run Failed Test Cases for ${{ github.event.inputs.Environment }} Environment on ${{ github.event.inputs.Browser }} Browser"
           mvn exec:java
         env:
           EMAIL_USER: ${{ secrets.SENDER_EMAIL }}

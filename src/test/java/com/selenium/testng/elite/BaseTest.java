@@ -87,7 +87,7 @@ public class BaseTest {
 
   // Method to write the list of failed test cases to a file
   private static void writeFailedTestCasesToFile() {
-    try (BufferedWriter writer = new BufferedWriter(new FileWriter(PathHelper.getListOfFailedTestCasesFile(), true))) {
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(PathHelper.getListOfFailedTestCasesFile(), false))) {
       writer.write("List of test cases which are failed:");
       writer.newLine();
 
