@@ -7,6 +7,7 @@ import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeBodyPart;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.mail.internet.MimeMultipart;
+import org.apache.commons.io.FileUtils;
 
 import java.io.*;
 import java.util.Properties;
@@ -126,6 +127,10 @@ public class sendEmailWithAttachment {
         lineCount++;
       }
       reader.close();
+
+      // Now delete the file so we don't get repetitive content
+      FileUtils.forceDelete(new File(filePath));
+
     } catch (Exception e) {
       e.printStackTrace();
       content.append("Congratulations! No failed test cases found");
