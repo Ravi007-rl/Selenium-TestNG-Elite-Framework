@@ -89,6 +89,9 @@ jobs:
         id: Re_Run_Test
         if: ${{ failure() && steps.Run_Test.outcome == 'failure' }}
         run: |
+          export BROWSER=${{ github.event.inputs.Browser }}
+          export HEADLESS=true
+          export ENV=${{ github.event.inputs.Environment }}
           mvn test -DsuiteXmlFile=target/surefire-reports/testng-failed.xml
 
       - name: Re-send result via email
