@@ -3,15 +3,10 @@ package com.selenium.testng.elite;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
-import com.selenium.testng.elite.utils.Constant;
-import com.selenium.testng.elite.utils.ExtentManager;
-import com.selenium.testng.elite.utils.Log;
-import com.selenium.testng.elite.utils.PathHelper;
+import com.selenium.testng.elite.utils.*;
 import com.selenium.utils.DriverFactory;
 import com.selenium.utils.EnvironmentConfig;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +59,8 @@ public class BaseTest {
 
   @AfterSuite
   public void afterSuite() {
-    if (!failedTests.isEmpty()) writeFailedTestCasesToFile();
+    if (!failedTests.isEmpty()) ResultMaker.writeFailedTestCasesToFile(failedTests);
+    else ResultMaker.writeGoodMessageInTestCaseFailedFile();
   }
 
   private void setUpReportAndLogger(ITestResult result) {
@@ -82,26 +78,10 @@ public class BaseTest {
     FileUtils.copyFile(screenshot, new File(screenShotPath));
     extentTest.fail(
         MediaEntityBuilder.createScreenCaptureFromBase64String(screenshotBase64).build());
-    System.out.println("Screenshot: file://" + PathHelper.getEncodedPathForScreenShot(screenShotPath));
+    System.out.println(
+        "Screenshot: file://" + PathHelper.getEncodedPathForScreenShot(screenShotPath));
   }
 
   // Method to write the list of failed test cases to a file
-  private static void writeFailedTestCasesToFile() {
-    try (BufferedWriter writer = new BufferedWriter(new FileWriter(PathHelper.getListOfFailedTestCasesFile(), false))) {
-      writer.write("List of test cases which are failed:");
-      writer.newLine();
 
-      // Loop through the list and write each test case with a number
-      int index = 1;
-      for (String testCase : BaseTest.failedTests) {
-        writer.write(index + ") " + testCase);
-        writer.newLine();
-        index++;
-      }
-    } catch (IOException e) {
-      e.printStackTrace(); // Handle any IO exceptions
-    }
-
-    System.out.println("Failed test cases written to file: " + PathHelper.getListOfFailedTestCasesFile());
-  }
 }
