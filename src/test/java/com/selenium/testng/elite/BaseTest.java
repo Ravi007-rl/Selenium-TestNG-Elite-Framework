@@ -81,7 +81,4 @@ public class BaseTest {
     System.out.println(
         "Screenshot: file://" + PathHelper.getEncodedPathForScreenShot(screenShotPath));
   }
-
-  // Method to write the list of failed test cases to a file
-
 }
