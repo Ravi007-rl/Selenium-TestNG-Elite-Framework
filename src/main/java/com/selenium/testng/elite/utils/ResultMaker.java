@@ -25,11 +25,8 @@ public class ResultMaker {
     }
 
     // Write the failed test cases to the file
-    if (!wantToStoreFailedTestCases) writeFailedTestCasesToFile(failedTests);
-    else {
-      writeFailedTestCasesToFile(failedTests);
-      writeFlakyTestCasesToFile(passedTests);
-    }
+    writeFailedTestCasesToFile(failedTests);
+    if (wantToStoreFailedTestCases) writeFlakyTestCasesToFile(passedTests);
   }
 
   private static void writeFailedTestCasesToFile(List<String> testCasesList) {
