@@ -79,6 +79,7 @@ jobs:
         run: |
           export BROWSER=${{ github.event.inputs.Browser }}
           export HEADLESS=true
+          export Is_Flaky=true
           export ENV=${{ github.event.inputs.Environment }}
           mvn test -DsuiteXmlFile=target/surefire-reports/testng-failed.xml
 

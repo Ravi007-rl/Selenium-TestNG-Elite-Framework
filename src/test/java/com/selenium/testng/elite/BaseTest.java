@@ -29,6 +29,7 @@ public class BaseTest {
   protected ExtentTest extentTest;
   protected static String baseUrl;
   private static final List<String> failedTests = new ArrayList<>();
+  private static final List<String> passedTests = new ArrayList<>();
 
   @BeforeSuite
   public void beforeSuite() {
@@ -52,15 +53,17 @@ public class BaseTest {
       log.get().error(result.getThrowable());
       captureScreenshotAndAttachScreenshotToReport(result);
       failedTests.add(result.getName());
-    } else log.get().info();
+    } else {
+      log.get().info();
+      passedTests.add(result.getName());
+    }
     extent.flush();
     driver.quit();
   }
 
   @AfterSuite
   public void afterSuite() {
-    if (!failedTests.isEmpty()) ResultMaker.writeFailedTestCasesToFile(failedTests);
-    else ResultMaker.writeGoodMessageInTestCaseFailedFile();
+    ResultMaker.CreateFileForResult(failedTests, passedTests);
   }
 
   private void setUpReportAndLogger(ITestResult result) {
