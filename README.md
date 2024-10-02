@@ -1,4 +1,3 @@
-```markdown
 # Selenium TestNG Elite Framework
 
 ## Table of Contents
