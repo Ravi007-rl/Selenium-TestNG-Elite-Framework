@@ -17,21 +17,23 @@ The framework is designed to be user-friendly, allowing users to read 2-3 pre-wr
 
 ## Features
 - **Environment Configuration**: Uses [Dotenv](https://www.dotenv.org/) for managing environment variables. You can change browsers and switch between headed and headless modes from the command line or the .env file.
-- **Multiple Browser Support**: A browser factory is created so when you pass the browser name from the command line or .env file, it will launch that browser.
-- **Parallel Execution**: Run tests in parallel to save time. This feature works at the class level, and the thread count is hard-coded to 5 in the testng.xml file. You can change it, or in the future, it will be made dynamic so you can pass this from the command line.
-- **Screenshot Capture**: Automatically captures screenshots on test failure and stores them in target/test-result/{testcase name}/screenshot.png format.
+- **Multiple Browser Support**: A browser factory is created so when you pass the browser name from the command line or `.env` file, it will launch that browser.
+- **Parallel Execution**: Run tests in parallel to save time. This feature works at the class level, and the thread count is hard-coded to 5 in the `testng.xml` file. You can change it, or in the future, it will be made dynamic so you can pass this from the command line.
+- **Screenshot Capture**: Automatically captures screenshots on test failure and stores them in `target/test-result/{testcase name}/screenshot.png` format.
 - **Logs**: Integrated with [Log4j](https://logging.apache.org/log4j/2.x/) for better logging of test case steps with auto-increment steps. Users don’t have to write “Step 1: Navigate to base URL”. Simply write “Navigate to base URL” and the step count is auto-added. Logs are displayed in the console as well as stored in target/test-result/{testcase name}/logfile.log format.
 - **Supports Multiple Environments**: The framework supports multiple environments like Dev, QA, and Prod.
 - **Extent Report**: Integrated with ExtentReports to generate beautiful HTML reports.
-- **Random Data Generation**: Uses the [Faker library](https://faker.readthedocs.io/en/master/) for random data generation. There is also a RandomHelper class that gives you random elements from a list and generates random strings.
+- **Random Data Generation**: Uses the [Faker library](https://faker.readthedocs.io/en/master/) for random data generation. There is also a `RandomHelper` class that gives you random elements from a list and generates random strings.
 - **Element Helper Classes**:
     - **WaitHelper**: Uses explicit waits to get elements in a particular state like visible or clickable.
-    - **SeleniumHelper**: Improves interaction with elements to remove flakiness. For example, driver.findElement(By.xpath()).isDisplayed() will return true if the element is displayed, but if not, it throws a NoSuchElementException. The helper method will return false instead.
+    - **SeleniumHelper**: Improves interaction with elements to remove flakiness. For example, `driver.findElement(By.xpath()).isDisplayed()` will return `true` if the element is displayed, but if not, it throws a NoSuchElementException. The helper method will return false instead.
     - **JavaScriptHelper**: Interacts with elements using JavaScript.
 - **Integrated Surefire Plugin**: Using this plugin, you can run test cases from the CLI. It also generates a failed test cases XML file when any test case fails, so you can run only the failed test cases.
-- **Debug Mode**: If you set DEBUG=true in the .env file, elements will be bordered in red before interaction.
-- **Headless Mode**: If you set HEADLESS=true in the .env file, the browser will be launched in headless mode.
+- **Mojo Plugin**: Uses a custom Mojo plugin to send emails with attachments. The plugin triggers the `emailHelper.sendEmailWithAttachment` method to send the Extent report to the user.
+- **Debug Mode**: If you set `DEBUG=true` in the .env file, elements will be bordered in red before interaction.
+- **Headless Mode**: If you set `HEADLESS=true` in the .env file, the browser will be launched in headless mode.
 - **GitHub Actions**: This framework supports GitHub Actions. You can run the tests from the GitHub Actions workflow.
+
 
 ## Installation Instructions
 1. **Clone the repository:**
@@ -215,9 +217,5 @@ The workflow requires the following secrets to be set in the repository settings
 - **SENDER_EMAIL**: The email address used to send the test results.
 - **SENDER_APP_PASSWORD**: The application password for the sender email.
 
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
 ## Contact Information
 Ravi (Email: ravi007.rl@gmail.com)
-```
