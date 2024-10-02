@@ -7,8 +7,7 @@
 4. [Usage](#usage)
 5. [What Framework Users Need to Do](#what-framework-users-need-to-do)
 6. [GitHub Actions Workflow](#github-actions-workflow)
-7. [Contributing](#contributing)
-8. [Contact Information](#contact-information)
+7. [Contact Information](#contact-information)
 
 ## Overview
 The Selenium TestNG Elite Framework is a robust and scalable test automation framework designed to simplify the process of writing and running automated tests for web applications. This framework leverages [Selenium WebDriver](https://www.selenium.dev/documentation/) for browser automation and [TestNG](https://testng.org/) for test management.
