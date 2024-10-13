@@ -271,27 +271,24 @@ public class WaitHelper {
   }
 
   // Wait till page loaded properly
-  public void waitForPageContentLoaded() {
+  public void waitForPageContentLoaded() throws InterruptedException {
     try {
-      getWebDriverWait(5)
-          .until(
-              (ExpectedCondition<Boolean>)
-                  driver -> {
-                    assert driver != null;
-                    return ((JavascriptExecutor) driver)
-                        .executeScript("return document.readyState")
-                        .equals("loading");
-                  });
+      String documentReadyState;
+      var retries = 5;
+      do {
+        documentReadyState =
+            ((JavascriptExecutor) driver).executeScript("return document.readyState").toString();
+        hardWait(1);
+        retries--;
+      } while (!documentReadyState.equals("complete") && retries > 0);
     } catch (Exception _) {
     }
+
     getWebDriverWait()
         .until(
-            (ExpectedCondition<Boolean>)
-                driver -> {
-                  assert driver != null;
-                  return ((JavascriptExecutor) driver)
-                      .executeScript("return document.readyState")
-                      .equals("complete");
-                });
+            driver ->
+                ((JavascriptExecutor) driver)
+                    .executeScript("return document.readyState")
+                    .equals("complete"));
   }
 }

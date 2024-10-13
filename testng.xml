@@ -8,6 +8,7 @@
             <class name="com.selenium.testng.elite.webTest.MyTest"/>
             <class name="com.selenium.testng.elite.webTest.homePageTest.HomeTest01"/>
             <class name="com.selenium.testng.elite.webTest.homePageTest.HomeTest02"/>
+            <class name="com.selenium.testng.elite.webTest.fileUploadTest.FileUploadTest"/>
         </classes>
     </test>
 </suite>

@@ -1,8 +1,10 @@
 package elementHelper.web;
 
+import com.selenium.testng.elite.utils.FileHelper;
 import elementHelper.WaitHelper;
 import io.github.cdimascio.dotenv.Dotenv;
 import java.util.List;
+import java.util.Objects;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -279,6 +281,13 @@ public class SeleniumHelper {
     return element.getText().trim();
   }
 
+  public String getText(By by, int second) throws InterruptedException {
+    var element = waitHelper.waitForElementToBeVisible(by, second);
+    jsHelper.scrollToElementIfNotInView(element);
+    if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
+    return element.getText().trim();
+  }
+
   // Use this to get text from multiple elements
   public List<String> getAllElementsText(By by) {
     var elements = waitHelper.waitForAllElementToBeVisible(by);
@@ -290,13 +299,24 @@ public class SeleniumHelper {
     return elements.stream().map(x -> x.getText().trim().replace("\n", "")).toList();
   }
 
+  public List<String> getAllElementsText(By by, int second) {
+    var elements = waitHelper.waitForAllElementToBeVisible(by, second);
+    if (IS_DEBUG)
+      try {
+        for (WebElement element : elements) jsHelper.javaScriptHighlightElement(element);
+      } catch (Exception _) {
+      }
+    return elements.stream().map(x -> x.getText().trim().replace("\n", "")).toList();
+  }
+
   // Use this to wait till page loaded properly
-  public void waitTillPageLoadedProperly() {
+  public void waitTillPageLoadedProperly() throws InterruptedException {
     waitHelper.waitForPageContentLoaded();
   }
 
   // Use this to get page title
-  public String getPageTitle() {
+  public String getPageTitle() throws InterruptedException {
+    waitTillPageLoadedProperly();
     return driver.getTitle();
   }
 
@@ -304,5 +324,41 @@ public class SeleniumHelper {
   public boolean isElementHaveGivenClass(By by, String cssValue) {
     var element = waitHelper.waitForElementToBeVisible(by);
     return element.getAttribute("class").contains(cssValue);
+  }
+
+  public void uploadFile(By by, String fileName) throws InterruptedException {
+    var file = FileHelper.getUploadFilesFullPath(fileName);
+    var element = waitHelper.waitForElementToBeVisible(by);
+    if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
+    if (Objects.equals(element.getAttribute("type"), "file")) element.sendKeys(file);
+    else jsHelper.uploadFile(element, file);
+  }
+
+  public void uploadFile(By by, String fileName, int second) throws InterruptedException {
+    var file = FileHelper.getUploadFilesFullPath(fileName);
+    var element = waitHelper.waitForElementToBeVisible(by, second);
+    if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
+    if (Objects.equals(element.getAttribute("type"), "file")) element.sendKeys(file);
+    else jsHelper.uploadFile(element, file);
+  }
+
+  public void uploadFile(By chooseFile, List<String> fileNames) throws InterruptedException {
+    var filePathForAllFiles = FileHelper.getConcatenatedPath(fileNames);
+    var element = waitHelper.waitForElementToBeVisible(chooseFile);
+    if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
+    if (Objects.equals(element.getAttribute("type"), "file")
+        && Objects.equals(element.getAttribute("multiple"), "true"))
+      element.sendKeys(filePathForAllFiles);
+    jsHelper.uploadMultipleFiles(element, filePathForAllFiles);
+  }
+
+  public void uploadFile(By by, List<String> fileNames, int second) throws InterruptedException {
+    var filePathForAllFiles = FileHelper.getConcatenatedPath(fileNames);
+    var element = waitHelper.waitForElementToBeVisible(by, second);
+    if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
+    if (Objects.equals(element.getAttribute("type"), "file")
+            && Objects.equals(element.getAttribute("multiple"), "true"))
+      element.sendKeys(filePathForAllFiles);
+    jsHelper.uploadMultipleFiles(element, filePathForAllFiles);
   }
 }
