@@ -29,4 +29,8 @@ public class PathHelper {
   public static String getListOfFailedTestCasesFile() {
     return System.getProperty("user.dir") + "/target/test-results/failed-test-cases.txt";
   }
+
+  public static String getUploadFiles() {
+    return System.getProperty("user.dir") + "/uploadFiles/";
+  }
 }

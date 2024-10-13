@@ -51,8 +51,6 @@ public class ResultMaker {
     } catch (IOException e) {
       e.printStackTrace(); // Handle any IO exceptions
     }
-
-    System.out.println("Failed test cases written to file: " + resultFilePath);
   }
 
   private static void writeFlakyTestCasesToFile(List<String> testCasesList) {

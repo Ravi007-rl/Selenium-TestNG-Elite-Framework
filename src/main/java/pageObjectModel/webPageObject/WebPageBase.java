@@ -17,7 +17,7 @@ public class WebPageBase extends BasePageObject {
   // Common Locator
   private final By logoLink = By.cssSelector("div#logo a[href*='home']");
 
-  public String getPageTitle() {
+  public String getPageTitle() throws InterruptedException {
     return seleniumHelper.getPageTitle();
   }
 
