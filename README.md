@@ -6,8 +6,9 @@
 3. [Installation Instructions](#installation-instructions)
 4. [Usage](#usage)
 5. [What Framework Users Need to Do](#what-framework-users-need-to-do)
-6. [GitHub Actions Workflow](#github-actions-workflow)
-7. [Contact Information](#contact-information)
+6. [How File Upload Feature Works](#how-file-upload-feature-works)
+7. [GitHub Actions Workflow](#github-actions-workflow)
+8. [Contact Information](#contact-information)
 
 ## Overview
 The Selenium TestNG Elite Framework is a robust and scalable test automation framework designed to simplify the process of writing and running automated tests for web applications. This framework leverages [Selenium WebDriver](https://www.selenium.dev/documentation/) for browser automation and [TestNG](https://testng.org/) for test management.
@@ -31,6 +32,7 @@ The framework is designed to be user-friendly, allowing users to read 2-3 pre-wr
 - **Mojo Plugin**: Uses a custom Mojo plugin to send emails with attachments. The plugin triggers the `emailHelper.sendEmailWithAttachment` method to send the Extent report to the user.
 - **Debug Mode**: If you set `DEBUG=true` in the .env file, elements will be bordered in red before interaction.
 - **Headless Mode**: If you set `HEADLESS=true` in the .env file, the browser will be launched in headless mode.
+- **File Upload**: The Selenium TestNG Elite Framework includes a comprehensive file upload feature that supports both traditional input type file uploads and drag-and-drop uploads. This feature is designed to handle single and multiple file uploads seamlessly. 
 - **GitHub Actions**: This framework supports GitHub Actions. You can run the tests from the GitHub Actions workflow.
 
 
@@ -68,6 +70,24 @@ mvn clean test -DsuiteXmlFile="testng.xml"
 - **Test File**: Where you can put your test cases.
 
 For reference, 20 test cases have been automated to demonstrate how anyone can automate test cases.
+
+## How File Upload Feature Works
+
+1. **Dedicated Folder for Upload Files**: User have to place the files they want to upload in a `uploadFiles` folder.
+
+2. **`uploadFile` Method**:
+    - This method is part of the `SeleniumHelper` class and is used for uploading files.
+    - It supports traditional input type file uploads where the HTML tag is `input` with `type="file"`.
+    - The method waits for the element to be present in the DOM and checks if the input type is `file`. If not, it attempts to upload the file using JavaScript, which is useful for elements that support drag-and-drop uploads.
+
+3. **Multiple File Upload**:
+    - The `uploadFile` method also supports uploading multiple files.
+    - Users can pass a `List<String>` containing file names, and the method will handle the upload of multiple files.
+
+4. **Test Cases**:
+    - Three test cases have been created for demonstration purposes. Test cases are located in the `FileUploadTest` class.
+
+This setup enhances the usability of your framework by simplifying the file upload process and providing flexibility for different upload scenarios.
 
 ## GitHub Actions Workflow
 

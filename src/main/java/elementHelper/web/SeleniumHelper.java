@@ -637,7 +637,7 @@ public class SeleniumHelper {
    */
   public void uploadFile(By by, String fileName) throws InterruptedException {
     var file = FileHelper.getUploadFilesFullPath(fileName);
-    var element = waitHelper.waitForElementToBeVisible(by);
+    var element = waitHelper.waitForElementPresenceInDOM(by);
     if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     if (Objects.equals(element.getAttribute("type"), "file")) element.sendKeys(file);
     else jsHelper.uploadFile(element, file);
@@ -654,7 +654,7 @@ public class SeleniumHelper {
    */
   public void uploadFile(By by, String fileName, int second) throws InterruptedException {
     var file = FileHelper.getUploadFilesFullPath(fileName);
-    var element = waitHelper.waitForElementToBeVisible(by, second);
+    var element = waitHelper.waitForElementPresenceInDOM(by, second);
     if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     if (Objects.equals(element.getAttribute("type"), "file")) element.sendKeys(file);
     else jsHelper.uploadFile(element, file);
@@ -670,7 +670,7 @@ public class SeleniumHelper {
    */
   public void uploadFile(By chooseFile, List<String> fileNames) throws InterruptedException {
     var filePathForAllFiles = FileHelper.getConcatenatedPath(fileNames);
-    var element = waitHelper.waitForElementToBeVisible(chooseFile);
+    var element = waitHelper.waitForElementPresenceInDOM(chooseFile);
     if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     var isTypeAttributeHasFile = Objects.equals(element.getAttribute("type"), "file");
     var isMultiplePropertyAvailable = element.getDomProperty("multiple") != null;
@@ -693,7 +693,7 @@ public class SeleniumHelper {
    */
   public void uploadFile(By by, List<String> fileNames, int second) throws InterruptedException {
     var filePathForAllFiles = FileHelper.getConcatenatedPath(fileNames);
-    var element = waitHelper.waitForElementToBeVisible(by, second);
+    var element = waitHelper.waitForElementPresenceInDOM(by, second);
     var isTypeAttributeHasFile = Objects.equals(element.getAttribute("type"), "file");
     var isMultiplePropertyAvailable = element.getDomProperty("multiple") != null;
     var isMultiplePropertyHaveNotFalseValue = Objects.equals(element.getAttribute("type"), "false");

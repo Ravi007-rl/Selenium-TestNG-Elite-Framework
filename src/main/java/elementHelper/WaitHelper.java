@@ -52,6 +52,14 @@ public class WaitHelper {
     return getWebDriverWait(duration).until(ExpectedConditions.visibilityOfElementLocated(locator));
   }
 
+  public WebElement waitForElementPresenceInDOM(By locator) {
+    return getWebDriverWait().until(ExpectedConditions.presenceOfElementLocated(locator));
+  }
+
+  public WebElement waitForElementPresenceInDOM(By locator,int duration) {
+    return getWebDriverWait(duration).until(ExpectedConditions.presenceOfElementLocated(locator));
+  }
+
   // Wait for all elements located by a locator to be visible
   public List<WebElement> waitForAllElementToBeVisible(By locator) {
     return getWebDriverWait().until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
