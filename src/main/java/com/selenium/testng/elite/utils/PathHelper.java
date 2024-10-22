@@ -33,4 +33,8 @@ public class PathHelper {
   public static String getUploadFiles() {
     return System.getProperty("user.dir") + "/uploadFiles/";
   }
+
+  public static String getDownloadFolderPath() {
+    return System.getProperty("user.dir") + "/downloadFiles/";
+  }
 }

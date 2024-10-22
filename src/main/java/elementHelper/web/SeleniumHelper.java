@@ -640,7 +640,7 @@ public class SeleniumHelper {
     var element = waitHelper.waitForElementPresenceInDOM(by);
     if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     if (Objects.equals(element.getAttribute("type"), "file")) element.sendKeys(file);
-    else jsHelper.uploadFile(element, file);
+    else jsHelper.uploadFile(element, file, false);
   }
 
   /**
@@ -657,7 +657,7 @@ public class SeleniumHelper {
     var element = waitHelper.waitForElementPresenceInDOM(by, second);
     if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     if (Objects.equals(element.getAttribute("type"), "file")) element.sendKeys(file);
-    else jsHelper.uploadFile(element, file);
+    else jsHelper.uploadFile(element, file, false);
   }
 
   /**
@@ -679,7 +679,7 @@ public class SeleniumHelper {
         && isMultiplePropertyAvailable
         && isMultiplePropertyHaveNotFalseValue) {
       element.sendKeys(filePathForAllFiles);
-    } else jsHelper.uploadMultipleFiles(element, filePathForAllFiles);
+    } else jsHelper.uploadFile(element, filePathForAllFiles, true);
   }
 
   /**
@@ -702,6 +702,6 @@ public class SeleniumHelper {
         && isMultiplePropertyAvailable
         && isMultiplePropertyHaveNotFalseValue) {
       element.sendKeys(filePathForAllFiles);
-    } else jsHelper.uploadMultipleFiles(element, filePathForAllFiles);
+    } else jsHelper.uploadFile(element, filePathForAllFiles, true);
   }
 }

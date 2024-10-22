@@ -63,6 +63,7 @@ public class BaseTest {
 
   @AfterSuite
   public void afterSuite() {
+    FileHelper.deleteAllFiles();
     ResultMaker.CreateFileForResult(failedTests, passedTests);
   }
 
