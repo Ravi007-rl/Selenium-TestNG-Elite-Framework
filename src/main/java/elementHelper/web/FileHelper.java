@@ -1,12 +1,15 @@
-package com.selenium.testng.elite.utils;
+package elementHelper.web;
 
+import com.selenium.testng.elite.utils.PathHelper;
 import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
+import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.TimeoutException;
+import org.apache.commons.lang3.tuple.Pair;
 import org.openqa.selenium.support.ui.FluentWait;
 
 public class FileHelper {
@@ -18,7 +21,7 @@ public class FileHelper {
    * @param file The name of the file.
    * @return The full path of the uploaded file.
    */
-  public static String getUploadFilesFullPath(String file) {
+  static String getUploadFilesFullPath(String file) {
     return PathHelper.getUploadFiles() + file;
   }
 
@@ -29,7 +32,7 @@ public class FileHelper {
    * @param fileNames The list of file names.
    * @return The concatenated path of the uploaded files.
    */
-  public static String getConcatenatedPath(List<String> fileNames) {
+  static String getConcatenatedPath(List<String> fileNames) {
     return fileNames.stream()
         .map(fileName -> PathHelper.getUploadFiles() + fileName)
         .collect(Collectors.joining("\n"))
@@ -37,13 +40,15 @@ public class FileHelper {
   }
 
   /**
-   * Verifies if the given file exists in the download folder within a specified time period.
+   * Checks if a file with the specified name exists in the download folder within the specified
+   * time period.
    *
-   * @param fileName The name of the file.
-   * @param timeInSeconds The time in seconds to wait for the file to exist.
-   * @return true if the file exists, false otherwise.
+   * @param fileName The name of the file to check for existence.
+   * @param timeInSeconds The time period in seconds to wait for the file to exist.
+   * @return A pair containing a boolean indicating whether the file exists and has a size greater
+   *     than 0, and a string listing the files available in the download folder.
    */
-  public static boolean isFileExists(String fileName, int timeInSeconds) {
+  static Pair<Boolean, String> isFileExists(String fileName, int timeInSeconds) {
 
     File dir = new File(PathHelper.getDownloadFolderPath());
 
@@ -55,7 +60,7 @@ public class FileHelper {
 
     Function<File, Boolean> checkForFile =
         fileDir -> {
-          File[] files = fileDir.listFiles();
+          var files = fileDir.listFiles();
           if (files == null) return false;
           for (File file : files) {
             if (file.getName().equals(fileName) && file.length() > 0) {
@@ -65,12 +70,18 @@ public class FileHelper {
           return false;
         };
 
+    // Check if the file exists
+    var fileExists = false;
     try {
-      return wait.until(checkForFile);
-    } catch (TimeoutException e) {
-      System.out.println("File not found: " + e.getMessage());
-      return false;
+      fileExists = wait.until(checkForFile);
+    } catch (Exception e) {
+      fileExists = false;
     }
+
+    Collection<File> files = FileUtils.listFiles(dir, null, true);
+    var fileNames = files.stream().map(File::getName).toList();
+    var fileInFolder = "\nFiles available in download folder:\n" + String.join("\n", fileNames);
+    return Pair.of(fileExists, fileInFolder);
   }
 
   /**
@@ -83,6 +94,19 @@ public class FileHelper {
       FileUtils.cleanDirectory(dir);
     } catch (Exception e) {
       System.out.println("An error occurred: " + e.getMessage());
+    }
+  }
+
+  /**
+   * Deletes a file with the specified name in the download folder.
+   *
+   * @param fileName The name of the file to delete.
+   */
+  static void deleteFile(String fileName) {
+    var file = new File(PathHelper.getDownloadFolderPath() + fileName);
+    try {
+      FileUtils.forceDelete(file);
+    } catch (IOException _) {
     }
   }
 }

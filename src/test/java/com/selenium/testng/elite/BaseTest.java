@@ -6,6 +6,7 @@ import com.aventstack.extentreports.MediaEntityBuilder;
 import com.selenium.testng.elite.utils.*;
 import com.selenium.utils.DriverFactory;
 import com.selenium.utils.EnvironmentConfig;
+import elementHelper.web.FileHelper;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;

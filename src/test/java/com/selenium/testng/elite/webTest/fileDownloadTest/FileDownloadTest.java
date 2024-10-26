@@ -3,61 +3,45 @@ package com.selenium.testng.elite.webTest.fileDownloadTest;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import com.selenium.testng.elite.BaseTest;
-import com.selenium.testng.elite.utils.FileHelper;
-import java.util.Date;
-import org.openqa.selenium.JavascriptExecutor;
 import org.testng.annotations.Test;
-import pageObjectModel.webPageObject.fileDownloadPage.FileDownloadPage;
+import pageObjectModel.webPageObject.fileDownloadPage.FileDownloadPageInternetHerokuApp;
+import pageObjectModel.webPageObject.fileDownloadPage.PrinceSampleDocumentsPage;
 
 public class FileDownloadTest extends BaseTest {
 
-    @Test
-    public void verifyThatUserCanDownloadFileFromInternetHerokuApp() throws InterruptedException {
+  @Test
+  public void verifyThatUserCanDownloadFileFromInternetHerokuApp() throws InterruptedException {
 
-        // Page object for download file page (Internet HerokuApp)
-        var fileDownload = new FileDownloadPage(driver);
+    // Page object for download file page (Internet HerokuApp)
+    var fileDownload = new FileDownloadPageInternetHerokuApp(driver);
 
-        log.get().info("Navigate to Internet HerokuApp's download page");
-        driver.get("https://the-internet.herokuapp.com/download");
+    log.get().info("Navigate to Internet HerokuApp's download page");
+    driver.get("https://the-internet.herokuapp.com/download");
 
-        log.get().info("Verify page header is displayed");
-        assertThat(fileDownload.getPageHeader()).isEqualTo("File Downloader");
+    log.get().info("Verify page header is displayed");
+    assertThat(fileDownload.getPageHeader()).isEqualTo("File Downloader");
 
-        log.get().info("Click on 'File Download' link");
-        var fileName = "zero_bytes_file.txt";
-        fileDownload.clickOnDownloadFile(fileName);
-    }
+    log.get().info("Click on 'File Download' link");
+    var fileName = "SomeFile.txt";
+    var fileExists = fileDownload.clickOnDownloadFile(fileName);
 
-    @Test
-    public void verifyThatUserCanDownloadFile() throws InterruptedException {
+    log.get().info("Verify that downloaded file name is correct");
+    assertThat(fileExists).isTrue();
+  }
 
-        // Page object for download file page (Internet HerokuApp)
-        var fileDownload = new FileDownloadPage(driver);
+  @Test
+  public void verifyThatUserCanDownloadPDFWhichIsRenderedAtBrowser() throws InterruptedException {
 
-        log.get().info("Navigate to Internet HerokuApp's download page");
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("window.location = 'https://download.oracle.com/java/21/archive/jdk-21.0.4_linux-aarch64_bin.tar.gz';");
+    // Page object for download file page (Internet HerokuApp)
+    var fileDownload = new PrinceSampleDocumentsPage(driver);
 
-//        log.get().info("Click on 'File Download' link");
-//        var fileName = "test.txt";
-//        fileDownload.clickOnDownloadFile(fileName);
+    log.get().info("Navigate to 'Prince - Sample Documents' page");
+    driver.get("https://www.princexml.com/samples/");
 
-        log.get().info("Verify that downloaded file name is correct");
+    log.get().info("Click on 'PDF' link");
+    var isFileExists = fileDownload.clickOnPDFLink("dictionary.pdf");
 
-        var startTime = new Date().getTime();
-        var fileDownloaded = FileHelper.isFileExists("jdk-21.0.4_linux-aarch64_bin.tar.gz",30);
-        var endTime = new Date().getTime();
-
-        // Convert into seconds
-        var totalTime = (endTime - startTime) / 1000;
-        System.out.println(totalTime);
-
-        assertThat(fileDownloaded).isTrue();
-
-
-
-
-
-        log.get().info("Test case complete here");
-    }
+    log.get().info("Verify that downloaded file name is correct");
+    assertThat(isFileExists.getLeft()).withFailMessage(isFileExists.getRight()).isTrue();
+  }
 }

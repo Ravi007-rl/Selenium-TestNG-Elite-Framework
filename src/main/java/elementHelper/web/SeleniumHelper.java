@@ -1,10 +1,12 @@
 package elementHelper.web;
 
-import com.selenium.testng.elite.utils.FileHelper;
 import elementHelper.WaitHelper;
 import io.github.cdimascio.dotenv.Dotenv;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+import lombok.Builder;
+import org.apache.commons.lang3.tuple.Pair;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
@@ -703,5 +705,37 @@ public class SeleniumHelper {
         && isMultiplePropertyHaveNotFalseValue) {
       element.sendKeys(filePathForAllFiles);
     } else jsHelper.uploadFile(element, filePathForAllFiles, true);
+  }
+
+  @Builder(builderMethodName = "initiateDownloadAndVerifyWithExpectedMessageBuilder")
+  private Pair<Boolean, String> initiateDownloadAndVerifyWithExpectedMessage(
+      By locator, String fileName, Integer downloadTimeout, Integer elementVisibilityTimeout)
+      throws InterruptedException {
+
+    // Optional parameters with default values
+    int effectiveDownloadTimeout = Optional.ofNullable(downloadTimeout).orElse(15);
+    int effectiveElementVisibilityTimeout =
+        Optional.ofNullable(elementVisibilityTimeout).orElse(15);
+
+    // Perform file operations
+    FileHelper.deleteFile(fileName);
+    scrollAndClickOn(locator, effectiveElementVisibilityTimeout);
+    return FileHelper.isFileExists(fileName, effectiveDownloadTimeout);
+  }
+
+  @Builder(builderMethodName = "initiateDownloadAndVerifyBuilder")
+  private Boolean initiateDownloadAndVerify(
+      By locator, String fileName, Integer downloadTimeout, Integer elementVisibilityTimeout)
+      throws InterruptedException {
+
+    // Optional parameters with default values
+    int effectiveDownloadTimeout = Optional.ofNullable(downloadTimeout).orElse(15);
+    int effectiveElementVisibilityTimeout =
+        Optional.ofNullable(elementVisibilityTimeout).orElse(15);
+
+    // Perform file operations
+    FileHelper.deleteFile(fileName);
+    scrollAndClickOn(locator, effectiveElementVisibilityTimeout);
+    return FileHelper.isFileExists(fileName, effectiveDownloadTimeout).getLeft();
   }
 }
