@@ -712,6 +712,10 @@ public class SeleniumHelper {
       By locator, String fileName, Integer downloadTimeout, Integer elementVisibilityTimeout)
       throws InterruptedException {
 
+    // Check required parameters
+    if (locator==null) throw new RuntimeException("locator cannot be null");
+    if (fileName==null) throw new RuntimeException("fileName cannot be null");
+
     // Optional parameters with default values
     int effectiveDownloadTimeout = Optional.ofNullable(downloadTimeout).orElse(15);
     int effectiveElementVisibilityTimeout =
@@ -727,6 +731,10 @@ public class SeleniumHelper {
   private Boolean initiateDownloadAndVerify(
       By locator, String fileName, Integer downloadTimeout, Integer elementVisibilityTimeout)
       throws InterruptedException {
+
+    // Check required parameters
+    if (locator==null) throw new RuntimeException("locator cannot be null");
+    if (fileName==null) throw new RuntimeException("fileName cannot be null");
 
     // Optional parameters with default values
     int effectiveDownloadTimeout = Optional.ofNullable(downloadTimeout).orElse(15);
