@@ -707,14 +707,27 @@ public class SeleniumHelper {
     } else jsHelper.uploadFile(element, filePathForAllFiles, true);
   }
 
+  /**
+   * Initiates a file download and verifies its existence with an expected message.
+   *
+   * @param locator the By locator strategy to find the element to click on
+   * @param fileName the name of the file to be downloaded
+   * @param downloadTimeout the time in seconds to wait for the file to be downloaded (default: 15)
+   * @param elementVisibilityTimeout the time in seconds to wait for the element to be visible
+   *     (default: 15)
+   * @return a pair containing a boolean indicating whether the file exists and a string listing the
+   *     files available in the download folder
+   * @throws InterruptedException if the thread is interrupted while waiting for the file to be
+   *     downloaded
+   */
   @Builder(builderMethodName = "initiateDownloadAndVerifyWithExpectedMessageBuilder")
   private Pair<Boolean, String> initiateDownloadAndVerifyWithExpectedMessage(
       By locator, String fileName, Integer downloadTimeout, Integer elementVisibilityTimeout)
       throws InterruptedException {
 
     // Check required parameters
-    if (locator==null) throw new RuntimeException("locator cannot be null");
-    if (fileName==null) throw new RuntimeException("fileName cannot be null");
+    if (locator == null) throw new RuntimeException("locator cannot be null");
+    if (fileName == null) throw new RuntimeException("fileName cannot be null");
 
     // Optional parameters with default values
     int effectiveDownloadTimeout = Optional.ofNullable(downloadTimeout).orElse(15);
@@ -727,14 +740,26 @@ public class SeleniumHelper {
     return FileHelper.isFileExists(fileName, effectiveDownloadTimeout);
   }
 
+  /**
+   * Initiates a file download and verifies its existence.
+   *
+   * @param locator the By locator strategy to find the element to click on
+   * @param fileName the name of the file to be downloaded
+   * @param downloadTimeout the time in seconds to wait for the file to be downloaded (default: 15)
+   * @param elementVisibilityTimeout the time in seconds to wait for the element to be visible
+   *     (default: 15)
+   * @return true if the file exists, false otherwise
+   * @throws InterruptedException if the thread is interrupted while waiting for the file to be
+   *     downloaded
+   */
   @Builder(builderMethodName = "initiateDownloadAndVerifyBuilder")
   private Boolean initiateDownloadAndVerify(
       By locator, String fileName, Integer downloadTimeout, Integer elementVisibilityTimeout)
       throws InterruptedException {
 
     // Check required parameters
-    if (locator==null) throw new RuntimeException("locator cannot be null");
-    if (fileName==null) throw new RuntimeException("fileName cannot be null");
+    if (locator == null) throw new RuntimeException("locator cannot be null");
+    if (fileName == null) throw new RuntimeException("fileName cannot be null");
 
     // Optional parameters with default values
     int effectiveDownloadTimeout = Optional.ofNullable(downloadTimeout).orElse(15);
