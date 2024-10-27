@@ -25,6 +25,7 @@
         <faker>1.0.2</faker>
         <extent-Report>5.1.2</extent-Report>
         <java-mail>2.0.1</java-mail>
+        <commons-lang3>3.17.0</commons-lang3>
     </properties>
 
     <dependencyManagement>
@@ -99,7 +100,11 @@
                 <artifactId>jakarta.mail</artifactId>
                 <version>${java-mail}</version>
             </dependency>
-
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -162,6 +167,11 @@
             <groupId>com.sun.mail</groupId>
             <artifactId>jakarta.mail</artifactId>
             <version>${java-mail}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang3}</version>
         </dependency>
     </dependencies>
 

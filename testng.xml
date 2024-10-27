@@ -9,6 +9,7 @@
             <class name="com.selenium.testng.elite.webTest.homePageTest.HomeTest01"/>
             <class name="com.selenium.testng.elite.webTest.homePageTest.HomeTest02"/>
             <class name="com.selenium.testng.elite.webTest.fileUploadTest.FileUploadTest"/>
+            <class name="com.selenium.testng.elite.webTest.fileDownloadTest.FileDownloadTest"/>
         </classes>
     </test>
 </suite>

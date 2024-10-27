@@ -1,10 +1,12 @@
 package elementHelper.web;
 
-import com.selenium.testng.elite.utils.FileHelper;
 import elementHelper.WaitHelper;
 import io.github.cdimascio.dotenv.Dotenv;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+import lombok.Builder;
+import org.apache.commons.lang3.tuple.Pair;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
@@ -640,7 +642,7 @@ public class SeleniumHelper {
     var element = waitHelper.waitForElementPresenceInDOM(by);
     if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     if (Objects.equals(element.getAttribute("type"), "file")) element.sendKeys(file);
-    else jsHelper.uploadFile(element, file);
+    else jsHelper.uploadFile(element, file, false);
   }
 
   /**
@@ -657,7 +659,7 @@ public class SeleniumHelper {
     var element = waitHelper.waitForElementPresenceInDOM(by, second);
     if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     if (Objects.equals(element.getAttribute("type"), "file")) element.sendKeys(file);
-    else jsHelper.uploadFile(element, file);
+    else jsHelper.uploadFile(element, file, false);
   }
 
   /**
@@ -679,7 +681,7 @@ public class SeleniumHelper {
         && isMultiplePropertyAvailable
         && isMultiplePropertyHaveNotFalseValue) {
       element.sendKeys(filePathForAllFiles);
-    } else jsHelper.uploadMultipleFiles(element, filePathForAllFiles);
+    } else jsHelper.uploadFile(element, filePathForAllFiles, true);
   }
 
   /**
@@ -702,6 +704,71 @@ public class SeleniumHelper {
         && isMultiplePropertyAvailable
         && isMultiplePropertyHaveNotFalseValue) {
       element.sendKeys(filePathForAllFiles);
-    } else jsHelper.uploadMultipleFiles(element, filePathForAllFiles);
+    } else jsHelper.uploadFile(element, filePathForAllFiles, true);
+  }
+
+  /**
+   * Initiates a file download and verifies its existence with an expected message.
+   *
+   * @param locator the By locator strategy to find the element to click on
+   * @param fileName the name of the file to be downloaded
+   * @param downloadTimeout the time in seconds to wait for the file to be downloaded (default: 15)
+   * @param elementVisibilityTimeout the time in seconds to wait for the element to be visible
+   *     (default: 15)
+   * @return a pair containing a boolean indicating whether the file exists and a string listing the
+   *     files available in the download folder
+   * @throws InterruptedException if the thread is interrupted while waiting for the file to be
+   *     downloaded
+   */
+  @Builder(builderMethodName = "initiateDownloadAndVerifyWithExpectedMessageBuilder")
+  private Pair<Boolean, String> initiateDownloadAndVerifyWithExpectedMessage(
+      By locator, String fileName, Integer downloadTimeout, Integer elementVisibilityTimeout)
+      throws InterruptedException {
+
+    // Check required parameters
+    if (locator == null) throw new RuntimeException("locator cannot be null");
+    if (fileName == null) throw new RuntimeException("fileName cannot be null");
+
+    // Optional parameters with default values
+    int effectiveDownloadTimeout = Optional.ofNullable(downloadTimeout).orElse(15);
+    int effectiveElementVisibilityTimeout =
+        Optional.ofNullable(elementVisibilityTimeout).orElse(15);
+
+    // Perform file operations
+    FileHelper.deleteFile(fileName);
+    scrollAndClickOn(locator, effectiveElementVisibilityTimeout);
+    return FileHelper.isFileExists(fileName, effectiveDownloadTimeout);
+  }
+
+  /**
+   * Initiates a file download and verifies its existence.
+   *
+   * @param locator the By locator strategy to find the element to click on
+   * @param fileName the name of the file to be downloaded
+   * @param downloadTimeout the time in seconds to wait for the file to be downloaded (default: 15)
+   * @param elementVisibilityTimeout the time in seconds to wait for the element to be visible
+   *     (default: 15)
+   * @return true if the file exists, false otherwise
+   * @throws InterruptedException if the thread is interrupted while waiting for the file to be
+   *     downloaded
+   */
+  @Builder(builderMethodName = "initiateDownloadAndVerifyBuilder")
+  private Boolean initiateDownloadAndVerify(
+      By locator, String fileName, Integer downloadTimeout, Integer elementVisibilityTimeout)
+      throws InterruptedException {
+
+    // Check required parameters
+    if (locator == null) throw new RuntimeException("locator cannot be null");
+    if (fileName == null) throw new RuntimeException("fileName cannot be null");
+
+    // Optional parameters with default values
+    int effectiveDownloadTimeout = Optional.ofNullable(downloadTimeout).orElse(15);
+    int effectiveElementVisibilityTimeout =
+        Optional.ofNullable(elementVisibilityTimeout).orElse(15);
+
+    // Perform file operations
+    FileHelper.deleteFile(fileName);
+    scrollAndClickOn(locator, effectiveElementVisibilityTimeout);
+    return FileHelper.isFileExists(fileName, effectiveDownloadTimeout).getLeft();
   }
 }
