@@ -80,7 +80,10 @@ public class FileHelper {
 
     Collection<File> files = FileUtils.listFiles(dir, null, true);
     var fileNames = files.stream().map(File::getName).toList();
-    var fileInFolder = "\nFiles available in download folder:\n" + String.join("\n", fileNames);
+    var fileInFolder =
+        (fileNames.isEmpty())
+            ? "No Files available in download folder"
+            : "\nFiles available in download folder:\n" + String.join("\n", fileNames);
     return Pair.of(fileExists, fileInFolder);
   }
 
