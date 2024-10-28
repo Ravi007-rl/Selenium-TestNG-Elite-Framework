@@ -84,7 +84,7 @@ For reference, 20 test cases have been automated to demonstrate how anyone can a
     - The `uploadFile` method also supports uploading multiple files.
     - Users can pass a `List<String>` containing file names, and the method will handle the upload of multiple files.
 
-4. **Test Cases**:
+**Note**:
     - Three test cases have been created for demonstration purposes. Test cases are located in the `FileUploadTest` class.
 
 This setup enhances the usability of your framework by simplifying the file upload process and providing flexibility for different upload scenarios.
