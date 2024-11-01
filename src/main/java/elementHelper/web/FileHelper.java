@@ -80,24 +80,28 @@ public class FileHelper {
 
     Collection<File> files = FileUtils.listFiles(dir, null, true);
     var fileNames = files.stream().map(File::getName).toList();
-    var fileInFolder =
-        (fileNames.isEmpty())
-            ? "No Files available in download folder"
-            : "\nFiles available in download folder:\n" + String.join("\n", fileNames);
+    var fileInFolder = "\nFiles available in download folder:\n" + String.join("\n", fileNames);
     return Pair.of(fileExists, fileInFolder);
   }
 
   /**
-   * Deletes all files in the download folder. This method cleans the download directory by removing
-   * all files present within it.
+   * Deletes all files in the download folder except the .gitkeep file. This method cleans the
+   * download directory by removing all files present within it.
    */
   public static void deleteAllFiles() {
     var dir = new File(PathHelper.getDownloadFolderPath());
-    try {
-      FileUtils.cleanDirectory(dir);
-    } catch (Exception e) {
-      System.out.println("An error occurred: " + e.getMessage());
-    }
+    var getAllFileInDownloadFolder = FileUtils.listFiles(dir, null, true);
+
+    getAllFileInDownloadFolder.stream()
+        .filter(file -> !file.getName().equals(".gitkeep"))
+        .forEach(
+            file -> {
+              try {
+                FileUtils.forceDelete(file);
+              } catch (Exception e) {
+                e.printStackTrace();
+              }
+            });
   }
 
   /**
