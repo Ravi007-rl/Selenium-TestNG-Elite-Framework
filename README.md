@@ -35,6 +35,7 @@ The framework is designed to be user-friendly, allowing users to read 2-3 pre-wr
 - **Headless Mode**: If you set `HEADLESS=true` in the .env file, the browser will be launched in headless mode.
 - **File Upload**: The Selenium TestNG Elite Framework includes a comprehensive file upload feature that supports both traditional input type file uploads and drag-and-drop uploads. This feature is designed to handle single and multiple file uploads seamlessly. For more info see [How File Upload Feature Works](#how-file-upload-feature-works)
 - **File Download**: The Selenium TestNG Elite Framework includes a comprehensive file download feature. In this feature user can download file and assert that the file is downloaded successfully. Used fluent wait to wait for the file to be downloaded. For more info see [How Download File Feature Works](#how-download-file-feature-works)
+- **Automatic Open Extent Report**: Created Environment variables to automatically open the Extent Report. In .env file added `WANT_TO_OPEN_REPORT` and set it to `true` to open the report.
 - **GitHub Actions**: This framework supports GitHub Actions. You can run the tests from the GitHub Actions workflow.
 
 
