@@ -16,6 +16,7 @@ public class EnvironmentConfig {
   private final PlatformName platform;
   private final boolean headless;
   private final EnvironmentType environment;
+  private final boolean wantToOpenReports;
 
   public EnvironmentConfig() {
 
@@ -36,5 +37,6 @@ public class EnvironmentConfig {
     Constant.loadConstants(environmentBasedConfig);
 
     headless = Boolean.parseBoolean(globalDotenv.get("HEADLESS"));
+    wantToOpenReports = Boolean.parseBoolean(globalDotenv.get("WANT_TO_OPEN_REPORT"));
   }
 }

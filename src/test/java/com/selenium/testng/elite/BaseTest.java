@@ -7,6 +7,7 @@ import com.selenium.testng.elite.utils.*;
 import com.selenium.utils.DriverFactory;
 import com.selenium.utils.EnvironmentConfig;
 import elementHelper.web.FileHelper;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -66,6 +67,7 @@ public class BaseTest {
   public void afterSuite() {
     FileHelper.deleteAllFiles();
     ResultMaker.CreateFileForResult(failedTests, passedTests);
+    openExtentReport(environmentConfig.isWantToOpenReports());
   }
 
   private void setUpReportAndLogger(ITestResult result) {
@@ -85,5 +87,16 @@ public class BaseTest {
         MediaEntityBuilder.createScreenCaptureFromBase64String(screenshotBase64).build());
     System.out.println(
         "Screenshot: file://" + PathHelper.getEncodedPathForScreenShot(screenShotPath));
+  }
+
+  private void openExtentReport(boolean wantToOpenReports) {
+    if (wantToOpenReports) {
+      try {
+        Desktop desktop = Desktop.getDesktop();
+        desktop.browse(new File(PathHelper.getPathForReport()).toURI());
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
   }
 }
