@@ -7,8 +7,9 @@
 4. [Usage](#usage)
 5. [What Framework Users Need to Do](#what-framework-users-need-to-do)
 6. [How File Upload Feature Works](#how-file-upload-feature-works)
-7. [GitHub Actions Workflow](#github-actions-workflow)
-8. [Contact Information](#contact-information)
+7. [How Download File Feature Works](#how-download-file-feature-works)
+8. [GitHub Actions Workflow](#github-actions-workflow)
+9. [Contact Information](#contact-information)
 
 ## Overview
 The Selenium TestNG Elite Framework is a robust and scalable test automation framework designed to simplify the process of writing and running automated tests for web applications. This framework leverages [Selenium WebDriver](https://www.selenium.dev/documentation/) for browser automation and [TestNG](https://testng.org/) for test management.
@@ -32,7 +33,8 @@ The framework is designed to be user-friendly, allowing users to read 2-3 pre-wr
 - **Mojo Plugin**: Uses a custom Mojo plugin to send emails with attachments. The plugin triggers the `emailHelper.sendEmailWithAttachment` method to send the Extent report to the user.
 - **Debug Mode**: If you set `DEBUG=true` in the .env file, elements will be bordered in red before interaction.
 - **Headless Mode**: If you set `HEADLESS=true` in the .env file, the browser will be launched in headless mode.
-- **File Upload**: The Selenium TestNG Elite Framework includes a comprehensive file upload feature that supports both traditional input type file uploads and drag-and-drop uploads. This feature is designed to handle single and multiple file uploads seamlessly. 
+- **File Upload**: The Selenium TestNG Elite Framework includes a comprehensive file upload feature that supports both traditional input type file uploads and drag-and-drop uploads. This feature is designed to handle single and multiple file uploads seamlessly. For more info see [How File Upload Feature Works](#how-file-upload-feature-works)
+- **File Download**: The Selenium TestNG Elite Framework includes a comprehensive file download feature. In this feature user can download file and assert that the file is downloaded successfully. Used fluent wait to wait for the file to be downloaded. For more info see [How Download File Feature Works](#how-download-file-feature-works)
 - **GitHub Actions**: This framework supports GitHub Actions. You can run the tests from the GitHub Actions workflow.
 
 
@@ -88,6 +90,101 @@ For reference, 20 test cases have been automated to demonstrate how anyone can a
     - Three test cases have been created for demonstration purposes. Test cases are located in the `FileUploadTest` class.
 
 This setup enhances the usability of your framework by simplifying the file upload process and providing flexibility for different upload scenarios.
+
+## How Download File Feature Works
+
+The Selenium TestNG Elite Framework provides a robust file download feature, ensuring files are downloaded efficiently and verified for existence. Below is a detailed explanation of how this feature operates:
+
+1. **Dedicated Download Folder**
+    - Files are saved to a dedicated `downloadFiles` folder.
+    - The download location is set using the `download.default_directory`:
+
+      ```code
+        Map<String, Object> prefs = new HashMap<>();
+        prefs.put("download.default_directory", Path_To_Download_Folder);
+        prefs.setExperimentalOption("prefs", prefs);
+      ```
+
+2. **Automatic Download Handling**
+    - The download prompt is disabled, enabling files to download automatically without user intervention. This is managed by setting `download.prompt_for_download` to `false`:
+
+      ```code
+        prefs.put("download.prompt_for_download", false);
+      ```
+
+3. **PDF Download Configuration**
+    - To avoid opening PDFs in the browser, they are configured to download directly by setting `plugins.always_open_pdf_externally` to `true`:
+
+      ```code
+        prefs.put("plugins.always_open_pdf_externally", true);
+      ```
+
+4. **Download Verification Methods**
+    - The framework includes two builder-based methods for flexible, parameterized download verification:
+
+        - **`initiateDownloadAndVerifyBuilder`**
+            - Returns `true` if the specified file exists in the download folder; `false` otherwise.
+              - **Usage**:
+
+                ```code
+                seleniumHelper.initiateDownloadAndVerifyBuilder()
+                    .locator(By_Locator)
+                    .fileName(FileName)
+                    .downloadTimeout(Wait_Time_In_Seconds)            // Optional
+                    .elementVisibilityTimeout(Wait_Time_In_Seconds)    // Optional
+                    .build();
+                ```
+
+            - **Implementation**:
+
+              ```code
+              @Builder(builderMethodName = "initiateDownloadAndVerifyBuilder")
+              private Boolean initiateDownloadAndVerify(By locator, String fileName, Integer downloadTimeout, Integer elementVisibilityTimeout) throws InterruptedException {
+                  // Validate parameters
+                  if (locator == null) throw new RuntimeException("locator cannot be null");
+                  if (fileName == null) throw new RuntimeException("fileName cannot be null");
+     
+                  // Optional parameters with default values
+                  int effectiveDownloadTimeout = Optional.ofNullable(downloadTimeout).orElse(15);
+                  int effectiveElementVisibilityTimeout = Optional.ofNullable(elementVisibilityTimeout).orElse(15);
+     
+                  // Download verification process
+                  FileHelper.deleteFile(fileName);
+                  scrollAndClickOn(locator, effectiveElementVisibilityTimeout);
+                  return FileHelper.isFileExists(fileName, effectiveDownloadTimeout).getLeft();
+              }
+              ```
+
+        - **`initiateDownloadAndVerifyWithExpectedMessageBuilder`**
+            - Returns a `Pair` containing a boolean to indicate if the file exists and a message listing files in the download folder.
+            - **Usage**:
+
+              ```code
+              seleniumHelper.initiateDownloadAndVerifyWithExpectedMessageBuilder()
+                  .locator(By_Locator)
+                  .fileName(FileName)
+                  .downloadTimeout(Wait_Time_In_Seconds)           // Optional
+                  .elementVisibilityTimeout(Wait_Time_In_Seconds)   // Optional
+                  .build();
+              ```
+
+            - **Implementation**:
+
+              ```code
+              @Builder(builderMethodName = "initiateDownloadAndVerifyWithExpectedMessageBuilder")
+              private Pair<Boolean, String> initiateDownloadAndVerifyWithExpectedMessage(By locator, String fileName, Integer downloadTimeout, Integer elementVisibilityTimeout) throws InterruptedException {
+                  if (locator == null) throw new RuntimeException("locator cannot be null");
+                  if (fileName == null) throw new RuntimeException("fileName cannot be null");
+     
+                  int effectiveDownloadTimeout = Optional.ofNullable(downloadTimeout).orElse(15);
+                  int effectiveElementVisibilityTimeout = Optional.ofNullable(elementVisibilityTimeout).orElse(15);
+     
+                  FileHelper.deleteFile(fileName);
+                  scrollAndClickOn(locator, effectiveElementVisibilityTimeout);
+                  return FileHelper.isFileExists(fileName, effectiveDownloadTimeout);
+              }
+              ```
+
 
 ## GitHub Actions Workflow
 
