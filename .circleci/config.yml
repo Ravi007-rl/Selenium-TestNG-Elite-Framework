@@ -4,10 +4,15 @@ jobs:
   Ubuntu_turn_on:
     machine:
       image: ubuntu-2204:current
+  install java:
+    docker:
+      - image: cimg/openjdk:23.0.1
     steps:
-      - run: echo "Ubuntu turn on"
+      - run: |
+          java --version
 
 workflows:
   my-workflow:
     jobs:
       - Ubuntu_turn_on
+      - install java
