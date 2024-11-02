@@ -6,7 +6,7 @@ orbs:
 jobs:
   build-and-test:
     docker:
-      - image: cimg/openjdk:23.0.1
+      - image: cimg/openjdk:22.0.2
     steps:
       - checkout
       - browser-tools/install-browser-tools
