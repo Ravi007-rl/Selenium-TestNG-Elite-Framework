@@ -4,6 +4,7 @@ jobs:
   Run Automation Testcases:
     machine:
       image: ubuntu-2204:current
+
     docker:
       - image: cimg/openjdk:23.0.1
     steps:
