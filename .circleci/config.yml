@@ -18,7 +18,7 @@ jobs:
             export ENV=Test
             mvn test -X -DsuiteXmlFile=testng.xml -Dexec.skip=true
       - store_test_results:
-          path: target/surefire-reports/testng-failed.xml
+          path: target/surefire-reports/My Test Suite/
 
 workflows:
   build-and-test:
