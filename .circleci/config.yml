@@ -1,107 +1,14 @@
 version: 2.1
 
-parameters:
-  environment:
-    type: string
-    default: "Test"
-    enum: ["Test", "Stage"]
-  browser:
-    type: string
-    default: "Chrome"
-    enum: ["Chrome", "Firefox", "Edge"]
-  email:
-    type: string
-    default: ""
-
 jobs:
-  build:
-    docker:
-      - image: circleci/openjdk:22-jdk
+  hello-job:
+    machine:
+      image: ubuntu-2204:current
     steps:
-      - checkout
-
-      - run:
-          name: Setup Maven
-          command: |
-            sudo apt-get update
-            sudo apt-get install -y maven
-            mvn -version
-
-      - when:
-          condition: << parameters.browser >> == "Chrome"
-          steps:
-            - run:
-                name: Setup Chrome
-                command: sudo apt-get install -y google-chrome-stable
-
-      - when:
-          condition: << parameters.browser >> == "Firefox"
-          steps:
-            - run:
-                name: Setup Firefox
-                command: sudo apt-get install -y firefox
-
-      - when:
-          condition: << parameters.browser >> == "Edge"
-          steps:
-            - run:
-                name: Setup Edge
-                command: |
-                  curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
-                  sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/
-                  sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/edge stable main" > /etc/apt/sources.list.d/microsoft-edge-dev.list'
-                  sudo apt update
-                  sudo apt install -y microsoft-edge-stable
-
-      - run:
-          name: Install dependencies without running tests
-          command: mvn clean install -DskipTests
-
-      - run:
-          name: Run tests
-          command: |
-            export BROWSER=<< parameters.browser >>
-            export HEADLESS=true
-            export ENV=<< parameters.environment >>
-            mvn test -DsuiteXmlFile=testng.xml
-          when: always
-
-      - run:
-          name: Send result via email
-          command: |
-            export EMAIL=<< parameters.email >>
-            export SUBJECT="Complete Execution for << parameters.environment >> Environment on << parameters.browser >> Browser"
-            mvn exec:java
-          environment:
-            EMAIL_USER: $SENDER_EMAIL
-            EMAIL_PASSWORD: $SENDER_APP_PASSWORD
-
-      - run:
-          name: Re-run failed tests
-          command: |
-            export BROWSER=<< parameters.browser >>
-            export HEADLESS=true
-            export Is_Flaky=true
-            export ENV=<< parameters.environment >>
-            mvn test -DsuiteXmlFile=target/surefire-reports/testng-failed.xml
-          when: on_fail
-
-      - run:
-        name: Re-send result via email
-        command: |
-          export EMAIL=<< parameters.email >>
-          export SUBJECT="Re-run Failed Test Cases for << parameters.environment >> Environment on << parameters.browser >> Browser"
-          mvn exec:java
-        environment:
-          EMAIL_USER: $SENDER_EMAIL
-          EMAIL_PASSWORD: $SENDER_APP_PASSWORD
-        when: on_fail
+      - checkout # check out the code in the project directory
+      - run: echo "hello world" # run the `echo` command
 
 workflows:
-  version: 2
-  manual-test-workflow:
+  my-workflow:
     jobs:
-      - build:
-          environment: << pipeline.parameters.environment >>
-          browser: << pipeline.parameters.browser >>
-          email: << pipeline.parameters.email >>
+      - hello-job
