@@ -29,7 +29,7 @@ jobs:
           command: google-chrome --version
       - install dependencies
       - run:
-          name: install dependencies
+          name: Install Dependencies
           command: mvn clean install -DskipTests
       - Run test cases
       - run:
