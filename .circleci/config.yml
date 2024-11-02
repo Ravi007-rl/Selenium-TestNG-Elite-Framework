@@ -1,43 +1,107 @@
-# This config was automatically generated from your source code
-# Stacks detected: cicd:github-actions:.github/workflows,deps:java:.
 version: 2.1
+
+parameters:
+  environment:
+    type: string
+    default: "Test"
+    enum: ["Test", "Stage"]
+  browser:
+    type: string
+    default: "Chrome"
+    enum: ["Chrome", "Firefox", "Edge"]
+  email:
+    type: string
+    default: ""
+
 jobs:
-  test-java:
+  build:
     docker:
-      - image: cimg/openjdk:17.0
+      - image: circleci/openjdk:22-jdk
     steps:
       - checkout
+
       - run:
-          name: Calculate cache key
-          command: |-
-            find . -name 'pom.xml' -o -name 'gradlew*' -o -name '*.gradle*' | \
-                    sort | xargs cat > /tmp/CIRCLECI_CACHE_KEY
-      - restore_cache:
-          key: cache-{{ checksum "/tmp/CIRCLECI_CACHE_KEY" }}
+          name: Setup Maven
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y maven
+            mvn -version
+
+      - when:
+          condition: << parameters.browser >> == "Chrome"
+          steps:
+            - run:
+                name: Setup Chrome
+                command: sudo apt-get install -y google-chrome-stable
+
+      - when:
+          condition: << parameters.browser >> == "Firefox"
+          steps:
+            - run:
+                name: Setup Firefox
+                command: sudo apt-get install -y firefox
+
+      - when:
+          condition: << parameters.browser >> == "Edge"
+          steps:
+            - run:
+                name: Setup Edge
+                command: |
+                  curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+                  sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/
+                  sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/edge stable main" > /etc/apt/sources.list.d/microsoft-edge-dev.list'
+                  sudo apt update
+                  sudo apt install -y microsoft-edge-stable
+
       - run:
-          command: mvn verify
-      - store_test_results:
-          path: target/surefire-reports
-      - save_cache:
-          key: cache-{{ checksum "/tmp/CIRCLECI_CACHE_KEY" }}
-          paths:
-            - ~/.m2/repository
-  deploy:
-    # This is an example deploy job, not actually used by the workflow
-    docker:
-      - image: cimg/base:stable
-    steps:
-      # Replace this with steps to deploy to users
+          name: Install dependencies without running tests
+          command: mvn clean install -DskipTests
+
       - run:
-          name: deploy
-          command: '#e.g. ./deploy.sh'
+          name: Run tests
+          command: |
+            export BROWSER=<< parameters.browser >>
+            export HEADLESS=true
+            export ENV=<< parameters.environment >>
+            mvn test -DsuiteXmlFile=testng.xml
+          when: always
+
       - run:
-          name: found github actions config
-          command: ':'
+          name: Send result via email
+          command: |
+            export EMAIL=<< parameters.email >>
+            export SUBJECT="Complete Execution for << parameters.environment >> Environment on << parameters.browser >> Browser"
+            mvn exec:java
+          environment:
+            EMAIL_USER: $SENDER_EMAIL
+            EMAIL_PASSWORD: $SENDER_APP_PASSWORD
+
+      - run:
+          name: Re-run failed tests
+          command: |
+            export BROWSER=<< parameters.browser >>
+            export HEADLESS=true
+            export Is_Flaky=true
+            export ENV=<< parameters.environment >>
+            mvn test -DsuiteXmlFile=target/surefire-reports/testng-failed.xml
+          when: on_fail
+
+      - run:
+        name: Re-send result via email
+        command: |
+          export EMAIL=<< parameters.email >>
+          export SUBJECT="Re-run Failed Test Cases for << parameters.environment >> Environment on << parameters.browser >> Browser"
+          mvn exec:java
+        environment:
+          EMAIL_USER: $SENDER_EMAIL
+          EMAIL_PASSWORD: $SENDER_APP_PASSWORD
+        when: on_fail
+
 workflows:
-  build-and-test:
+  version: 2
+  manual-test-workflow:
     jobs:
-      - test-java
-    # - deploy:
-    #     requires:
-    #       - test-java
+      - build:
+          environment: << pipeline.parameters.environment >>
+          browser: << pipeline.parameters.browser >>
+          email: << pipeline.parameters.email >>
