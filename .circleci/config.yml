@@ -4,6 +4,11 @@ jobs:
   Ubuntu_turn_on:
     machine:
       image: ubuntu-2204:current
+    steps:
+      - run: |
+          echo "hello world"
+          
+
   install java:
     docker:
       - image: cimg/openjdk:23.0.1
