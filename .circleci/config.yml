@@ -10,4 +10,4 @@ jobs:
 workflows:
   my-workflow:
     jobs:
-      - hello-job
+      - Ubuntu_turn_on
