@@ -12,7 +12,7 @@ jobs:
       - browser-tools/install-browser-tools
       - run:
           name: Run test cases
-          run: |
+          command: |
             export BROWSER=chrome
             export HEADLESS=true
             export ENV=Test
