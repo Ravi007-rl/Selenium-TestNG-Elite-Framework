@@ -19,5 +19,4 @@ jobs:
 workflows:
   my-workflow:
     jobs:
-      - Ubuntu_turn_on
-      - install java
+      - Run Automation Testcases
