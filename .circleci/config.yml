@@ -6,35 +6,19 @@ orbs:
 jobs:
   build-and-test:
     docker:
-      - image: cimg/openjdk:19.0.1
+      - image: cimg/openjdk:19.0.1-browsers
     steps:
       - checkout
-      - run:
-          name: Install Java
-          command: |
-            sudo apt-get update
-            sudo apt install openjdk-19-jdk
-      - run:
-          name: Verify Java installation
-          command: java -version
-      - run:
-          name: Install Maven
-          command: sudo apt-get install maven
-      - run:
-          name: Verify Maven installation
-          command: mvn --version
-      - browser-tools/install-chrome
+      - browser-tools/install-browser-tools
       - run:
           name: Verify Chrome installation
           command: google-chrome --version
-      - install dependencies
       - run:
           name: Install Dependencies
           command: mvn clean install -DskipTests
-      - Run test cases
       - run:
           name: Run test cases
-          command: mvn test -DsuiteXmlFile=target/surefire-reports/testng-failed.xml
+          command: mvn test
 
 workflows:
   build-and-test:
