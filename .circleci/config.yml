@@ -11,14 +11,12 @@ jobs:
       - checkout
       - browser-tools/install-browser-tools
       - run:
-          name: Verify Chrome installation
-          command: google-chrome --version
-      - run:
-          name: Install Dependencies
-          command: mvn clean install -DskipTests
-      - run:
           name: Run test cases
-          command: mvn test
+          run: |
+            export BROWSER=chrome
+            export HEADLESS=true
+            export ENV=Test
+            mvn test -DsuiteXmlFile=target/surefire-reports/testng-failed.xml
 
 workflows:
   build-and-test:
