@@ -16,7 +16,7 @@ jobs:
             export BROWSER=chrome
             export HEADLESS=true
             export ENV=Test
-            mvn test -DsuiteXmlFile=target/surefire-reports/testng-failed.xml
+            mvn test -X -DsuiteXmlFile=target/surefire-reports/testng-failed.xml
 
 workflows:
   build-and-test:
