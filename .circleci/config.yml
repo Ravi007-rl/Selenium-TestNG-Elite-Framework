@@ -1,12 +1,11 @@
 version: 2.1
 
 jobs:
-  hello-job:
+  Ubuntu_turn_on:
     machine:
       image: ubuntu-2204:current
     steps:
-      - checkout # check out the code in the project directory
-      - run: echo "hello world" # run the `echo` command
+      - run: echo "Ubuntu turn on"
 
 workflows:
   my-workflow:
