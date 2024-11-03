@@ -16,7 +16,7 @@ jobs:
             export BROWSER=chrome
             export HEADLESS=true
             export ENV=Test
-            mvn test -X -DsuiteXmlFile=testng.xml -Dexec.skip=true
+            mvn test -DsuiteXmlFile=testng.xml
       - store_test_results:
           path: target/surefire-reports/My Test Suite/
 
