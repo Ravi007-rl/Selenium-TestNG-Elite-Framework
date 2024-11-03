@@ -21,7 +21,7 @@ jobs:
           path: target/surefire-reports/My Test Suite/
       - store_artifacts:
           path: target/html-report/SparkReport.html
-          destination: SparkReport.html
+          destination: initial_run/SparkReport.html
       - run:
           name: Run only failed test cases
           command: |
@@ -34,7 +34,7 @@ jobs:
           path: target/surefire-reports/My Test Suite/
       - store_artifacts:
           path: target/html-report/SparkReport.html
-          destination: SparkReport.html
+          destination: rerun/SparkReport.html
 
 workflows:
   build-and-test:
