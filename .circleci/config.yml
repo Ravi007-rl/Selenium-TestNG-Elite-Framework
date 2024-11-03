@@ -26,7 +26,7 @@ jobs:
           name: Send result via email
           command: |
             export EMAIL=ravi007.rl@gmail.com
-            export SUBJECT="Test Cases for ${{ github.event.inputs.Environment }} Environment on ${{ github.event.inputs.Browser }} Browser"
+            export SUBJECT="Test Cases for Test Environment on Chrome Browser"
             mvn exec:java
           when: always
       - run:
@@ -46,7 +46,7 @@ jobs:
           name: Send re-run result via email
           command: |
             export EMAIL=ravi007.rl@gmail.com
-            export SUBJECT="Re-run Failed Test Cases for ${{ github.event.inputs.Environment }} Environment on ${{ github.event.inputs.Browser }} Browser"
+            export SUBJECT="Re-run Failed Test Cases for Test Environment on Chrome Browser"
             mvn exec:java
           when: on_fail
 
