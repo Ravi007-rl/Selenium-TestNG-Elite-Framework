@@ -1,15 +1,11 @@
 version: 2.1
 
-parameters:
-  manual-workflow:
-    type: boolean
-    default: false
-
 orbs:
   browser-tools: circleci/browser-tools@1.4.8
 
 jobs:
   build-and-test:
+    working_directory: /tmp
     docker:
       - image: cimg/openjdk:22.0.2
     steps:
@@ -24,6 +20,11 @@ jobs:
             mvn test -DsuiteXmlFile=testng.xml
       - store_test_results:
           path: target/surefire-reports/My Test Suite/
+      - store_artifacts:
+          path: target/html-report/SparkReport.html
+          destination: artifact-file
+      - store_artifacts:
+          path: /tmp/artifacts
       - run:
           name: Re-run failed tests
           command: |
@@ -33,7 +34,6 @@ jobs:
             mvn test -DsuiteXmlFile=target/surefire-reports/testng-failed.xml
 
 workflows:
-  manual-workflow:
-    when: << pipeline.parameters.manual-workflow >>
+  build-and-test:
     jobs:
       - build-and-test
