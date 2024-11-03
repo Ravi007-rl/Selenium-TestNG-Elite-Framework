@@ -28,7 +28,7 @@ jobs:
             export BROWSER=chrome
             export HEADLESS=true
             export ENV=Test
-            mvn test -DsuiteXmlFile=testng.xml -Dsurefire.rerunFailingTestsCount=1
+            mvn test -DsuiteXmlFile=target/surefire-reports/testng-failed.xml
           when: on_fail
       - store_test_results:
           path: target/surefire-reports/My Test Suite/
