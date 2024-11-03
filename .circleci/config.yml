@@ -17,21 +17,8 @@ jobs:
             export HEADLESS=true
             export ENV=Test
             mvn test -DsuiteXmlFile=testng.xml
-      working_directory: /tmp
       - store_test_results:
           path: target/surefire-reports/My Test Suite/
-      - store_artifacts:
-          path: target/html-report/SparkReport.html
-          destination: artifact-file
-      - store_artifacts:
-          path: /tmp/artifacts
-      - run:
-          name: Re-run failed tests
-          command: |
-            export BROWSER=chrome
-            export HEADLESS=true
-            export ENV=Test
-            mvn test -DsuiteXmlFile=target/surefire-reports/testng-failed.xml
 
 workflows:
   build-and-test:
