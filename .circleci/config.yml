@@ -22,6 +22,19 @@ jobs:
       - store_artifacts:
           path: target/html-report/SparkReport.html
           destination: SparkReport.html
+      - run:
+          name: Run only failed test cases
+          command: |
+            export BROWSER=chrome
+            export HEADLESS=true
+            export ENV=Test
+            mvn test -DsuiteXmlFile=testng.xml -Dsurefire.rerunFailingTestsCount=1
+          when: on_fail
+      - store_test_results:
+          path: target/surefire-reports/My Test Suite/
+      - store_artifacts:
+          path: target/html-report/SparkReport.html
+          destination: SparkReport.html
 
 workflows:
   build-and-test:
