@@ -1,5 +1,10 @@
 version: 2.1
 
+parameters:
+  manual-workflow:
+    type: boolean
+    default: false
+
 orbs:
   browser-tools: circleci/browser-tools@1.4.8
 
@@ -28,6 +33,7 @@ jobs:
             mvn test -DsuiteXmlFile=target/surefire-reports/testng-failed.xml
 
 workflows:
-  build-and-test:
+  manual-workflow:
+    when: << pipeline.parameters.manual-workflow >>
     jobs:
       - build-and-test
