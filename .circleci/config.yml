@@ -11,11 +11,6 @@ jobs:
       - checkout
       - browser-tools/install-browser-tools
       - run:
-          name: Store pipeline environment variable in bash variable
-          command: |
-            echo 'export EMAIL_USER="${SENDER_EMAIL}"' >> $EMAIL_USER
-            echo 'export EMAIL_PASSWORD="${SENDER_APP_PASSWORD}"' >> $EMAIL_PASSWORD
-      - run:
           name: Run test cases
           command: |
             export BROWSER=chrome
