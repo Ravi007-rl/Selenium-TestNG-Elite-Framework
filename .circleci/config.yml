@@ -11,6 +11,13 @@ jobs:
       - checkout
       - browser-tools/install-browser-tools
       - run:
+          name: Store pipeline environment variable in bash variable
+          command: |
+            echo 'export EMAIL_USER="${SENDER_EMAIL}"' >> $EMAIL_USER
+            source $EMAIL_USER
+            echo 'export EMAIL_PASSWORD="${SENDER_APP_PASSWORD}"' >> $EMAIL_PASSWORD
+            source $EMAIL_PASSWORD
+      - run:
           name: Run test cases
           command: |
             export BROWSER=chrome
@@ -44,6 +51,7 @@ jobs:
           destination: rerun/SparkReport.html
       - run:
           name: Send re-run result via email
+          environment:
           command: |
             export EMAIL=ravi007.rl@gmail.com
             export SUBJECT="Re-run Failed Test Cases for Test Environment on Chrome Browser"
