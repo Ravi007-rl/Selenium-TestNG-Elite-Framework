@@ -104,5 +104,5 @@ jobs:
         if: ${{ failure() && steps.Run_Test.outcome == 'failure' }}
         uses: actions/upload-artifact@v4
         with:
-          name: Re-Run Result
+          name: code-coverage-report
           path: target/html-report/SparkReport.html
