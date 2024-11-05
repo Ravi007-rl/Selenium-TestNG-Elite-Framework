@@ -37,9 +37,6 @@ jobs:
           java-version: 22
           distribution: 'temurin'
 
-      - name: Setup Maven
-        uses: stCarolas/setup-maven@v5
-
       - name: Set up Chrome
         if: ${{ github.event.inputs.Browser == 'chrome' }}
         uses: browser-actions/setup-chrome@v1.7.2
