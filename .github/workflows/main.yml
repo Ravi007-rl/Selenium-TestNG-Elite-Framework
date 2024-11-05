@@ -73,12 +73,12 @@ jobs:
           EMAIL_USER: ${{ secrets.SENDER_EMAIL }}
           EMAIL_PASSWORD: ${{ secrets.SENDER_APP_PASSWORD }}
 
-      - name: Get Result Using Artifacts
+      - name: Store Html Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: Test Result
-          path: target/surefire-reports/My Test Suite/
+          name: Initial Result
+          path: target/html-report/SparkReport.html
 
       - name: Re-run failed tests
         id: Re_Run_Test
@@ -99,3 +99,10 @@ jobs:
         env:
           EMAIL_USER: ${{ secrets.SENDER_EMAIL }}
           EMAIL_PASSWORD: ${{ secrets.SENDER_APP_PASSWORD }}
+
+      - name: Store Html Report
+        if: ${{ failure() && steps.Run_Test.outcome == 'failure' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: Re-Run Result
+          path: target/html-report/SparkReport.html
