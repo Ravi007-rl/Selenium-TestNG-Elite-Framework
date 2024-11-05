@@ -74,7 +74,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: Initial Result
+          name: Initial Test Result
           path: target/html-report/SparkReport.html
 
       - name: Re-run failed tests
@@ -101,5 +101,5 @@ jobs:
         if: ${{ failure() && steps.Run_Test.outcome == 'failure' }}
         uses: actions/upload-artifact@v4
         with:
-          name: code-coverage-report
+          name: Re-Run Test Result
           path: target/html-report/SparkReport.html
