@@ -29,16 +29,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Setup Java JDK
         uses: actions/setup-java@v4.3.0
         with:
           java-version: 22
           distribution: 'temurin'
-
-      - name: Setup Maven
-        uses: stCarolas/setup-maven@v5
 
       - name: Set up Chrome
         if: ${{ github.event.inputs.Browser == 'chrome' }}
@@ -73,6 +70,13 @@ jobs:
           EMAIL_USER: ${{ secrets.SENDER_EMAIL }}
           EMAIL_PASSWORD: ${{ secrets.SENDER_APP_PASSWORD }}
 
+      - name: Store Html Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Initial Test Result
+          path: target/html-report/SparkReport.html
+
       - name: Re-run failed tests
         id: Re_Run_Test
         if: ${{ failure() && steps.Run_Test.outcome == 'failure' }}
@@ -92,3 +96,10 @@ jobs:
         env:
           EMAIL_USER: ${{ secrets.SENDER_EMAIL }}
           EMAIL_PASSWORD: ${{ secrets.SENDER_APP_PASSWORD }}
+
+      - name: Store Html Report
+        if: ${{ failure() && steps.Run_Test.outcome == 'failure' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: Re-Run Test Result
+          path: target/html-report/SparkReport.html
