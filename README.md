@@ -189,7 +189,7 @@ The Selenium TestNG Elite Framework provides a robust file download feature, ens
 
 ## GitHub Actions Workflow
 
-This repository contains a [GitHub Actions](https://github.com/features/actions) workflow for running automation test cases using [Selenium](https://www.selenium.dev/documentation/webdriver/support_features/expected_conditions/App) and [TestNG](https://testng.org/testng-1.0.dtd">). The workflow supports multiple environments and browsers, and it sends the test results via email.
+This repository contains a [GitHub Actions](https://github.com/features/actions) workflow for running automation test cases using [Selenium](https://www.selenium.dev/documentation/webdriver/support_features/expected_conditions/App) and [TestNG](https://testng.org/testng-1.0.dtd">). The workflow supports multiple environments and browsers, and it sends the test results via email also store results in GitHub Artifacts.
 
 ### Workflow Overview
 
@@ -202,8 +202,10 @@ The workflow is triggered manually using the `workflow_dispatch` event. It allow
 5. Installs dependencies without running tests.
 6. Runs the tests.
 7. Sends the test results via email.
-8. Re-runs failed tests if any.
-9. Re-sends the test results for the re-run tests via email.
+8. Store initial test result in GitHub Artifacts.
+9. Re-runs failed tests if any.
+10. Re-sends the test results for the re-run tests via email.
+11. Store re-run test result in GitHub Artifacts.
 
 ### Inputs
 
@@ -228,7 +230,7 @@ To manually trigger the workflow, follow these steps:
 #### 1. Checkout Repository
 
 ```yaml
-- uses: actions/checkout@v2
+- uses: actions/checkout@v4
 ```
 
 #### 2. Setup Java JDK
@@ -299,7 +301,18 @@ Depending on the selected browser, one of the following steps will be executed:
     EMAIL_PASSWORD: ${{ secrets.SENDER_APP_PASSWORD }}
 ```
 
-#### 8. Re-run Failed Tests
+#### 8. Store Html Report
+
+```yaml
+- name: Store Html Report
+  if: always()
+  uses: actions/upload-artifact@v4
+  with:
+    name: Initial Test Result
+    path: target/html-report/SparkReport.html
+```
+
+#### 9. Re-run Failed Tests
 
 ```yaml
 - name: Re-run failed tests
@@ -313,7 +326,7 @@ Depending on the selected browser, one of the following steps will be executed:
     mvn test -DsuiteXmlFile=target/surefire-reports/testng-failed.xml
 ```
 
-#### 9. Re-send Result via Email
+#### 10. Re-send Result via Email
 
 ```yaml
 - name: Re-send result via email
@@ -327,6 +340,17 @@ Depending on the selected browser, one of the following steps will be executed:
     EMAIL_PASSWORD: ${{ secrets.SENDER_APP_PASSWORD }}
 ```
 
+#### 11. Store Html Report
+
+```yaml
+- name: Store Html Report
+  if: ${{ failure() && steps.Run_Test.outcome == 'failure' }}
+  uses: actions/upload-artifact@v4
+  with:
+    name: Re-Run Test Result
+    path: target/html-report/SparkReport.html
+```
+
 ### Secrets
 
 The workflow requires the following secrets to be set in the repository settings:
@@ -335,4 +359,15 @@ The workflow requires the following secrets to be set in the repository settings
 - **SENDER_APP_PASSWORD**: The application password for the sender email.
 
 ## Contact Information
-Ravi (Email: ravi007.rl@gmail.com)
+
+<p>
+  <a href="mailto:ravi007.rl@gmail.com" style="text-decoration: none;">
+    <img src="https://img.shields.io/badge/Email-Ravi_D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Email Ravi" />
+  </a>
+  &nbsp;
+  <a href="https://www.linkedin.com/in/ravi-lalwani-4907991a4/" style="text-decoration: none;">
+    <img src="https://img.shields.io/badge/LinkedIn-Ravi_Lalwani-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn Ravi Lalwani" />
+  </a>
+</p>
+
+
