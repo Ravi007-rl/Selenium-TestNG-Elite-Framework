@@ -22,7 +22,7 @@ public class FileDownloadTest extends BaseTest {
     assertThat(fileDownload.getPageHeader()).isEqualTo("File Downloader");
 
     log.get().info("Click on 'File Download' link");
-    var fileName = "test.pdf";
+    var fileName = "webdriverIO.png";
     var fileExists = fileDownload.clickOnDownloadFile(fileName);
 
     log.get().info("Verify that downloaded file name is correct");
