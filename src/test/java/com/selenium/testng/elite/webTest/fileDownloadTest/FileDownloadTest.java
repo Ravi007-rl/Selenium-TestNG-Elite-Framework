@@ -6,6 +6,7 @@ import com.selenium.testng.elite.BaseTest;
 import org.testng.annotations.Test;
 import pageObjectModel.webPageObject.fileDownloadPage.FileDownloadPageInternetHerokuApp;
 import pageObjectModel.webPageObject.fileDownloadPage.PrinceSampleDocumentsPage;
+import pageObjectModel.webPageObject.fileUploadPage.FileUploadPage;
 
 public class FileDownloadTest extends BaseTest {
 
@@ -14,15 +15,26 @@ public class FileDownloadTest extends BaseTest {
 
     // Page object for download file page (Internet HerokuApp)
     var fileDownload = new FileDownloadPageInternetHerokuApp(driver);
+    var fileUpload = new FileUploadPage(driver);
 
-    log.get().info("Navigate to Internet HerokuApp's download page");
+    log.get().info("Navigate to Internet HerokuApp's upload file page");
+    driver.get("https://the-internet.herokuapp.com/upload");
+
+    log.get().info("Upload PDF file and click on upload button");
+    var fileName = "PDFFile.pdf";
+    fileUpload.uploadFile(fileName);
+    fileUpload.clickOnUploadButton();
+
+    log.get().info("Verify file uploaded properly");
+    assertThat(fileUpload.getUploadedFileText()).isEqualTo("PDFFile.pdf");
+
+    log.get().info("Navigate to Internet HerokuApp's download file page");
     driver.get("https://the-internet.herokuapp.com/download");
 
     log.get().info("Verify page header is displayed");
     assertThat(fileDownload.getPageHeader()).isEqualTo("File Downloader");
 
     log.get().info("Click on 'File Download' link");
-    var fileName = "webdriverIO.png";
     var fileExists = fileDownload.clickOnDownloadFile(fileName);
 
     log.get().info("Verify that downloaded file name is correct");
