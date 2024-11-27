@@ -17,8 +17,6 @@ jobs:
             export HEADLESS=true
             export ENV=Test
             mvn test -DsuiteXmlFile=testng.xml
-      - store_test_results:
-          path: target/surefire-reports/My Test Suite/
       - store_artifacts:
           path: target/html-report/SparkReport.html
           destination: initial_run/SparkReport.html
