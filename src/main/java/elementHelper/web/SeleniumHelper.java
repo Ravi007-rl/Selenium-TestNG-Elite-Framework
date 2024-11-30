@@ -625,7 +625,7 @@ public class SeleniumHelper {
    */
   public boolean isElementHaveGivenClass(By by, String cssValue) {
     var element = waitHelper.waitForElementToBeVisible(by);
-    var classAttribute = element.getAttribute("class");
+    var classAttribute = element.getDomAttribute("class");
     return classAttribute != null && classAttribute.contains(cssValue);
   }
 
@@ -641,7 +641,7 @@ public class SeleniumHelper {
     var file = FileHelper.getUploadFilesFullPath(fileName);
     var element = waitHelper.waitForElementPresenceInDOM(by);
     if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
-    if (Objects.equals(element.getAttribute("type"), "file")) element.sendKeys(file);
+    if (Objects.equals(element.getDomAttribute("type"), "file")) element.sendKeys(file);
     else jsHelper.uploadFile(element, file, false);
   }
 
@@ -658,7 +658,7 @@ public class SeleniumHelper {
     var file = FileHelper.getUploadFilesFullPath(fileName);
     var element = waitHelper.waitForElementPresenceInDOM(by, second);
     if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
-    if (Objects.equals(element.getAttribute("type"), "file")) element.sendKeys(file);
+    if (Objects.equals(element.getDomAttribute("type"), "file")) element.sendKeys(file);
     else jsHelper.uploadFile(element, file, false);
   }
 
@@ -674,9 +674,9 @@ public class SeleniumHelper {
     var filePathForAllFiles = FileHelper.getConcatenatedPath(fileNames);
     var element = waitHelper.waitForElementPresenceInDOM(chooseFile);
     if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
-    var isTypeAttributeHasFile = Objects.equals(element.getAttribute("type"), "file");
+    var isTypeAttributeHasFile = Objects.equals(element.getDomAttribute("type"), "file");
     var isMultiplePropertyAvailable = element.getDomProperty("multiple") != null;
-    var isMultiplePropertyHaveNotFalseValue = Objects.equals(element.getAttribute("type"), "false");
+    var isMultiplePropertyHaveNotFalseValue = Objects.equals(element.getDomAttribute("type"), "false");
     if (isTypeAttributeHasFile
         && isMultiplePropertyAvailable
         && isMultiplePropertyHaveNotFalseValue) {
@@ -696,9 +696,9 @@ public class SeleniumHelper {
   public void uploadFile(By by, List<String> fileNames, int second) throws InterruptedException {
     var filePathForAllFiles = FileHelper.getConcatenatedPath(fileNames);
     var element = waitHelper.waitForElementPresenceInDOM(by, second);
-    var isTypeAttributeHasFile = Objects.equals(element.getAttribute("type"), "file");
+    var isTypeAttributeHasFile = Objects.equals(element.getDomAttribute("type"), "file");
     var isMultiplePropertyAvailable = element.getDomProperty("multiple") != null;
-    var isMultiplePropertyHaveNotFalseValue = Objects.equals(element.getAttribute("type"), "false");
+    var isMultiplePropertyHaveNotFalseValue = Objects.equals(element.getDomAttribute("type"), "false");
     if (IS_DEBUG) jsHelper.javaScriptHighlightElement(element);
     if (isTypeAttributeHasFile
         && isMultiplePropertyAvailable
