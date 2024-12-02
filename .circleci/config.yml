@@ -23,11 +23,12 @@ jobs:
       - run:
           name: Send result via email
           command: |
-            echo 'export EMAIL_USER="${MY_EMAIL}"' >> $SENDER_EMAIL
-            echo 'export EMAIL_PASSWORD="${MY_PASSWORD}"' >> $SENDER_APP_PASSWORD
             export EMAIL=ravi007.rl@gmail.com
             export SUBJECT="Test Cases for Test Environment on Chrome Browser"
             mvn exec:java
+          environment:
+            EMAIL_USER: $SENDER_EMAIL
+            EMAIL_PASSWORD: $SENDER_APP_PASSWORD
           when: always
       - run:
           name: Run only failed test cases
