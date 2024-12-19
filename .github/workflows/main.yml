@@ -23,10 +23,6 @@ on:
       Email:
         description: 'Please enter Email to receive result'
         required: true
-permissions:
-  contents: read
-  actions: read
-  checks: write
 
 jobs:
   build:
@@ -107,11 +103,3 @@ jobs:
         with:
           name: Re-Run Test Result
           path: target/html-report/SparkReport.html
-
-      - name: Test Report
-        uses: dorny/test-reporter@v1
-        if: success() || failure()
-        with:
-          name: JUnit Report
-          path: target/surefire-reports/junitreports/TEST-**.xml
-          reporter: java-junit
