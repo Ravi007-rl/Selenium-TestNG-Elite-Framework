@@ -109,5 +109,5 @@ jobs:
         if: success() || failure()
         with:
           name: JUnit Report
-          path: target/surefire-reports/junitreports/*.xml
+          path: target/surefire-reports/junitreports/TEST-**.xml
           reporter: java-junit
