@@ -23,6 +23,10 @@ on:
       Email:
         description: 'Please enter Email to receive result'
         required: true
+permissions:
+  contents: read
+  actions: read
+  checks: write
 
 jobs:
   build:
