@@ -23,7 +23,7 @@ jobs:
       - run:
           name: Send result via email
           command: |
-            export $EMAIL_USER
+            echo $EMAIL_USER
             export EMAIL=ravi007.rl@gmail.com
             export SUBJECT="Test Cases for Test Environment on Chrome Browser"
             mvn exec:java
