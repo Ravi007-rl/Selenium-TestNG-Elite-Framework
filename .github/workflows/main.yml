@@ -32,9 +32,9 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Setup Java JDK
-        uses: actions/setup-java@v4.3.0
+        uses: actions/setup-java@v4.6.0
         with:
-          java-version: 22
+          java-version: 23
           distribution: 'temurin'
 
       - name: Set up Chrome
@@ -45,7 +45,7 @@ jobs:
         if: ${{ github.event.inputs.Browser == 'firefox' }}
         uses: browser-actions/setup-firefox@v1.5.2
 
-      - name: Set up Edge
+      - name: Setup Edge
         if: ${{ github.event.inputs.Browser == 'edge' }}
         uses: browser-actions/setup-edge@v1.1.1
 

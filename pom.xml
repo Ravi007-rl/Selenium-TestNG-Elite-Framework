@@ -12,9 +12,10 @@
     <url>http://maven.apache.org</url>
 
     <properties>
-        <maven.compiler.source>22</maven.compiler.source>
-        <maven.compiler.target>22</maven.compiler.target>
-        <maven.compiler.release>22</maven.compiler.release>
+        <maven.compiler.source>23</maven.compiler.source>
+        <maven.compiler.target>23</maven.compiler.target>
+        <maven.compiler.release>23</maven.compiler.release>
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <selenium.version>4.34.0</selenium.version>
         <testng.version>7.11.0</testng.version>
@@ -27,6 +28,8 @@
         <extent-Report>5.1.2</extent-Report>
         <java-mail>2.0.1</java-mail>
         <commons-lang3>3.18.0</commons-lang3>
+        <mojo-plugin>3.0.0</mojo-plugin>
+        <surefire-plugin>3.3.1</surefire-plugin>
     </properties>
 
     <dependencyManagement>
@@ -195,7 +198,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.3.1</version>
+                <version>${surefire-plugin}</version>
                 <configuration>
                     <suiteXmlFiles>
                         <!--suppress UnresolvedMavenProperty -->
@@ -206,7 +209,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-                <version>3.0.0</version>
+                <version>${mojo-plugin}</version>
                 <executions>
                     <execution>
                         <goals>
@@ -216,6 +219,20 @@
                 </executions>
                 <configuration>
                     <mainClass>emailHelper.sendEmailWithAttachment</mainClass>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version> <!-- Ensure this matches your Lombok version -->
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
         </plugins>
