@@ -2,6 +2,7 @@ package com.selenium.utils;
 
 import com.selenium.testng.elite.enums.PlatformName;
 import com.selenium.testng.elite.utils.PathHelper;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -28,7 +29,10 @@ public class DriverFactory {
         case SAFARI -> driver = new SafariDriver();
         default -> throw new Exception("Please select valid browser");
       }
-      driver.manage().window().maximize();
+      if (environmentConfig.isHeadless())
+        driver.manage().window().setSize(new Dimension(1920, 1080));
+      else
+        driver.manage().window().maximize();
     }
     return driver;
   }
@@ -47,7 +51,7 @@ public class DriverFactory {
     options.addArguments("--no-sandbox");
     options.addArguments("--disable-dev-shm-usage");
     options.addArguments("--disable-gpu");
-    if (environmentConfig.isHeadless()) options.addArguments("--headless");
+    if (environmentConfig.isHeadless()) options.addArguments("--headless", "start-maximized");
     return new ChromeDriver(options);
   }
 
@@ -64,7 +68,7 @@ public class DriverFactory {
     var options = new FirefoxOptions();
     options.setProfile(profile);
     options.addArguments("--disable-notifications");
-    if (environmentConfig.isHeadless()) options.addArguments("--headless");
+    if (environmentConfig.isHeadless()) options.addArguments("--headless", "--width=1920", "--height=1080");
     return new FirefoxDriver(options);
   }
 
@@ -78,7 +82,7 @@ public class DriverFactory {
     options.setExperimentalOption("prefs", edgePrefs);
 
     options.addArguments("--disable-notifications");
-    if (environmentConfig.isHeadless()) options.addArguments("--headless");
+    if (environmentConfig.isHeadless()) options.addArguments("--headless", "start-maximized");
     return new EdgeDriver(options);
   }
 }
