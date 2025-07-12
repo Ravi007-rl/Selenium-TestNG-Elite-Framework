@@ -1,8 +1,9 @@
 package dataFactory.registerUserDataFactory;
 
-import com.github.javafaker.Faker;
+
 import dataObject.registerUser.RegisterUserDataObject;
 import com.selenium.testng.elite.utils.RandomHelper;
+import net.datafaker.Faker;
 
 public class RegisterUserDataFactory {
 

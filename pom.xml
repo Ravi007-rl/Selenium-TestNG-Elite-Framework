@@ -14,18 +14,19 @@
     <properties>
         <maven.compiler.source>22</maven.compiler.source>
         <maven.compiler.target>22</maven.compiler.target>
+        <maven.compiler.release>22</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <selenium.version>4.27.0</selenium.version>
-        <testng.version>7.10.2</testng.version>
-        <lombok.version>1.18.34</lombok.version>
-        <commonOs.version>2.8.0</commonOs.version>
-        <java.dotEnv>3.0.1</java.dotEnv>
-        <log4j.version>2.23.1</log4j.version>
-        <assertj>3.26.3</assertj>
-        <faker>1.0.2</faker>
+        <selenium.version>4.34.0</selenium.version>
+        <testng.version>7.11.0</testng.version>
+        <lombok.version>1.18.38</lombok.version>
+        <commonOs.version>2.19.0</commonOs.version>
+        <java.dotEnv>3.2.0</java.dotEnv>
+        <log4j.version>2.25.0</log4j.version>
+        <assertj>3.27.3</assertj>
+        <data-faker>2.4.3</data-faker>
         <extent-Report>5.1.2</extent-Report>
         <java-mail>2.0.1</java-mail>
-        <commons-lang3>3.17.0</commons-lang3>
+        <commons-lang3>3.18.0</commons-lang3>
     </properties>
 
     <dependencyManagement>
@@ -85,9 +86,9 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
-                <groupId>com.github.javafaker</groupId>
-                <artifactId>javafaker</artifactId>
-                <version>${faker}</version>
+                <groupId>net.datafaker</groupId>
+                <artifactId>datafaker</artifactId>
+                <version>${data-faker}</version>
             </dependency>
             <dependency>
                 <groupId>com.aventstack</groupId>
@@ -154,9 +155,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.javafaker</groupId>
-            <artifactId>javafaker</artifactId>
-            <version>${faker}</version>
+            <groupId>net.datafaker</groupId>
+            <artifactId>datafaker</artifactId>
+            <version>${data-faker}</version>
         </dependency>
         <dependency>
             <groupId>com.aventstack</groupId>
@@ -177,6 +178,20 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>

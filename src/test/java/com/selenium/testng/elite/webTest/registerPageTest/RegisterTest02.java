@@ -2,9 +2,9 @@ package com.selenium.testng.elite.webTest.registerPageTest;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import com.github.javafaker.Faker;
 import com.selenium.testng.elite.BaseTest;
 import dataFactory.registerUserDataFactory.RegisterUserDataFactory;
+import net.datafaker.Faker;
 import org.testng.annotations.Test;
 import pageObjectModel.webPageObject.accountPage.AccountCreatedPage;
 import pageObjectModel.webPageObject.homePage.HomePage;
