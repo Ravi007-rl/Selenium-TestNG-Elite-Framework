@@ -1,0 +1,60 @@
+version: 2.1
+
+orbs:
+  browser-tools: circleci/browser-tools@1.4.8
+
+jobs:
+  build-and-test:
+    docker:
+      - image: cimg/openjdk:22.0.2
+    steps:
+      - checkout
+      - browser-tools/install-browser-tools
+      - run:
+          name: Run test cases
+          command: |
+            export BROWSER=chrome
+            export HEADLESS=true
+            export ENV=Test
+            mvn test -DsuiteXmlFile=testng.xml
+      - store_artifacts:
+          path: target/html-report/SparkReport.html
+          destination: initial_run/SparkReport.html
+      - run:
+          name: Send result via email
+          command: |
+            export EMAIL_USER = $SENDER_EMAIL
+            echo $EMAIL_USER
+            export EMAIL=ravi007.rl@gmail.com
+            export SUBJECT="Test Cases for Test Environment on Chrome Browser"
+            mvn exec:java
+          environment:
+            EMAIL_USER: $SENDER_EMAIL
+            EMAIL_PASSWORD: $SENDER_APP_PASSWORD
+          when: always
+      - run:
+          name: Run only failed test cases
+          command: |
+            export BROWSER=chrome
+            export HEADLESS=true
+            export ENV=Test
+            mvn test -DsuiteXmlFile=target/surefire-reports/testng-failed.xml
+          when: on_fail
+      - store_test_results:
+          path: target/surefire-reports/My Test Suite/
+      - store_artifacts:
+          path: target/html-report/SparkReport.html
+          destination: rerun/SparkReport.html
+      - run:
+          name: Send re-run result via email
+          environment:
+          command: |
+            export EMAIL=ravi007.rl@gmail.com
+            export SUBJECT="Re-run Failed Test Cases for Test Environment on Chrome Browser"
+            mvn exec:java
+          when: on_fail
+
+workflows:
+  build-and-test:
+    jobs:
+      - build-and-test
